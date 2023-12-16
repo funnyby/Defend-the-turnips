@@ -25,7 +25,7 @@
 
 cmake_minimum_required(VERSION 3.6)
 
-set(APP_NAME menuCpp)
+set(APP_NAME DefendTheTurnips)
 
 project(${APP_NAME})
 
