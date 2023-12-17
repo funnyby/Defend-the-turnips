@@ -1,5 +1,6 @@
 #include "MainScene.h"
 #include "SimpleAudioEngine.h"
+#include "ChooseLevel.h"
 
 
 USING_NS_CC;
@@ -66,6 +67,28 @@ bool MainScene::InitUI()
 	{
 		startGameBtn->setPosition(Vec2(origin.x + 562, origin.y + 395));
 		this->addChild(startGameBtn, 1);
+
+		startGameBtn->addTouchEventListener([](Ref* sender, Widget::TouchEventType type) {
+			switch (type)
+			{
+				case ui::Widget::TouchEventType::BEGAN:
+				{
+					//SimpleAudioEngine::getInstance()->playEffect("Sound/MainMenu/Select.mp3", false, 1.0f, 1.0f, 1.0f);
+					break;
+				}
+				case ui::Widget::TouchEventType::ENDED:
+				{
+					//log("_startGameBtn ENDERD");
+					 //Ìø×ª³¡¾°
+					auto chooseLevel = ChooseLevel::createScene();
+					Director::getInstance()->replaceScene(chooseLevel);
+					break;
+				}
+				default:
+					break;
+			}
+			});
+
 	}
 
 	/*

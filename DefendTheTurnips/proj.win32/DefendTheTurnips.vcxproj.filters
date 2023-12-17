@@ -10,6 +10,9 @@
     <Filter Include="src">
       <UniqueIdentifier>{bb6c862e-70e9-49d9-81b7-3829a6f50471}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\ChooseLevel">
+      <UniqueIdentifier>{e46a3a47-86ac-4fb8-a9bb-d6b664ec4884}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -24,6 +27,9 @@
     <ClCompile Include="MainScene.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="ChooseLevel.cpp">
+      <Filter>src\ChooseLevel</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -37,6 +43,9 @@
     </ClInclude>
     <ClInclude Include="MainScene.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="ChooseLevel.h">
+      <Filter>src\ChooseLevel</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
