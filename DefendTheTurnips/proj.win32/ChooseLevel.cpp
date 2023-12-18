@@ -120,15 +120,14 @@ enum zOrderMap
 
 void ChooseLevel::LoadTiledMap()
 {
-	//TMXTiledMap* tmap = TMXTiledMap::create("ChooseLevel/tiledmap.tmx");
-	//this->addChild(tmap,-1);
-	//TMXTiledMap* map = TMXTiledMap::create("ChooseLevel/tiledmap.tmx");
+
+	TMXTiledMap* map = TMXTiledMap::create("tiledmap.tmx");
 	//获取瓦片地图中的point对象层
-	//auto objectGroup = map->getObjectGroup("point");
+	auto objectGroup = map->getObjectGroup("point");
 	//将对象层中的所有对象获取出来
-	//auto objs = objectGroup->getObjects();
+	auto objs = objectGroup->getObjects();
 	//遍历对象
-	/*for (int i = 0; i < objs.size(); i++)
+	for (int i = 0; i < objs.size(); i++)
 	{
 		auto _scrollView = ScrollView::create();
 		//根据瓦片地图中位置坐标信息配置关卡按钮
@@ -160,11 +159,12 @@ void ChooseLevel::LoadTiledMap()
 				//当前关卡等级，根据Tag值加载对应关卡的数据
 				log("hello %d", ((Button*)sender)->getTag());
 				//TODO：加载关卡数据，进入游戏
+
 			}
 			});
 		
 	}
-	*/
+	
 }
 
 

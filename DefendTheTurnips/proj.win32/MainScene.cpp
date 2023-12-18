@@ -68,6 +68,7 @@ bool MainScene::InitUI()
 		startGameBtn->setPosition(Vec2(origin.x + 562, origin.y + 395));
 		this->addChild(startGameBtn, 1);
 
+		//´¥ÃþÊÂ¼þ
 		startGameBtn->addTouchEventListener([](Ref* sender, Widget::TouchEventType type) {
 			switch (type)
 			{
