@@ -3,6 +3,7 @@
 #define __MAIN_SCENE_H__
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
+#include"My_monster.h"
 
 class MainScene :public cocos2d::Scene
 {

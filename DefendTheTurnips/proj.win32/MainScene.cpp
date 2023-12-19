@@ -6,6 +6,18 @@
 USING_NS_CC;
 using namespace cocos2d::ui;
 
+/*//开始游戏
+void MainScene::startGame(float delta)
+{
+	//在地图起点处放置一个怪物
+	auto monsterSprite = monster1::create();
+	monsterSprite->init();
+	//monsterSprite->setPosition(Vec2(40, 390));
+	//this->addChild(monsterSprite, 0);
+	//取消定时器方法，保证startGame只执行一次
+	this->unschedule(schedule_selector(MainScene::startGame));
+}*/
+
 cocos2d::Scene* MainScene::createScene()
 {
 	return MainScene::create();
@@ -100,6 +112,7 @@ bool MainScene::InitUI()
 		return false;
 	monster4->setScale(0.75);
 
+
 	//设置按钮
 	auto setUpBtn = Button::create("MainMenu/front_btn_setting_normal.png", "MainMenu/front_btn_setting_pressed.png", "null.png");
 	if (nullptr == setUpBtn)
@@ -191,6 +204,9 @@ bool MainScene::init()
 {
 	if (!InitUI())
 		return false;
+
+	//0.5秒后调用startGame方法
+	//this->schedule(schedule_selector(MainScene::startGame), 0.5f);
 
 	return true;
 }
