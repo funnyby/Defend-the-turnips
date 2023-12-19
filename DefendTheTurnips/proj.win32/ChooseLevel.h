@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __CHOOSE_LEVEL_H__
+#define __CHOOSE_LEVEL_H__
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
 #include <string.h>
@@ -27,3 +28,4 @@ private:
 	cocos2d::ui::Button* _toolbarRightbg;
 
 };
+#endif // __CHOOSE_LEVEL_H__
