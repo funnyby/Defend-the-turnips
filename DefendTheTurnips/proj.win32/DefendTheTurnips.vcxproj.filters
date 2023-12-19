@@ -13,6 +13,12 @@
     <Filter Include="src\ChooseLevel">
       <UniqueIdentifier>{e46a3a47-86ac-4fb8-a9bb-d6b664ec4884}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BaseClass">
+      <UniqueIdentifier>{7aa06828-1a9f-4a94-b401-5d464b736c88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Carrots">
+      <UniqueIdentifier>{02cf2684-22e1-4c7a-98ff-e9895aac6455}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -30,6 +36,12 @@
     <ClCompile Include="ChooseLevel.cpp">
       <Filter>src\ChooseLevel</Filter>
     </ClCompile>
+    <ClCompile Include="ActionSprite.cpp">
+      <Filter>BaseClass</Filter>
+    </ClCompile>
+    <ClCompile Include="Carrot.cpp">
+      <Filter>src\Carrots</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -46,6 +58,12 @@
     </ClInclude>
     <ClInclude Include="ChooseLevel.h">
       <Filter>src\ChooseLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionSprite.h">
+      <Filter>BaseClass</Filter>
+    </ClInclude>
+    <ClInclude Include="Carrot.h">
+      <Filter>src\Carrots</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
