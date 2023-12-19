@@ -19,8 +19,6 @@ private:
 
 	void InitEvent();
 
-	void LoadTiledMap();
-
 private:
 	cocos2d::ui::Button* _toolbarHome;
 	cocos2d::ui::Button* _toolbarShop;
