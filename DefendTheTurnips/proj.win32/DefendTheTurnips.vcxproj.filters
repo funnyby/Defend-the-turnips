@@ -19,6 +19,12 @@
     <Filter Include="src\Carrots">
       <UniqueIdentifier>{02cf2684-22e1-4c7a-98ff-e9895aac6455}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\EnterScene">
+      <UniqueIdentifier>{136dbe6c-1d10-47bc-a391-f08195b32e61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\GameMap">
+      <UniqueIdentifier>{497a2a63-d4d4-4c1c-a76b-64aa3eaa9211}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -42,6 +48,12 @@
     <ClCompile Include="Carrot.cpp">
       <Filter>src\Carrots</Filter>
     </ClCompile>
+    <ClCompile Include="EnterScene.cpp">
+      <Filter>src\EnterScene</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMap.cpp">
+      <Filter>src\GameMap</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -64,6 +76,12 @@
     </ClInclude>
     <ClInclude Include="Carrot.h">
       <Filter>src\Carrots</Filter>
+    </ClInclude>
+    <ClInclude Include="EnterScene.h">
+      <Filter>src\EnterScene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMap.h">
+      <Filter>src\GameMap</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

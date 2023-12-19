@@ -1,5 +1,6 @@
 #include "ChooseLevel.h"
 #include "MainScene.h"
+#include"EnterScene.h"
 #include<vector>
 
 USING_NS_CC;
@@ -126,18 +127,21 @@ void ChooseLevel::InitUI()
 		button->setScale(1.0);//调大小
 		button->setPressedActionEnabled(true);
 
-		//触摸事件监听器
-		button->addTouchEventListener([](Ref* sender, Widget::TouchEventType type) {
-			if (type == ui::Widget::TouchEventType::ENDED)
-			{
-				//当前关卡等级，根据Tag值加载对应关卡的数据
-				log("hello %d", ((Button*)sender)->getTag());
-				
-				//TODO：加载关卡数据，进入游戏
+		if (i == 0) {
+			//触摸事件监听器
+			button->addTouchEventListener([](Ref* sender, Widget::TouchEventType type) {
+				if (type == ui::Widget::TouchEventType::ENDED)
+				{
+					//当前关卡等级，根据Tag值加载对应关卡的数据
+					log("hello %d", ((Button*)sender)->getTag());
 
-			}
-			});
-
+					
+					 //跳转场景
+					auto enterscene = EnterScene::createScene();
+					Director::getInstance()->replaceScene(enterscene);
+				}
+				});
+		}
 	}
 }
 //底层事件层初始化

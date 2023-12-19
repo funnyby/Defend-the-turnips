@@ -156,6 +156,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="ActionSprite.cpp" />
     <ClCompile Include="Carrot.cpp" />
     <ClCompile Include="ChooseLevel.cpp" />
+    <ClCompile Include="EnterScene.cpp" />
+    <ClCompile Include="GameMap.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainScene.cpp" />
   </ItemGroup>
@@ -165,6 +167,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="ActionSprite.h" />
     <ClInclude Include="Carrot.h" />
     <ClInclude Include="ChooseLevel.h" />
+    <ClInclude Include="EnterScene.h" />
+    <ClInclude Include="GameMap.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="MainScene.h" />
   </ItemGroup>
