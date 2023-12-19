@@ -1,6 +1,17 @@
 #pragma once
+/*
+this class rises form CCSprite
+all characters' actions base on this class
+cited from:https://www.cnblogs.com/hll2008/p/4266776.html
+this first version created by wsy for monsters class setup on 23.12.17
+also fby create it for carrots class on 23.12.18
+
+*/
+#ifndef __ACTION_SPRITE_H_
+#define __ACTION_SPRITE_H_
 #include "cocos2d.h"
-//声明一个动作状态的枚举类型
+using namespace cocos2d;
+
 typedef enum _ActionState {
     kActionStateNone = 0, //无状态
     kActionStateIdle, //静止状态
@@ -41,3 +52,4 @@ public:
     CC_SYNTHESIZE(bool, _halo, Halo);
 
 };
+#endif //__ACTION_SPRITE_H_

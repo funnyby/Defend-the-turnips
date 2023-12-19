@@ -19,6 +19,9 @@
     <Filter Include="src\Carrots">
       <UniqueIdentifier>{02cf2684-22e1-4c7a-98ff-e9895aac6455}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Publication">
+      <UniqueIdentifier>{4f07e904-7216-484b-bbcf-1ff078c1e612}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
