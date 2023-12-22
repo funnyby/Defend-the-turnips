@@ -1,5 +1,24 @@
 #pragma once
 #include "cocos2d.h"
+#include "ui/CocosGUI.h"
+#include "Way.h"
+#define CREATE_FUNC(__TYPE__) \
+static __TYPE__* create() \
+{ \
+    __TYPE__ *pRet = new(std::nothrow) __TYPE__(); \
+    if (pRet && pRet->init()) \
+    { \
+        pRet->autorelease(); \
+        return pRet; \
+    } \
+    else \
+    { \
+        delete pRet; \
+        pRet = nullptr; \
+        return nullptr; \
+    } \
+}
+
 
 class Monster : public cocos2d::CCSprite
 {
@@ -7,7 +26,6 @@ public:
     void initmonster();
     //是否死亡
     bool isDie;
-    //void update(float delta);
 private:
     //生命值
     CC_SYNTHESIZE(float, _hp, HP);
@@ -28,4 +46,8 @@ private:
     cocos2d::Point beginningWaypoint;
     //结束路点
     cocos2d::Point destinationWaypoint;
+    //是否成功咬了萝卜
+    void BiteTurnips();
+
+    CREATE_FUNC(Monster);
 };
