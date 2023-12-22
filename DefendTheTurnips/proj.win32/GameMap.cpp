@@ -1,8 +1,8 @@
 #include "ChooseLevel.h"
 #include "MainScene.h"
-#include"EnterScene.h"
-#include"GameMap.h"
-#include"Way.h"
+#include "EnterScene.h"
+#include "GameMap.h"
+#include "Way.h"
 #include<vector>
 
 USING_NS_CC;
@@ -34,6 +34,20 @@ bool GameMap::init()
 	// 设置精灵的缩放
 	background->setScale(scaleX, scaleY);
 	this->addChild(background);
+	
+	//添加一个萝卜在终点处
+	auto pRet = new Carrot;
+	if (pRet && pRet->initWithLocation(Vec2(1000, 485)))
+	{
+		pRet->init();
+		pRet->autorelease();
+	}
+	else {
+		problemLoading("Carrot_1.png");
+		pRet == NULL;
+		return false;
+	}
+	//对萝卜的眨眼动画展示
 
 	//在地图起点处放置一个怪物
 	auto monsterSprite = Monster::create("monster/1.png");
@@ -47,9 +61,7 @@ bool GameMap::init()
 	CCSequence* actionSequence = CCSequence::create(moveTo, moveTo1,moveTo2, moveTo3,moveTo4,NULL);
 	monsterSprite->runAction(actionSequence);
 
-	//Monster* monsterSprite = new Monster();
-	//this->addChild(monsterSprite, 0);
-	//monsterSprite->initmonster();
+	
 	return true;
 }
 

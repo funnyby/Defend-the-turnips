@@ -13,17 +13,17 @@
     <Filter Include="src\ChooseLevel">
       <UniqueIdentifier>{e46a3a47-86ac-4fb8-a9bb-d6b664ec4884}</UniqueIdentifier>
     </Filter>
-    <Filter Include="BaseClass">
-      <UniqueIdentifier>{7aa06828-1a9f-4a94-b401-5d464b736c88}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Carrots">
-      <UniqueIdentifier>{02cf2684-22e1-4c7a-98ff-e9895aac6455}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\EnterScene">
       <UniqueIdentifier>{136dbe6c-1d10-47bc-a391-f08195b32e61}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\GameMap">
       <UniqueIdentifier>{497a2a63-d4d4-4c1c-a76b-64aa3eaa9211}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Carrot">
+      <UniqueIdentifier>{458ca448-20f3-48c8-901d-e2d8c55bc28a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Monster">
+      <UniqueIdentifier>{fa572db1-5bdc-41bd-96cc-e57277453744}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -42,17 +42,20 @@
     <ClCompile Include="ChooseLevel.cpp">
       <Filter>src\ChooseLevel</Filter>
     </ClCompile>
-    <ClCompile Include="ActionSprite.cpp">
-      <Filter>BaseClass</Filter>
-    </ClCompile>
-    <ClCompile Include="Carrot.cpp">
-      <Filter>src\Carrots</Filter>
-    </ClCompile>
     <ClCompile Include="EnterScene.cpp">
       <Filter>src\EnterScene</Filter>
     </ClCompile>
     <ClCompile Include="GameMap.cpp">
       <Filter>src\GameMap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ActionSprite.cpp">
+      <Filter>Carrot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Carrot.cpp">
+      <Filter>Carrot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\My_monster.cpp">
+      <Filter>Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -71,17 +74,26 @@
     <ClInclude Include="ChooseLevel.h">
       <Filter>src\ChooseLevel</Filter>
     </ClInclude>
-    <ClInclude Include="ActionSprite.h">
-      <Filter>BaseClass</Filter>
-    </ClInclude>
-    <ClInclude Include="Carrot.h">
-      <Filter>src\Carrots</Filter>
-    </ClInclude>
     <ClInclude Include="EnterScene.h">
       <Filter>src\EnterScene</Filter>
     </ClInclude>
     <ClInclude Include="GameMap.h">
       <Filter>src\GameMap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ActionSprite.h">
+      <Filter>Carrot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Carrot.h">
+      <Filter>Carrot</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\My_monster.h">
+      <Filter>Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Way.h">
+      <Filter>Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

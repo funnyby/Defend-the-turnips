@@ -1,8 +1,6 @@
-#pragma once
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
 #include <string.h>
-
 
 class GameMap :public cocos2d::Scene
 {
@@ -18,6 +16,6 @@ private:
 
 	void InitEvent();
 
-
+	void init_m(float delta);
 };
 #pragma once

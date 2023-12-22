@@ -1,6 +1,9 @@
 #pragma once
+#ifndef __MY_MONSTER_H_
+#define __MY_MONSTER_H_
 #include "cocos2d.h"
-
+#include "way.h"
+using namespace cocos2d;
 class Monster : public cocos2d::CCSprite
 {
 public:
@@ -29,3 +32,4 @@ private:
     //½áÊøÂ·µã
     cocos2d::Point destinationWaypoint;
 };
+#endif __MY_MONSTER_H_
