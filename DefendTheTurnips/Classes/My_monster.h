@@ -25,7 +25,8 @@ class Monster : public cocos2d::CCSprite
 public:
     void initmonster();
     //ÊÇ·ñËÀÍö
-    bool isDie;
+    bool isDie();
+    void isFreezed();
 private:
     //ÉúÃüÖµ
     CC_SYNTHESIZE(float, _hp, HP);
