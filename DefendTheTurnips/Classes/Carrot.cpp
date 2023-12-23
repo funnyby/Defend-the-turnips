@@ -3,12 +3,20 @@
 
 
 */
+
 #include "Carrot.h"
+using namespace cocos2d::ui;
 
 bool Carrot::init()
 {
-
-    bool bRet = false;
+    _hp = 10;
+    auto myCarrot=initWithFile("Carrot_1.png");
+    int myHeight =50;
+   //对坐标进行校正提供半个身位高度
+    location.add(Vec2(0, myHeight));
+    this->setPosition(location);
+    return true;
+   /* bool bRet = false;
     do
     {
         CC_BREAK_IF(!ActionSprite::initWithFile("Carrot/CarrotStay/Carrot_1.png"));
@@ -37,30 +45,17 @@ bool Carrot::init()
     } while (0);
 
     return bRet;
+ */
 }
-bool Carrot::initWithLocation(Point location)
-{
-    bool bRet = false;
-    do
-    {
-        //实例化一个萝卜
-        auto sprite = Carrot::create();
-        sprite->initWithFile("Carrot/CarrotStay/Carrot_1.png");
-        //添加精灵到当前Carrot中
-        this->addChild(sprite);
-        //设置为静止
-        sprite->idle();
-        //计算当前萝莉精灵1/2高
-        int myHeight = sprite->getTextureRect().size.height / 2.0f;
-        //对坐标进行校正提供半个身位高度
-        location.add(Vec2(0, myHeight));
-        sprite->setPosition(location);
-        Director* pDirector = Director::getInstance();
-        Scene* curScene = pDirector->getRunningScene();
-        curScene->addChild(this, 10000);
-        bRet = true;
-    } while (0);
-    return bRet;
+void Carrot::setLocation(Point mapDest) {
+    location = mapDest;
 }
 
-
+void Carrot::beBiten() {
+    _hp--;
+}
+bool Carrot::GameOver() {
+    if (_hp == 0)
+        return true;
+    return false;
+ }

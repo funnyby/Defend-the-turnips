@@ -5,6 +5,7 @@
 #include "ui/CocosGUI.h"
 #include "My_monster.h"
 #include "Carrot.h"
+//#include "Carrots.h"
 class MainScene :public cocos2d::Scene
 {
 public:

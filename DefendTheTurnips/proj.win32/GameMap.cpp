@@ -35,36 +35,27 @@ bool GameMap::init()
 	background->setScale(scaleX, scaleY);
 	this->addChild(background);
 	
+	
 	//添加一个萝卜在终点处
-	auto pRet = new Carrot;
-	if (pRet && pRet->initWithLocation(Vec2(1000, 485)))
-	{
-		pRet->init();
-		pRet->autorelease();
-	}
-	else {
-		problemLoading("Carrot_1.png");
-		pRet == NULL;
-		return false;
-	}
+	auto CarrotSprite = Carrot::create();
+	this->addChild(CarrotSprite, 1000);
+	CarrotSprite->setLocation(Vec2(1000, 485));
+	CarrotSprite->init();
+
 	//对萝卜的眨眼动画展示
 
 	//在地图起点处放置一个怪物
-	auto monsterSprite = Monster::create("monster/1.png");
-	monsterSprite->setPosition(Vec2(170, 485));
+	auto monsterSprite = Monster::create();
 	this->addChild(monsterSprite, 0);
-	auto moveTo = MoveTo::create(map[1].path*0.01, Vec2(map[1].x, map[1].y));
-	auto moveTo1 = MoveTo::create(map[2].path * 0.01, Vec2(map[2].x, map[2].y));
-	auto moveTo2 = MoveTo::create(map[3].path * 0.01, Vec2(map[3].x, map[3].y));
-	auto moveTo3 = MoveTo::create(map[4].path * 0.01, Vec2(map[4].x, map[4].y));
-	auto moveTo4 = MoveTo::create(map[5].path * 0.01, Vec2(map[5].x, map[5].y));
-	CCSequence* actionSequence = CCSequence::create(moveTo, moveTo1,moveTo2, moveTo3,moveTo4,NULL);
-	monsterSprite->runAction(actionSequence);
-
-	
+	schedule(schedule_selector(GameMap::init_m), 1);
+	monsterSprite->initmonster();
 	return true;
 }
-
+void GameMap::init_m(float delta) {
+	auto monsterSprite = Monster::create();
+	this->addChild(monsterSprite, 0);
+	monsterSprite->initmonster();
+}
 bool InitUI()
 {
 	
