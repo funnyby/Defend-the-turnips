@@ -2,16 +2,27 @@
 
 USING_NS_CC;
 using namespace cocos2d::ui;
-int blood=10;
 
+int blood;
 
 void Monster::initmonster() {
 	//在地图起点处放置一个怪物
 	initWithFile("monster/1.png");
 
-	_walkSpeed = 0.01;
+	//_walkSpeed =200;
+	_walkSpeed =0.01;
+	_hp = 100;
+	_freeze = -1;
 
+	this->create_Health_bar();
+	this->scheduleBlood();
 	this->setPosition(170, 485);
+
+	//beginningWaypoint.x = map[0].x;
+	//beginningWaypoint.y = map[0].y;
+	//destinationWaypoint.x = map[1].x;
+	//destinationWaypoint.y = map[1].y;
+
 	auto moveTo = MoveTo::create(map[1].path* _walkSpeed,Vec2(map[1].x, map[1].y));
 	auto moveTo1 = MoveTo::create(map[2].path * _walkSpeed, Vec2(map[2].x, map[2].y));
 	auto moveTo2 = MoveTo::create(map[3].path * _walkSpeed, Vec2(map[3].x, map[3].y));
@@ -21,6 +32,41 @@ void Monster::initmonster() {
 	runAction(actionSequence);
 }
 
+void Monster::update(float dt) {
+	int waypoint = 1;
+	_freeze += 1;
+	this->isDie();
+	this->isFreezed();
+	this->scheduleBlood();
+	//this->walk();
+	//this->judge_dest(waypoint);
+}
+
+void Monster::create_Health_bar() {
+	auto sprite = Sprite::create("monster/3.png");   //创建进度框
+	sprite->setScaleX(0.12f); // 将精灵在x轴上的大小缩小到原来的50%  
+	sprite->setScaleY(0.12f); // 将精灵在y轴上的大小缩小到原来的50%
+	sprite->setPosition(40, 90); //设置框的位置
+	this->addChild(sprite);            //加到默认图层里面去
+	auto sprBlood = Sprite::create("monster/4.png");  //创建血条
+	ProgressTimer* progress = ProgressTimer::create(sprBlood); //创建progress对象
+	progress->setType(ProgressTimer::Type::BAR);        //类型：条状
+	progress->setScaleX(0.12f); // 将精灵在x轴上的大小缩小到原来的50%  
+	progress->setScaleY(0.12f); // 将精灵在y轴上的大小缩小到原来的50%
+	progress->setPosition(40, 90);
+	//从右到左减少血量
+	progress->setMidpoint(Point(0, 0.5));     //如果是从左到右的话，改成(1,0.5)即可
+	progress->setBarChangeRate(Point(1, 0));
+	progress->setTag(BLOOD_BAR);       //做一个标记
+	this->addChild(progress);
+}
+
+void Monster::scheduleBlood() {
+	auto progress = (ProgressTimer*)this->getChildByTag(BLOOD_BAR);
+	progress->setPercentage(((_hp) / 100) * 100);  //这里是百分制显示
+}
+
+//萝卜掉血
 void loseblood() {
 	blood--;
 }
@@ -35,8 +81,85 @@ void Monster::BiteTurnips() {
 		loseblood();
 }
 
-void Monster::isFreezed() {
+bool Monster::judge_dest(int& n) {
+	//Vec2 pos = this->getPosition();
+	//if ((destinationWaypoint.x - pos.x) * (destinationWaypoint.x - pos.x) + (destinationWaypoint.y - pos.y) * (destinationWaypoint.y - pos.y) <= 37)
+	//{
+	//	beginningWaypoint.x = map[n].x;
+	//	beginningWaypoint.y = map[n].y;
+	//	destinationWaypoint.x = map[n+1].x;
+	//	destinationWaypoint.y = map[n+1].y;
+	//	//auto b = Sprite::create("monster/2.png");
+	//	//this->addChild(b);
+	//	//this->setPosition(70, 485);
+	//	//for (int i = 0; i <= 4; i++) {
+	//	//	if (map[i].x == destinationWaypoint.x && map[i].y == destinationWaypoint.y) {
+	//	//		//auto b = Sprite::create("monster/2.png");
+	//	//		//this->addChild(b);
+	//	//		//this->setPosition(70, 485);
+	//	//		beginningWaypoint.x = map[i].x;
+	//	//		beginningWaypoint.y = map[i].y;
+	//	//		destinationWaypoint.x = map[i+1].x;
+	//	//		destinationWaypoint.y = map[i+1].y;
+	//	//		return true;
+	//	//	}
+	//	//}
+	//	return true;
+	//}
+	//else
+		return false;
+}
+
+void Monster::walk() {
+	//Vec2 pos = this->getPosition();
+	//float path = abs(destinationWaypoint.x - beginningWaypoint.x) + abs(destinationWaypoint.y - beginningWaypoint.y);
+	//float x = (destinationWaypoint.x - beginningWaypoint.x) / path * _walkSpeed * 0.1f+pos.x;
+	//float y = (destinationWaypoint.y - beginningWaypoint.y) / path * _walkSpeed * 0.1f + pos.y;
+	//MoveTo* moveto = MoveTo::create(0.1f, Point(x, y));
+	//this->runAction(moveto);
+}
+
+
+bool Monster::isFreezed() {
 	if (_freeze == 1) {
-		_walkSpeed *= 0.8;
+		_walkSpeed *= 0.5;
+		this->schedule(schedule_selector(Monster::unFreezed), 3);
+		return true;
+	}
+	return false;
+}
+
+void Monster::unFreezed(float a) {
+	_freeze = 0;
+}
+
+
+bool Monster::isDie() {
+	if (_hp <= 0)
+	{
+		//精灵爆炸
+		auto texture = Director::getInstance()->getTextureCache()->addImage("monster/2.png");
+		// 设置新的纹理  
+		this->setTexture(texture);
+		this->stopAllActions();
+		this->schedule(schedule_selector(Monster::deletemonster), 0.05f);
+		return true;
+	}
+	else
+		return false;
+}
+
+void Monster::behurt(float a) {
+	_hp = 0;
+	if (this->isDie()) {
+		//删除该精灵结点，怎么写待定
 	}
 }
+
+void Monster::deletemonster(float a) {
+	this->removeFromParent();
+}
+
+//void Monster::behurt(int monster_blood) {
+//	_hp -= monster_blood;
+//}
