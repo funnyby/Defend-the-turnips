@@ -24,6 +24,8 @@ static __TYPE__* create() \
 class Monster : public cocos2d::CCSprite
 {
 public:
+    //精灵是否还活着
+    bool isalive;
     virtual void update(float dt);
     void initmonster();
     //是否受伤，子弹每次攻击时调用该函数
@@ -46,6 +48,8 @@ private:
     //GameMediator* m;
     //当前精灵的位置
     cocos2d::Point myPosition;
+    //当前走到第几个结点了
+    int waypoint;
     //开始路点
     cocos2d::Point beginningWaypoint;
     //结束路点
@@ -65,7 +69,7 @@ private:
     //怪物移动
     void walk();
     //判断怪物是否到了下一个结点
-    bool judge_dest(int& n);
+    bool judge_dest();
     //删除当前怪物结点
     void deletemonster(float a);
     CREATE_FUNC(Monster);

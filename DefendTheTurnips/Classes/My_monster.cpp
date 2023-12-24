@@ -9,37 +9,33 @@ void Monster::initmonster() {
 	//在地图起点处放置一个怪物
 	initWithFile("monster/1.png");
 
-	//_walkSpeed =200;
-	_walkSpeed =0.01;
+	_walkSpeed =100;
+	//_walkSpeed =0.01;
 	_hp = 100;
 	_freeze = -1;
+	waypoint = 1;
+	isalive = 1;
 
 	this->create_Health_bar();
 	this->scheduleBlood();
 	this->setPosition(170, 485);
 
-	//beginningWaypoint.x = map[0].x;
-	//beginningWaypoint.y = map[0].y;
-	//destinationWaypoint.x = map[1].x;
-	//destinationWaypoint.y = map[1].y;
+	beginningWaypoint.x = map[0].x;
+	beginningWaypoint.y = map[0].y;
+	destinationWaypoint.x = map[1].x;
+	destinationWaypoint.y = map[1].y;
 
-	auto moveTo = MoveTo::create(map[1].path* _walkSpeed,Vec2(map[1].x, map[1].y));
-	auto moveTo1 = MoveTo::create(map[2].path * _walkSpeed, Vec2(map[2].x, map[2].y));
-	auto moveTo2 = MoveTo::create(map[3].path * _walkSpeed, Vec2(map[3].x, map[3].y));
-	auto moveTo3 = MoveTo::create(map[4].path * _walkSpeed, Vec2(map[4].x, map[4].y));
-	auto moveTo4 = MoveTo::create(map[5].path * _walkSpeed, Vec2(map[5].x, map[5].y));
-	CCSequence* actionSequence = CCSequence::create(moveTo, moveTo1,moveTo2, moveTo3,moveTo4,NULL);
-	runAction(actionSequence);
 }
 
 void Monster::update(float dt) {
-	int waypoint = 1;
-	_freeze += 1;
+	_hp-=5;
 	this->isDie();
 	this->isFreezed();
 	this->scheduleBlood();
-	//this->walk();
-	//this->judge_dest(waypoint);
+	this->walk();
+	this->judge_dest();
+	if (!this->isalive)
+		this->unschedule(schedule_selector(Monster::update));
 }
 
 void Monster::create_Health_bar() {
@@ -72,51 +68,43 @@ void loseblood() {
 }
 
 void Monster::BiteTurnips() {
-	double time = 0;
-	for (int i = 1; i <= 5; i++) {
-		time += map[1].path * 0.01;
-	}
-	auto position = this->getPosition();
-	if (position.x == map[5].x && position.y == map[5].y)
-		loseblood();
+	//double time = 0;
+	//for (int i = 1; i <= 5; i++) {
+	//	time += map[1].path * 0.01;
+	//}
+	//auto position = this->getPosition();
+	//if (position.x == map[5].x && position.y == map[5].y)
+	//	loseblood();
 }
 
-bool Monster::judge_dest(int& n) {
-	//Vec2 pos = this->getPosition();
-	//if ((destinationWaypoint.x - pos.x) * (destinationWaypoint.x - pos.x) + (destinationWaypoint.y - pos.y) * (destinationWaypoint.y - pos.y) <= 37)
-	//{
-	//	beginningWaypoint.x = map[n].x;
-	//	beginningWaypoint.y = map[n].y;
-	//	destinationWaypoint.x = map[n+1].x;
-	//	destinationWaypoint.y = map[n+1].y;
-	//	//auto b = Sprite::create("monster/2.png");
-	//	//this->addChild(b);
-	//	//this->setPosition(70, 485);
-	//	//for (int i = 0; i <= 4; i++) {
-	//	//	if (map[i].x == destinationWaypoint.x && map[i].y == destinationWaypoint.y) {
-	//	//		//auto b = Sprite::create("monster/2.png");
-	//	//		//this->addChild(b);
-	//	//		//this->setPosition(70, 485);
-	//	//		beginningWaypoint.x = map[i].x;
-	//	//		beginningWaypoint.y = map[i].y;
-	//	//		destinationWaypoint.x = map[i+1].x;
-	//	//		destinationWaypoint.y = map[i+1].y;
-	//	//		return true;
-	//	//	}
-	//	//}
-	//	return true;
-	//}
-	//else
+bool Monster::judge_dest() {
+	Vec2 pos = this->getPosition();
+	if ((destinationWaypoint.x - pos.x) * (destinationWaypoint.x - pos.x) + (destinationWaypoint.y - pos.y) * (destinationWaypoint.y - pos.y) <= 666)
+	{
+		waypoint++;
+		beginningWaypoint.x = destinationWaypoint.x;
+		beginningWaypoint.y = destinationWaypoint.y;
+		destinationWaypoint.x = map[waypoint].x;
+		destinationWaypoint.y = map[waypoint].y;
+		//if(waypoint >3)
+		//{
+		//	auto b = Sprite::create("monster/2.png");
+		//	this->addChild(b);
+		//	this->setPosition(70, 485);
+		//}
+		return true;
+	}
+	else
 		return false;
 }
 
 void Monster::walk() {
-	//Vec2 pos = this->getPosition();
-	//float path = abs(destinationWaypoint.x - beginningWaypoint.x) + abs(destinationWaypoint.y - beginningWaypoint.y);
-	//float x = (destinationWaypoint.x - beginningWaypoint.x) / path * _walkSpeed * 0.1f+pos.x;
-	//float y = (destinationWaypoint.y - beginningWaypoint.y) / path * _walkSpeed * 0.1f + pos.y;
-	//MoveTo* moveto = MoveTo::create(0.1f, Point(x, y));
-	//this->runAction(moveto);
+	Vec2 pos = this->getPosition();
+	float path = map[waypoint].path;
+	float x = _walkSpeed * 0.1f*(destinationWaypoint.x - beginningWaypoint.x) / path +pos.x;
+	float y = _walkSpeed * 0.1f * (destinationWaypoint.y - beginningWaypoint.y) /path + pos.y;
+	MoveTo* moveto = MoveTo::create(0.1f, Point(x, y));
+	this->runAction(moveto);
 }
 
 
@@ -124,6 +112,11 @@ bool Monster::isFreezed() {
 	if (_freeze == 1) {
 		_walkSpeed *= 0.5;
 		this->schedule(schedule_selector(Monster::unFreezed), 3);
+		auto sprite = Sprite::create("monster/5.png");   //创建进度框
+		sprite->setScaleX(0.03f); // 将精灵在x轴上的大小缩小到原来的50%  
+		sprite->setScaleY(0.03f); // 将精灵在y轴上的大小缩小到原来的50%
+		sprite->setPosition(35, 9); //设置框的位置
+		this->addChild(sprite);            //加到默认图层里面去
 		return true;
 	}
 	return false;
@@ -137,12 +130,27 @@ void Monster::unFreezed(float a) {
 bool Monster::isDie() {
 	if (_hp <= 0)
 	{
+		isalive = 0;
 		//精灵爆炸
 		auto texture = Director::getInstance()->getTextureCache()->addImage("monster/2.png");
 		// 设置新的纹理  
 		this->setTexture(texture);
-		this->stopAllActions();
-		this->schedule(schedule_selector(Monster::deletemonster), 0.05f);
+		//2.创建动画，设置间隔
+		Animation* animation = Animation::create();
+		animation->setDelayPerUnit(0.125 / 2);//动画共16帧，运行时间1秒
+		animation->setRestoreOriginalFrame(true);//动画执行完后返回第一帧
+		//3.加载精灵帧
+		Texture2D* texture1 = Director::getInstance()->getTextureCache()->addImage("monster/8.png");
+		for (int i = 0; i <= 1; i++)
+		{
+			for (int j = 0; j <= 1; j++)
+			{
+				animation->addSpriteFrameWithTexture(texture1, Rect(125 * j, 125 * i, 150, 125));
+			}
+		}
+		//4.运行动画
+		this->runAction(RepeatForever::create(Animate::create(animation)));
+		this->schedule(schedule_selector(Monster::deletemonster), 0.125);
 		return true;
 	}
 	else
