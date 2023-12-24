@@ -153,9 +153,12 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
   <ItemGroup>
     <ClCompile Include="..\Classes\ActionSprite.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
+    <ClCompile Include="..\Classes\BulletClasses\BottleTowerBullet.cpp" />
+    <ClCompile Include="..\Classes\BulletClasses\Bullet.cpp" />
     <ClCompile Include="..\Classes\Carrot.cpp" />
+    <ClCompile Include="..\Classes\GameData\GameManager.cpp" />
     <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
-    <ClCompile Include="..\Classes\My_monster.cpp" />
+    <ClCompile Include="..\Classes\Monster\My_monster.cpp" />
     <ClCompile Include="ChooseLevel.cpp" />
     <ClCompile Include="EnterScene.cpp" />
     <ClCompile Include="GameMap.cpp" />
@@ -165,9 +168,12 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
   <ItemGroup>
     <ClInclude Include="..\Classes\ActionSprite.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />
+    <ClInclude Include="..\Classes\BulletClasses\BottleTowerBullet.h" />
+    <ClInclude Include="..\Classes\BulletClasses\Bullet.h" />
     <ClInclude Include="..\Classes\Carrot.h" />
+    <ClInclude Include="..\Classes\GameData\GameManager.h" />
     <ClInclude Include="..\Classes\HelloWorldScene.h" />
-    <ClInclude Include="..\Classes\My_monster.h" />
+    <ClInclude Include="..\Classes\Monster\My_monster.h" />
     <ClInclude Include="..\Classes\Way.h" />
     <ClInclude Include="ChooseLevel.h" />
     <ClInclude Include="EnterScene.h" />

@@ -25,6 +25,18 @@
     <Filter Include="Monster">
       <UniqueIdentifier>{fa572db1-5bdc-41bd-96cc-e57277453744}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Bullet">
+      <UniqueIdentifier>{7074d182-62be-40cc-ba4d-6521ee159301}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Bullet\BaseBullet">
+      <UniqueIdentifier>{3fb0ada3-e893-4ff0-a578-85ffa93025c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Bullet\BottleTowerBullet">
+      <UniqueIdentifier>{f111ab5c-27ad-4afe-94dd-cb9cf9a33889}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameData">
+      <UniqueIdentifier>{03aab3e2-30fd-4f5e-a9a8-d320bcf03cbb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -48,14 +60,23 @@
     <ClCompile Include="..\Classes\ActionSprite.cpp">
       <Filter>Carrot</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\My_monster.cpp">
-      <Filter>Monster</Filter>
-    </ClCompile>
     <ClCompile Include="GameMap.cpp">
       <Filter>src\GameMap</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Carrot.cpp">
       <Filter>Carrot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GameData\GameManager.cpp">
+      <Filter>GameData</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Monster\My_monster.cpp">
+      <Filter>Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BulletClasses\Bullet.cpp">
+      <Filter>Bullet\BaseBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BulletClasses\BottleTowerBullet.cpp">
+      <Filter>Bullet\BottleTowerBullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -83,9 +104,6 @@
     <ClInclude Include="resource.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\My_monster.h">
-      <Filter>Monster</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\Way.h">
       <Filter>Monster</Filter>
     </ClInclude>
@@ -94,6 +112,18 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Carrot.h">
       <Filter>Carrot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameData\GameManager.h">
+      <Filter>GameData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Monster\My_monster.h">
+      <Filter>Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BulletClasses\Bullet.h">
+      <Filter>Bullet\BaseBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BulletClasses\BottleTowerBullet.h">
+      <Filter>Bullet\BottleTowerBullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

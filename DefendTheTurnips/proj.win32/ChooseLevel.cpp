@@ -76,7 +76,7 @@ void ChooseLevel::InitUI()
 	auto leftPanel = Sprite::create(leftPanelPinfo);
 	leftPanel->setAnchorPoint(Vec2(0, 1));
 	leftPanel->setPosition(0, Director::getInstance()->getVisibleSize().height);
-	leftPanel->setScale(0.7);
+	leftPanel->setScale(float(0.7));
 	layerUI->addChild(leftPanel);
 
 	//创建背景图精灵的子节点（三个按钮）
@@ -107,7 +107,7 @@ void ChooseLevel::InitUI()
 	//将对象层中的所有对象获取出来
 	auto objs = objectGroup->getObjects();
 	//遍历对象
-	for (int i = 0; i < objs.size(); i++)
+	for (unsigned int i = 0; i < objs.size(); i++)
 	{
 		//图片纹理
 		string texture = "ChooseLevel/stagepoint_adv.png";
