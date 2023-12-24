@@ -20,18 +20,24 @@ static __TYPE__* create() \
     } \
 }
 
-
 class Monster : public cocos2d::CCSprite
 {
 public:
     //精灵是否还活着
     bool isalive;
     virtual void update(float dt);
-    void initmonster();
+    void initmonster_type1();
+    void initmonster_type2();
+    void initmonster_type3();
     //是否受伤，子弹每次攻击时调用该函数
     void behurt(float a);
     //void behurt(int monster_blood);
 private:
+    Sprite* bloodbox;
+    Sprite* choice;
+    bool choosed;
+    //总血量
+    int hp_total;
     //生命值
     CC_SYNTHESIZE(float, _hp, HP);
     //行走速度
@@ -72,5 +78,9 @@ private:
     bool judge_dest();
     //删除当前怪物结点
     void deletemonster(float a);
+    //怪物是否被选中
+    void touched();
+    //选中后产生头上红点
+    void betouched();
     CREATE_FUNC(Monster);
 };
