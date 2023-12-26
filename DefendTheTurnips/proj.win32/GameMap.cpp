@@ -49,56 +49,27 @@ bool GameMap::init()
 	background->setScale(scaleX, scaleY);
 	this->addChild(background,-1);
 	
-	
-	//添加一个萝卜在终点处
+	/*auto BottleBulletSprite = GreenTowerBullet::create();
+	this->addChild(BottleBulletSprite, 0);
+	BottleBulletSprite->init();
+	BottleBulletSprite->shoot();*/
 	auto CarrotSprite = Carrot::create();
 	CarrotSprite->setLocation(Vec2(1000, 485));
-	this->addChild(CarrotSprite, 1000);
-	//萝卜血量状态的更新
-/*	
-	// 创建一个BoundingBox对象来表示矩形区域*/
-	Rect BoundingBox = CarrotSprite->getBoundingBox();
-	/*if (CarrotSprite->GameOver())
-		timerThread.join();*/
-	// 创建一个触摸事件监听器
-	auto listener = EventListenerTouchOneByOne::create();
-	listener->setSwallowTouches(true); // 设置吞噬触摸事件，防止事件向下传递
-
-	// 在触摸开始时判断触摸点是否在矩形区域内
-	listener->onTouchBegan = [&](Touch* touch, Event* event) {
-		// 获取触摸点的位置
-		auto touchPosition = touch->getLocation();
-
-		// 判断触摸点是否在矩形区域内
-		if (BoundingBox.containsPoint(touchPosition)) {
-			// 在区域内进行了点击操作
-			// 在这里处理相应的逻辑
-			CarrotSprite->isCarrotClicked = true;
-			schedule(schedule_selector(Carrot::updateCarrot), 1);
-			return true; // 返回true表示吞噬触摸事件
-		}
-		return false; // 返回false表示不吞噬触摸事件
-	};
-
-	// 添加触摸事件监听器到事件分发器
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, CarrotSprite);
-
-
-	//在地图起点处放置一个怪物
-	auto monsterSprite = Monster::create();
-	this->addChild(monsterSprite, 0);
-	schedule(schedule_selector(GameMap::init_m), 1);
-	monsterSprite->initmonster();
-//	schedule(schedule_selector(Carrot::updateCarrot), 1);
-	unschedule(schedule_selector(Carrot::updateCarrot));
-
+	this->addChild(CarrotSprite, 100);
+	CarrotSprite->initCarrot();
+	CarrotSprite->schedule(schedule_selector(Carrot::update), 2.0f);
+	//schedule(schedule_selector(GameMap::init_m), 1);
 	return true;
 }
 
 void GameMap::init_m(float delta) {
-	auto monsterSprite = Monster::create();
+	
+	//CarrotSprite->schedule(schedule_selector(Carrot::update), 0.5f);
+
+	/*auto monsterSprite = Monster::create();
 	this->addChild(monsterSprite, 0);
-	monsterSprite->initmonster();
+	monsterSprite->initmonster_type3();
+	monsterSprite->schedule(schedule_selector(Monster::update), 0.05f);*/
 }
 bool InitUI()
 {

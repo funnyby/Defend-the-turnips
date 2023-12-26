@@ -57,14 +57,8 @@
     <ClCompile Include="EnterScene.cpp">
       <Filter>src\EnterScene</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\ActionSprite.cpp">
-      <Filter>Carrot</Filter>
-    </ClCompile>
     <ClCompile Include="GameMap.cpp">
       <Filter>src\GameMap</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Carrot.cpp">
-      <Filter>Carrot</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\GameData\GameManager.cpp">
       <Filter>GameData</Filter>
@@ -77,6 +71,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\BulletClasses\BottleTowerBullet.cpp">
       <Filter>Bullet\BottleTowerBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Carrot.cpp">
+      <Filter>Carrot</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -98,9 +95,6 @@
     <ClInclude Include="EnterScene.h">
       <Filter>src\EnterScene</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\ActionSprite.h">
-      <Filter>Carrot</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -109,9 +103,6 @@
     </ClInclude>
     <ClInclude Include="GameMap.h">
       <Filter>src\GameMap</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Carrot.h">
-      <Filter>Carrot</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\GameData\GameManager.h">
       <Filter>GameData</Filter>
@@ -124,6 +115,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\BulletClasses\BottleTowerBullet.h">
       <Filter>Bullet\BottleTowerBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Carrot.h">
+      <Filter>Carrot</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

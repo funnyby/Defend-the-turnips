@@ -10,7 +10,10 @@ public:
     CREATE_FUNC(GreenTowerBullet);
     void shoot();
     void removeBullet();
-
+    virtual void upgradeAttackDamage(int increase) {
+        attackDamage += increase;
+        bulletSprite->setTexture("Bullets/GreenBottleBullets/PBottle" + StringUtils::toString(attackDamage + 10) + ".png");
+    }
 private:
     Monster* monster;
 };

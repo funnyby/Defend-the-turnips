@@ -15,9 +15,6 @@ public:
 
     virtual bool init();
 
-    // 设置子弹的飞行动画
-    virtual void setBulletAnimation(Animate* animation);
-
     // 子弹攻击目标
     virtual void attack(Node* target);
 

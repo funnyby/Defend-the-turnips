@@ -7,8 +7,7 @@ bool GreenTowerBullet::init()
 	{
 		return false;
 	}
-	bulletSprite = Sprite::createWithSpriteFrameName("arrow.png");
-	addChild(bulletSprite);
+	bulletSprite->initWithFile("Bullets/GreenBottleBullets/PBottle11.png");//³õÊ¼»¯
 	return true;
 }
 void GreenTowerBullet::shoot() {
@@ -26,7 +25,7 @@ void GreenTowerBullet::removeBullet() {
 
 	auto monsterVector = instance->monsterVector;
 
-/*	for (int j = 0; j < monsterVector.size(); j++)
+	/*for (int j = 0; j < monsterVector.size(); j++)
 	{
 		auto monster = monsterVector.at(j);
 		auto monsterRect = monster->baseSprite->getBoundingBox();
@@ -50,16 +49,15 @@ void GreenTowerBullet::removeBullet() {
 			}
 			break;
 		}
-	}*/
+	}
 	if (isMissed) {
 
 		bulletSprite->setSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("decal_arrow.png"));
-
 		bulletSprite->runAction(Sequence::create(FadeOut::create(1.0f)
 			, CallFuncN::create(CC_CALLBACK_0(Bullet::removeFromParent, this))
 			, NULL));
 	}
 	else {
 		this->removeFromParent();
-	}
+	}*/
 }

@@ -4,6 +4,8 @@
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
 #include "../Classes/Monster/My_monster.h"
+#include "../Classes/BulletClasses/Bullet.h"
+#include "../Classes/BulletClasses/BottleTowerBullet.h"
 #include "Carrot.h"
 //#include "Carrots.h"
 class MainScene :public cocos2d::Scene

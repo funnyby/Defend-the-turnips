@@ -5,7 +5,7 @@ bool Bullet:: init() {
         return false;
     }
     // 初始化其他成员变量
-    attackDamage = 0;
+    attackDamage = 1;
     attackRange = 0;
     bulletType = BulletType::Normal;
     // 初始化子弹精灵
