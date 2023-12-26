@@ -2,6 +2,7 @@
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
 #include"EnterScene.h"
+//#include"GameMap.h"
 #include "Way.h"
 #define CREATE_FUNC(__TYPE__) \
 static __TYPE__* create() \
@@ -30,14 +31,15 @@ public:
     void initmonster_type2();
     void initmonster_type3();
     //是否受伤，子弹每次攻击时调用该函数
-    void behurt(float a);
-    //void behurt(int monster_blood);
+    void behurt(int monster_blood, int type);
 private:
     Sprite* bloodbox;
     Sprite* choice;
+    Sprite* behit;
     bool choosed;
     //总血量
     int hp_total;
+    int freeze_total;
     //生命值
     CC_SYNTHESIZE(float, _hp, HP);
     //行走速度
@@ -82,5 +84,10 @@ private:
     void touched();
     //选中后产生头上红点
     void betouched();
+    void deletebehit(float a);
     CREATE_FUNC(Monster);
 };
+
+extern cocos2d::Vector<Monster*> monsterContainer;
+extern int monsternum;
+extern int die_monsternum;
