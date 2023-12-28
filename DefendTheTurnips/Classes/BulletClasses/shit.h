@@ -1,35 +1,27 @@
-#ifndef __BOTTLE_TOWER_BULLET_H_
-#define __BOTTLE_TOWER_BULLET_H_
+#ifndef __SHIT_H_
+#define __SHIT_H_
 #include "..\Classes\BulletClasses\Bullet.h"
 #include "..\Classes\Monster\My_monster.h"
 #include "..\Classes\GameData\GameManager.h"
 #include "proj.win32/GameMap.h"
 using namespace cocos2d;
-class GreenTowerBullet : public Bullet {
+class shitBullet : public Bullet {
 public:
-    virtual bool initGreenBullet(int grade);
-
-    CREATE_FUNC(GreenTowerBullet);
-    
+    virtual bool initshitBullet();
+    CREATE_FUNC(shitBullet);
     void shoot();
-    
-
     void removeBullet();
-    
     virtual void upgradeAttackDamage(int increase) {
         attackDamage += increase;
-        speed += increase*3;
         bulletSprite->setTexture("Bullets/GreenBottleBullets/PBottle" + StringUtils::toString(attackDamage + 10) + ".png");
-
     }
     virtual void inputBulletAction(Point towerLoc, Point MonsterLoc);
-    void rotateSpriteToDirection();
+    void rotateSpriteToDirection(Point src, Point dst);
     cocos2d::Vector<Monster*> monsterContainer;
 private:
     int speed;
+    int freeze = attackDamage - 4;//
     MoveTo* shootTo;
-    MoveBy* shootBy;
-    Point src, dst;
-    int myGrade;
+
 };
-#endif//__BOTTLE_TOWER_BULLET_H_
+#endif//__SHIT_H_

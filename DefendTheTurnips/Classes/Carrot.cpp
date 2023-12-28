@@ -124,7 +124,6 @@ void Carrot::createBloodBox() {
 		CCLOG("Failed to load carrot image");
 		exit(1);
 	}
-//	CarrotBloodBox->initWithFile("Carrot/CarrotBlood/carrot_hp_bg.png");	
 	CarrotBloodBox->setScale(0.8f);//set sprite 0.8f size in x and y
 	CarrotBloodBox->setPosition(Vec2(85, 120));//height higher 50 than carrot
 	this->addChild(CarrotBloodBox,20);            //add to picture layer 

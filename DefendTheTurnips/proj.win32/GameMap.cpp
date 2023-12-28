@@ -49,27 +49,38 @@ bool GameMap::init()
 	background->setScale(scaleX, scaleY);
 	this->addChild(background,-1);
 	
-	/*auto BottleBulletSprite = GreenTowerBullet::create();
-	this->addChild(BottleBulletSprite, 0);
-	BottleBulletSprite->init();
-	BottleBulletSprite->shoot();*/
+
 	auto CarrotSprite = Carrot::create();
 	CarrotSprite->setLocation(Vec2(1000, 485));
 	this->addChild(CarrotSprite, 100);
 	CarrotSprite->initCarrot();
 	CarrotSprite->schedule(schedule_selector(Carrot::update), 2.0f);
+	
+	/*auto monsterSprite = Monster::create();
+	this->addChild(monsterSprite, 0);
+	monsterSprite->initmonster_type3();*/
+	
+	auto BulletSprite = GreenTowerBullet::create();
+	this->addChild(BulletSprite, 3);
+	BulletSprite->initGreenBullet(3);
+
+	//BulletSprite->monsterContainer.pushBack(monsterSprite);
+	
+	BulletSprite->inputBulletAction(Vec2(1000, 300), Vec2(335, 300));//src\dst
+    BulletSprite->shoot();
+	//BulletSprite->upgradeAttackDamage(10);
+	
+//	BulletSprite->inputBulletAction(Vec2(1000, 300), Vec2(335, 300));//src\dst
+	//BulletSprite->shoot();
 	//schedule(schedule_selector(GameMap::init_m), 1);
 	return true;
 }
 
 void GameMap::init_m(float delta) {
-	
-	//CarrotSprite->schedule(schedule_selector(Carrot::update), 0.5f);
-
-	/*auto monsterSprite = Monster::create();
+	auto monsterSprite = Monster::create();
 	this->addChild(monsterSprite, 0);
 	monsterSprite->initmonster_type3();
-	monsterSprite->schedule(schedule_selector(Monster::update), 0.05f);*/
+	monsterSprite->schedule(schedule_selector(Monster::update), 0.05f);
 }
 bool InitUI()
 {

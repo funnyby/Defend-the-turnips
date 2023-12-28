@@ -4,9 +4,6 @@
     <Filter Include="win32">
       <UniqueIdentifier>{84a8ebd7-7cf0-47f6-b75e-d441df67da40}</UniqueIdentifier>
     </Filter>
-    <Filter Include="resource">
-      <UniqueIdentifier>{715254bc-d70b-4ec5-bf29-467dd3ace079}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src">
       <UniqueIdentifier>{bb6c862e-70e9-49d9-81b7-3829a6f50471}</UniqueIdentifier>
     </Filter>
@@ -36,6 +33,15 @@
     </Filter>
     <Filter Include="GameData">
       <UniqueIdentifier>{03aab3e2-30fd-4f5e-a9a8-d320bcf03cbb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource">
+      <UniqueIdentifier>{715254bc-d70b-4ec5-bf29-467dd3ace079}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Bullet\SunFlower">
+      <UniqueIdentifier>{c41bcb31-c153-4ddd-95f2-aa5bc84a8db0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Bullet\Shit">
+      <UniqueIdentifier>{b6ef702b-2567-448c-8870-6d879917959b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -74,6 +80,12 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Carrot.cpp">
       <Filter>Carrot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BulletClasses\SunFlowerBullet.cpp">
+      <Filter>Bullet\SunFlower</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BulletClasses\shit.cpp">
+      <Filter>Bullet\Shit</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -118,6 +130,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Carrot.h">
       <Filter>Carrot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BulletClasses\SunFlowerBullet.h">
+      <Filter>Bullet\SunFlower</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BulletClasses\shit.h">
+      <Filter>Bullet\Shit</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
