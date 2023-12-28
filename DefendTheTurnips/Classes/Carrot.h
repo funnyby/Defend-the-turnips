@@ -38,7 +38,7 @@ public:
     void setLocation(Point mapDest);//set carrot location according to different map
     
     void runTwistAnimation();
-    
+    void set_beBiten(bool set) { _beBiten = set; }
     void beTouched();   //when touched twist
 
     virtual void update(float dt);//update carrot state
@@ -50,7 +50,8 @@ private:
     Sprite* BloodNum;   //blood number
     bool _beBiten;  //true==_biten
     bool isAlive;
-    float bitenDamage;//set by monster grade
+    float bitenDamage=1.0f;//set by monster grade
+
 
     CC_SYNTHESIZE(float, _hp, HP);    //to create a variable"_hp"and functions: setHP\ getHP
 
@@ -66,4 +67,5 @@ private:
 
 };
 
+extern Vector<Carrot*> myCarrot;
 #endif // __CARROT_H__

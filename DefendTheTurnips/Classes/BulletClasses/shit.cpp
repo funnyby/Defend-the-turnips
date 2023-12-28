@@ -64,8 +64,8 @@ void shitBullet::removeBullet() {
 		this->getPositionY() + this->getParent()->getPositionY() - this->getContentSize().height / 2,
 		this->bulletSprite->getContentSize().width,
 		this->bulletSprite->getContentSize().height);
-	//auto monsterVector = instance->monsterContainer;
-/*	for (int j = 0; j < monsterContainer.size(); j++) {
+	
+	for (int j = 0; j < monsterContainer.size(); j++) {
 		auto monster = monsterContainer.at(j);
 		auto monsterRect = monster->getBoundingBox();
 
@@ -78,12 +78,11 @@ void shitBullet::removeBullet() {
 				currHp = 0;
 			}
 			monster->setHP(currHp);
-			monster->setFreeze(3);//待改动
+			monster->setFreeze(myGrade);//待改动
 			monster->update(1);//?
 			isMissed = false;
 		}
 	}
-	*/
 	if (isMissed) {
 		//渐渐消失
 		bulletSprite->runAction(Sequence::create(FadeOut::create(0.3f)

@@ -2,8 +2,6 @@
 #define __SUN_FLOWER_BULLET_H_
 #include "..\Classes\BulletClasses\Bullet.h"
 #include "..\Classes\Monster\My_monster.h"
-#include "..\Classes\GameData\GameManager.h"
-#include "proj.win32/GameMap.h"
 using namespace cocos2d;
 class SunFlowerBullet : public Bullet {
 public:

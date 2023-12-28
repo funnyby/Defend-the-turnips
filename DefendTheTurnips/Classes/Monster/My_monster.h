@@ -1,7 +1,8 @@
 #pragma once
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
-#include"EnterScene.h"
+#include "EnterScene.h"
+#include "Carrot.h"
 //#include"GameMap.h"
 #include "Way.h"
 #define CREATE_FUNC(__TYPE__) \

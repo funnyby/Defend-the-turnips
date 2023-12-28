@@ -164,14 +164,23 @@ void Monster::BiteTurnips() {
 	}
 }
 
+
 bool Monster::judge_dest() {
 	Vec2 pos = this->getPosition();
 	if ((destinationWaypoint.x - pos.x) * (destinationWaypoint.x - pos.x) + (destinationWaypoint.y - pos.y) * (destinationWaypoint.y - pos.y) <= 666)
 	{
 		waypoint++;
 		if (waypoint == 6)
-
-			beginningWaypoint.x = destinationWaypoint.x;
+		{
+			for (auto Carrot : myCarrot) {
+				Carrot->set_beBiten(true);
+			}
+			//myCarrot[0]->set_beBiten(true);
+			this->_hp = 0;
+			this->isDie();
+			return true;
+		}
+		beginningWaypoint.x = destinationWaypoint.x;
 		beginningWaypoint.y = destinationWaypoint.y;
 		destinationWaypoint.x = map[waypoint].x;
 		destinationWaypoint.y = map[waypoint].y;
@@ -367,6 +376,3 @@ void Monster::deletebehit(float a) {
 	behit->setVisible(false);
 }
 
-void Monster::befreezed() {
-	_freeze = 1;
-}

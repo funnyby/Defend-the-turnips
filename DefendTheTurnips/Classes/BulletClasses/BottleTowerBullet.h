@@ -15,7 +15,6 @@ public:
     
     virtual void inputBulletAction(Point towerLoc, Point MonsterLoc);
     void rotateSpriteToDirection();
-    cocos2d::Vector<Monster*> monsterContainer;
 private:
     int speed;
 

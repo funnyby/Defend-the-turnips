@@ -58,8 +58,8 @@ bool GameMap::init()
 	CarrotSprite->setLocation(Vec2(1000, 485));
 	this->addChild(CarrotSprite, 100);
 	CarrotSprite->initCarrot();
-	CarrotSprite->schedule(schedule_selector(Carrot::update), 2.0f);
-	
+	CarrotSprite->schedule(schedule_selector(Carrot::update), 0.4f);
+
 	this->scheduleOnce(schedule_selector(GameMap::bo), 1);
 	
 	/*auto BulletSprite1 = GreenTowerBullet::create();

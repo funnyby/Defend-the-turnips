@@ -1,12 +1,15 @@
 #include "..\Classes\Carrot.h"
+USING_NS_CC;
+Vector<Carrot*> myCarrot;
 /*-----------------public---------------------*/
 bool Carrot::initCarrot() {
+	myCarrot.pushBack(this);
 	if (!initWithFile("Carrot/CarrotStay/Carrot_1.png")) {
 		CCLOG("Failed to load carrot image");
 		return false;
 	}
 	this->setHP(10.0);
-	bitenDamage = 0;
+	bitenDamage = 1;
 	_beBiten = false;
 	this->createBloodBox();
 	this->changeBloodBox();
@@ -90,7 +93,7 @@ void Carrot::beBiten() {
 	if (_beBiten == true) {
 		_hp-=bitenDamage;
 		_beBiten = false;
-		bitenDamage = 0;
+		bitenDamage = 1;
 		this->changeBloodBox();//更换血条数字
 		this->changeCarrotAppearance();//显示新的hp对应的萝卜
 	}

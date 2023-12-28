@@ -67,8 +67,8 @@ void GreenTowerBullet::removeBullet() {
 		this->getPositionY() + this->getParent()->getPositionY() - this->getContentSize().height / 2,
 		this->bulletSprite->getContentSize().width,
 		this->bulletSprite->getContentSize().height);
-	//auto monsterVector = instance->monsterContainer;
-/*for (int j = 0; j < monsterContainer.size(); j++) {
+
+	for (int j = 0; j < monsterContainer.size(); j++) {
 		auto monster = monsterContainer.at(j);
 		auto monsterRect = monster->getBoundingBox();
 
@@ -84,7 +84,7 @@ void GreenTowerBullet::removeBullet() {
 			monster->update(1);//?
 			isMissed = false;
 		}
-	}*/
+	}
 
 	if (isMissed) {
 		//½¥½¥ÏûÊ§
