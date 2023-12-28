@@ -7,6 +7,7 @@
 #include "../Classes/BulletClasses/Bullet.h"
 #include "../Classes/BulletClasses/BottleTowerBullet.h"
 #include "../Classes/BulletClasses/shit.h"
+#include "../Classes/BulletClasses/SunFlowerBullet.h"
 #include "Carrot.h"
 //#include "Carrots.h"
 class MainScene :public cocos2d::Scene

@@ -14,11 +14,13 @@ public:
     void removeBullet();
     
     virtual void inputBulletAction(Point towerLoc);
+
+    void spreadSpriteToScope();
    // cocos2d::Vector<Monster*> monsterContainer;
 private:
     int speed;
 
-    MoveTo* spreadTo;
+    ScaleTo* spreadTo;
 
     Point src;
 

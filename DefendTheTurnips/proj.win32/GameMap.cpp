@@ -3,7 +3,7 @@
 #include "EnterScene.h"
 #include "GameMap.h"
 #include "Way.h"
-#include<vector>
+#include <vector>
 #include <iostream>
 #include <thread>
 #include <chrono>
@@ -62,14 +62,22 @@ bool GameMap::init()
 
 	this->scheduleOnce(schedule_selector(GameMap::bo), 1);
 	
-	/*auto BulletSprite1 = GreenTowerBullet::create();
+	auto BulletSprite1 = GreenTowerBullet::create();
 	this->addChild(BulletSprite1, 3);
-	BulletSprite1->initGreenBullet(1);
+	BulletSprite1->initGreenBullet(2);//grade
 
-	BulletSprite->monsterContainer.pushBack(monsterSprite);
-	BulletSprite1->inputBulletAction(Vec2(1000, 300), Vec2(335, 300));//src\dst
+	//BulletSprite1->monsterContainer.pushBack(monsterSprite);
+	BulletSprite1->inputBulletAction(Vec2(1000, 400), Vec2(335, 300));//src\dst
     BulletSprite1->shoot();
-    */
+
+	auto BulletSprite2 = SunFlowerBullet::create();
+	this->addChild(BulletSprite2, 5);
+	BulletSprite2->initSunBullet(2);//grade
+
+	//BulletSprite1->monsterContainer.pushBack(monsterSprite);
+	BulletSprite2->inputBulletAction(Vec2(335, 500));//src\dst
+	BulletSprite2->spread();
+    
 	return true;
 }
 
@@ -111,6 +119,7 @@ void GameMap::bo(float a) {
 			//第一波：五个便便怪
 			schedule(schedule_selector(GameMap::init_m3), 1, 4, 1);
 			break;
+				
 		case 2:
 			//第二波：五个黑煤球
 			schedule(schedule_selector(GameMap::init_m1), 1, 4, 1);

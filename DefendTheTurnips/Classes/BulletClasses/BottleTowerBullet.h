@@ -14,6 +14,7 @@ public:
     void removeBullet();
     
     virtual void inputBulletAction(Point towerLoc, Point MonsterLoc);
+   
     void rotateSpriteToDirection();
 private:
     int speed;
