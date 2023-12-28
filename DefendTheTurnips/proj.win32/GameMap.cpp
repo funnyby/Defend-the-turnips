@@ -50,40 +50,103 @@ bool GameMap::init()
 	this->addChild(background,-1);
 	
 
+	boshu = 1;
+	monsternum = 0;
+	die_monsternum = 0;
+
 	auto CarrotSprite = Carrot::create();
 	CarrotSprite->setLocation(Vec2(1000, 485));
 	this->addChild(CarrotSprite, 100);
 	CarrotSprite->initCarrot();
 	CarrotSprite->schedule(schedule_selector(Carrot::update), 2.0f);
 	
-	/*auto monsterSprite = Monster::create();
-	this->addChild(monsterSprite, 0);
-	monsterSprite->initmonster_type3();*/
+	this->scheduleOnce(schedule_selector(GameMap::bo), 1);
 	
-	auto BulletSprite = GreenTowerBullet::create();
-	this->addChild(BulletSprite, 3);
-	BulletSprite->initGreenBullet(3);
+	/*auto BulletSprite1 = GreenTowerBullet::create();
+	this->addChild(BulletSprite1, 3);
+	BulletSprite1->initGreenBullet(1);
 
-	//BulletSprite->monsterContainer.pushBack(monsterSprite);
-	
-	BulletSprite->inputBulletAction(Vec2(1000, 300), Vec2(335, 300));//src\dst
-    BulletSprite->shoot();
-	//BulletSprite->upgradeAttackDamage(10);
-	
-//	BulletSprite->inputBulletAction(Vec2(1000, 300), Vec2(335, 300));//src\dst
-	//BulletSprite->shoot();
-	//schedule(schedule_selector(GameMap::init_m), 1);
+	BulletSprite->monsterContainer.pushBack(monsterSprite);
+	BulletSprite1->inputBulletAction(Vec2(1000, 300), Vec2(335, 300));//src\dst
+    BulletSprite1->shoot();
+    */
 	return true;
 }
 
-void GameMap::init_m(float delta) {
+void GameMap::init_m1(float delta) {
 	auto monsterSprite = Monster::create();
-	this->addChild(monsterSprite, 0);
+	this->addChild(monsterSprite, 100 - monsternum);
+	monsterSprite->initmonster_type1();
+	monsterSprite->schedule(schedule_selector(Monster::update), 0.05f);
+	monsternum++;
+}
+
+void GameMap::init_m2(float delta) {
+	auto monsterSprite = Monster::create();
+	this->addChild(monsterSprite, 100 - monsternum);
+	monsterSprite->initmonster_type2();
+	monsterSprite->schedule(schedule_selector(Monster::update), 0.05f);
+	monsternum++;
+}
+
+void GameMap::init_m3(float delta) {
+	monsternum++;
+	auto monsterSprite = Monster::create();
+	this->addChild(monsterSprite, 100 - monsternum);
 	monsterSprite->initmonster_type3();
 	monsterSprite->schedule(schedule_selector(Monster::update), 0.05f);
 }
+
 bool InitUI()
 {
 	
 	return true;
+}
+
+void GameMap::bo(float a) {
+
+	switch (boshu)
+	{
+		case 1:
+			//第一波：五个便便怪
+			schedule(schedule_selector(GameMap::init_m3), 1, 4, 1);
+			break;
+		case 2:
+			//第二波：五个黑煤球
+			schedule(schedule_selector(GameMap::init_m1), 1, 4, 1);
+			break;
+		case 3:
+			//第三波：五个小蝙蝠
+			schedule(schedule_selector(GameMap::init_m2), 1, 4, 1);
+			break;
+		case 4:
+			//第四波：五个便便怪
+			schedule(schedule_selector(GameMap::init_m3), 1, 4, 1);
+			break;
+		case 5:
+			schedule(schedule_selector(GameMap::init_m3), 1, 4, 1);
+			break;
+		case 6:
+			//第五波：各五个
+			schedule(schedule_selector(GameMap::init_m2), 1, 4, 1);
+			break;
+		case 7:
+			schedule(schedule_selector(GameMap::init_m1), 1, 4, 1);
+			break;
+	}
+	boshu++;
+	if (boshu < 6)
+		this->schedule(schedule_selector(GameMap::next_bo), 3);
+	else
+	{
+		this->scheduleOnce(schedule_selector(GameMap::bo), 5);
+	}
+}
+
+void GameMap::next_bo(float a) {
+	if (die_monsternum == monsternum)
+	{
+		this->unschedule(schedule_selector(GameMap::next_bo));
+		this->GameMap::bo(0.1f);
+	}
 }

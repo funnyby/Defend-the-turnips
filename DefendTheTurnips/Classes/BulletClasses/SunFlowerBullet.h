@@ -7,21 +7,23 @@
 using namespace cocos2d;
 class SunFlowerBullet : public Bullet {
 public:
-    virtual bool initSunBullet();
+    virtual bool initSunBullet(int grade);
+
     CREATE_FUNC(SunFlowerBullet);
+    
     void spread();
+    
     void removeBullet();
-    virtual void upgradeAttackDamage(int increase) {
-        attackDamage += increase;
-        bulletSprite->setTexture("Bullets/GreenBottleBullets/PBottle" + StringUtils::toString(attackDamage + 10) + ".png");
-    }
-    //GameMap* getMap(GameMap* nowMap) { return nowMap;}
-    virtual void inputBulletAction(Point towerLoc, Point MonsterLoc);
-    //void rotateSpriteToDirection(Point src, Point dst);
+    
+    virtual void inputBulletAction(Point towerLoc);
    // cocos2d::Vector<Monster*> monsterContainer;
 private:
     int speed;
+
     MoveTo* spreadTo;
 
+    Point src;
+
+    int myGrade;
 };
 #endif//__SUN_FLOWER_BULLET_H_

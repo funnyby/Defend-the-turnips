@@ -6,6 +6,7 @@
 #include "../Classes/Monster/My_monster.h"
 #include "../Classes/BulletClasses/Bullet.h"
 #include "../Classes/BulletClasses/BottleTowerBullet.h"
+#include "../Classes/BulletClasses/shit.h"
 #include "Carrot.h"
 //#include "Carrots.h"
 class MainScene :public cocos2d::Scene

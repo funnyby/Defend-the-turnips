@@ -5,12 +5,23 @@ using namespace cocos2d::ui;
 
 bool choose_a_object = 0;
 int blood;
+
+int monsternum;
+int die_monsternum;
+
 cocos2d::Vector<Monster*> monsterContainer;
 
 void Monster::initmonster_type1() {
 	//在地图起点处放置一个怪物
 	monsterContainer.pushBack(this);
 	initWithFile("monster/13.png");
+
+
+
+	behit = Sprite::create();
+	behit->setPosition(60, 24); //设置框的位置
+	behit->setVisible(false); // 设置为可见  
+	this->addChild(behit);            //加到默认图层里面去
 
 	freeze_total = 88;
 	_walkSpeed = 88;
@@ -131,30 +142,26 @@ void Monster::initmonster_type3() {
 }
 
 void Monster::update(float dt) {
-	_hp -= 1;
 	this->isDie();
 	this->isFreezed();
 	this->scheduleBlood();
 	this->walk();
 	this->judge_dest();
 	this->touched();
+	this->BiteTurnips();
 	if (!this->isalive)
 		this->unschedule(schedule_selector(Monster::update));
 }
 
-//萝卜掉血
-void loseblood() {
-	blood--;
-}
-
 void Monster::BiteTurnips() {
-	//double time = 0;
-	//for (int i = 1; i <= 5; i++) {
-	//	time += map[1].path * 0.01;
-	//}
-	//auto position = this->getPosition();
-	//if (position.x == map[5].x && position.y == map[5].y)
-	//	loseblood();
+	Vec2 location;
+	location.x = map[6].x - 10;
+	location.y = map[6].y;
+	if (this->getBoundingBox().containsPoint(location)) {
+		_hp = -6;
+		this->isDie();
+		//调用萝卜被咬的函数
+	}
 }
 
 bool Monster::judge_dest() {
@@ -162,16 +169,12 @@ bool Monster::judge_dest() {
 	if ((destinationWaypoint.x - pos.x) * (destinationWaypoint.x - pos.x) + (destinationWaypoint.y - pos.y) * (destinationWaypoint.y - pos.y) <= 666)
 	{
 		waypoint++;
-		beginningWaypoint.x = destinationWaypoint.x;
+		if (waypoint == 6)
+
+			beginningWaypoint.x = destinationWaypoint.x;
 		beginningWaypoint.y = destinationWaypoint.y;
 		destinationWaypoint.x = map[waypoint].x;
 		destinationWaypoint.y = map[waypoint].y;
-		//if(waypoint >3)
-		//{
-		//	auto b = Sprite::create("monster/2.png");
-		//	this->addChild(b);
-		//	this->setPosition(70, 485);
-		//}
 		return true;
 	}
 	else
@@ -212,7 +215,7 @@ void Monster::scheduleBlood() {
 }
 
 void Monster::betouched() {
-	if (this->choosed == 1)
+	if (this->choosed == 1 || !this->isalive)
 		return;
 	choice = Sprite::create("monster/16.png");   //创建进度框
 	this->addChild(choice, 10000);            //加到默认图层里面去
@@ -231,8 +234,6 @@ void Monster::betouched() {
 }
 
 void Monster::touched() {
-	if (!this->isalive)
-		return;
 	// 添加鼠标点击事件监听器  
 	auto listener = EventListenerMouse::create();
 	this->setTag(_spriteIndex);
@@ -265,7 +266,11 @@ void Monster::touched() {
 		}
 	};
 	Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
-
+	if (!this->isalive)
+	{
+		_eventDispatcher->removeEventListener(listener);
+		return;
+	}
 }
 
 
@@ -293,8 +298,8 @@ bool Monster::isDie() {
 	{
 		if (this->choosed == 1 && this->choice != nullptr)
 		{
-			//getActionManager()->removeAllActionsFromTarget(choice);
-			//choice->removeFromParent();
+			getActionManager()->removeAllActionsFromTarget(choice);
+			choice->removeFromParent();
 		}
 		bloodbox->removeFromParent();
 		getActionManager()->removeAllActionsFromTarget(this);
@@ -323,23 +328,45 @@ bool Monster::isDie() {
 		//4.运行动画
 		this->runAction(RepeatForever::create(Animate::create(animation)));
 		this->schedule(schedule_selector(Monster::deletemonster), 0.4);
+		die_monsternum++;
 		return true;
 	}
 	else
 		return false;
 }
 
-void Monster::behurt(float a) {
-	_hp = 0;
-	if (this->isDie()) {
-		//删除该精灵结点，怎么写待定
-	}
-}
 
 void Monster::deletemonster(float a) {
 	this->removeFromParent();
 }
 
-//void Monster::behurt(int monster_blood) {
-//	_hp -= monster_blood;
-//}
+void Monster::behurt(int monster_blood, int type) {
+	_hp -= monster_blood;
+	behit->setVisible(true); // 设置为可见  
+	if (type == 1)
+	{
+		auto texture = Director::getInstance()->getTextureCache()->addImage("monster/behit1.png");
+		// 设置新的纹理  
+		behit->setTexture(texture);
+		//2.创建动画，设置间隔
+		Animation* animation = Animation::create();
+		animation->setDelayPerUnit(0.2 / 2);//动画共16帧，运行时间1秒
+		animation->setRestoreOriginalFrame(true);//动画执行完后返回第一帧
+		//3.加载精灵帧
+		Texture2D* texture1 = Director::getInstance()->getTextureCache()->addImage("monster/behit1.png");
+		animation->addSpriteFrameWithTexture(texture1, Rect(0, 0, 100, 100));
+		Texture2D* texture2 = Director::getInstance()->getTextureCache()->addImage("monster/7.png");
+		animation->addSpriteFrameWithTexture(texture2, Rect(0, 0, 100, 100));
+		//4.运行动画
+		behit->runAction(RepeatForever::create(Animate::create(animation)));
+	}
+	schedule(schedule_selector(Monster::deletebehit), 0.4);
+}
+
+void Monster::deletebehit(float a) {
+	behit->setVisible(false);
+}
+
+void Monster::befreezed() {
+	_freeze = 1;
+}

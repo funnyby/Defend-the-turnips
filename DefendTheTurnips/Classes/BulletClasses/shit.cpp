@@ -1,43 +1,59 @@
 #include "..\Classes\BulletClasses\shit.h"
-#include "..\Classes\GameData\GameManager.h"
 #include "..\Classes\Monster\My_monster.h"
 
-bool shitBullet::initshitBullet()
+bool shitBullet::initshitBullet(int grade)
 {
 	if (!Bullet::init())
 	{
 		return false;
 	}
-	speed = 10;
-	attackDamage = 4;
-	bulletSprite->initWithFile("Bullets/GreenBottleBullets/PBottle11.png");//初始化
-	bulletSprite->setPosition(Vec2(650, 300));
-	//this->rotateSpriteToDirection(Vec2(650, 300), Vec2(1000, 485));
-	this->inputBulletAction(Vec2(650, 300), Vec2(650, 500));
-	this->runAction(Sequence::create(shootTo, FadeOut::create(0.2f)
-		, CallFuncN::create(CC_CALLBACK_0(Bullet::removeFromParent, this)), NULL));
+	myGrade = grade;
+	speed = (grade - 1) * 200 + 1000;
+	attackDamage = 10 + (grade - 1) * 2;
+	_freeze = -10*grade;
+
+	bulletSprite->initWithFile("Bullets/ShitBullets/Shit" + StringUtils::toString(grade * 10 + 1) + ".png");//初始化
+	//飞的过程的纹理的变化设置
+	Animation* blinkAnimation = Animation::create();    //twist animate action
+	blinkAnimation->setDelayPerUnit(1.0f / 2);//动画共3帧，运行时间0.6秒
+	blinkAnimation->setRestoreOriginalFrame(true);//动画执行完后返回第一帧
+
+	Texture2D* texture1 = Director::getInstance()->getTextureCache()->addImage("Bullets/ShitBullets/Shit" + StringUtils::toString(myGrade * 10 + 1) + ".png");
+	blinkAnimation->addSpriteFrameWithTexture(texture1, Rect(0, 0, 70, 70));
+	Texture2D* texture2 = Director::getInstance()->getTextureCache()->addImage("Bullets/ShitBullets/Shit" + StringUtils::toString(myGrade * 10 + 2) + ".png");
+	blinkAnimation->addSpriteFrameWithTexture(texture2, Rect(0, 0, 70, 70));
+	bulletSprite->runAction(RepeatForever::create(Animate::create(blinkAnimation)));
 	return true;
 }
-void shitBullet::rotateSpriteToDirection(Point src, Point dst) {
-	Vec2 direction = dst - src;
+void shitBullet::rotateSpriteToDirection() {
+	//方向向量
+	const Vec2 direction = dst - src;
+
+	//两点间距离
+	const float distance = src.distance(dst);
+
+	//动作持续时间
+	const float durTime = distance / speed;
 
 	// 计算角度（弧度）
-	float angle = atan2(direction.y, direction.x);
+	const float angle = atan2(direction.y, direction.x);
 
 	// 将弧度转换为角度
-	float rotation = CC_RADIANS_TO_DEGREES(angle);
+	const float rotation = CC_RADIANS_TO_DEGREES(angle);
 
 	// 设置精灵的旋转角度
-	this->setRotation(360 - rotation);
+	bulletSprite->setRotation(-rotation);
+
+	//射击动画
+	shootBy = MoveBy::create(durTime, direction);
 }
 void shitBullet::inputBulletAction(Point towerLoc, Point MonsterLoc) {
-	bulletSprite->setPosition(towerLoc);
-	this->rotateSpriteToDirection(towerLoc, MonsterLoc);
-	float durTime = towerLoc.distance(MonsterLoc) / speed;
-	shootTo = MoveTo::create(durTime, MonsterLoc);
+	src = towerLoc, dst = MonsterLoc;//设置两个点
+	bulletSprite->setPosition(src);//初始定位
+	this->rotateSpriteToDirection();//计算角度制作动画
 }
 void shitBullet::shoot() {
-	runAction(Sequence::create(shootTo,
+	runAction(Sequence::create(shootBy,
 		CallFuncN::create(CC_CALLBACK_0(shitBullet::removeBullet, this)), NULL));
 }
 void shitBullet::removeBullet() {
@@ -49,7 +65,7 @@ void shitBullet::removeBullet() {
 		this->bulletSprite->getContentSize().width,
 		this->bulletSprite->getContentSize().height);
 	//auto monsterVector = instance->monsterContainer;
-	for (int j = 0; j < monsterContainer.size(); j++) {
+/*	for (int j = 0; j < monsterContainer.size(); j++) {
 		auto monster = monsterContainer.at(j);
 		auto monsterRect = monster->getBoundingBox();
 
@@ -67,10 +83,10 @@ void shitBullet::removeBullet() {
 			isMissed = false;
 		}
 	}
-
+	*/
 	if (isMissed) {
 		//渐渐消失
-		bulletSprite->runAction(Sequence::create(FadeOut::create(1.0f)
+		bulletSprite->runAction(Sequence::create(FadeOut::create(0.3f)
 			, CallFuncN::create(CC_CALLBACK_0(Bullet::removeFromParent, this))
 			, NULL));
 	}
