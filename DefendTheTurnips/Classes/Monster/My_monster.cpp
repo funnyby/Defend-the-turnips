@@ -6,8 +6,8 @@ using namespace cocos2d::ui;
 bool choose_a_object = 0;
 int blood;
 
-int monsternum;
-int die_monsternum;
+extern int monsternum;
+extern int die_monsternum;
 
 cocos2d::Vector<Monster*> monsterContainer;
 
@@ -52,10 +52,10 @@ void Monster::initmonster_type1() {
 	//4.运行动画
 	this->runAction(RepeatForever::create(Animate::create(animation)));
 
-	beginningWaypoint.x = map[0].x;
-	beginningWaypoint.y = map[0].y;
-	destinationWaypoint.x = map[1].x;
-	destinationWaypoint.y = map[1].y;
+	beginningWaypoint.x = Path[0].x;
+	beginningWaypoint.y = Path[0].y;
+	destinationWaypoint.x = Path[1].x;
+	destinationWaypoint.y = Path[1].y;
 
 }
 
@@ -93,10 +93,10 @@ void Monster::initmonster_type2() {
 	//4.运行动画
 	this->runAction(RepeatForever::create(Animate::create(animation)));
 
-	beginningWaypoint.x = map[0].x;
-	beginningWaypoint.y = map[0].y;
-	destinationWaypoint.x = map[1].x;
-	destinationWaypoint.y = map[1].y;
+	beginningWaypoint.x = Path[0].x;
+	beginningWaypoint.y = Path[0].y;
+	destinationWaypoint.x = Path[1].x;
+	destinationWaypoint.y = Path[1].y;
 
 }
 
@@ -134,10 +134,10 @@ void Monster::initmonster_type3() {
 	//4.运行动画
 	this->runAction(RepeatForever::create(Animate::create(animation)));
 
-	beginningWaypoint.x = map[0].x;
-	beginningWaypoint.y = map[0].y;
-	destinationWaypoint.x = map[1].x;
-	destinationWaypoint.y = map[1].y;
+	beginningWaypoint.x = Path[0].x;
+	beginningWaypoint.y = Path[0].y;
+	destinationWaypoint.x = Path[1].x;
+	destinationWaypoint.y = Path[1].y;
 
 }
 
@@ -155,8 +155,8 @@ void Monster::update(float dt) {
 
 void Monster::BiteTurnips() {
 	Vec2 location;
-	location.x = map[6].x - 10;
-	location.y = map[6].y;
+	location.x = Path[6].x - 10;
+	location.y = Path[6].y;
 	if (this->getBoundingBox().containsPoint(location)) {
 		_hp = -6;
 		this->isDie();
@@ -182,8 +182,8 @@ bool Monster::judge_dest() {
 		}
 		beginningWaypoint.x = destinationWaypoint.x;
 		beginningWaypoint.y = destinationWaypoint.y;
-		destinationWaypoint.x = map[waypoint].x;
-		destinationWaypoint.y = map[waypoint].y;
+		destinationWaypoint.x = Path[waypoint].x;
+		destinationWaypoint.y = Path[waypoint].y;
 		return true;
 	}
 	else
@@ -192,7 +192,7 @@ bool Monster::judge_dest() {
 
 void Monster::walk() {
 	Vec2 pos = this->getPosition();
-	float path = map[waypoint].path;
+	float path = Path[waypoint].path;
 	float x = _walkSpeed * 0.1f * (destinationWaypoint.x - beginningWaypoint.x) / path + pos.x;
 	float y = _walkSpeed * 0.1f * (destinationWaypoint.y - beginningWaypoint.y) / path + pos.y;
 	MoveTo* moveto = MoveTo::create(0.1f, Point(x, y));

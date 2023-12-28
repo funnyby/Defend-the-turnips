@@ -70,7 +70,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LibraryPath>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>D:\Defend-the-turnips\DefendTheTurnips\proj.win32;C:\Users\boring\Documents\GitHub\Defend-the-turnips\DefendTheTurnips\proj.win32;$(IncludePath)</IncludePath>
+    <IncludePath>D:\Defend-the-turnips\DefendTheTurnips;D:\Defend-the-turnips\DefendTheTurnips\proj.win32;C:\Users\boring\Documents\GitHub\Defend-the-turnips\DefendTheTurnips\proj.win32;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LibraryPath>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
@@ -159,9 +159,12 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Carrot.cpp" />
     <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
     <ClCompile Include="..\Classes\Monster\My_monster.cpp" />
+    <ClCompile Include="..\Classes\Tower\ShitTower.cpp" />
+    <ClCompile Include="..\Classes\Tower\Tower.cpp" />
+    <ClCompile Include="BottleTower.cpp" />
     <ClCompile Include="ChooseLevel.cpp" />
     <ClCompile Include="EnterScene.cpp" />
-    <ClCompile Include="GameMap.cpp" />
+    <ClCompile Include="GameMap1.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainScene.cpp" />
   </ItemGroup>
@@ -174,10 +177,13 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Carrot.h" />
     <ClInclude Include="..\Classes\HelloWorldScene.h" />
     <ClInclude Include="..\Classes\Monster\My_monster.h" />
+    <ClInclude Include="..\Classes\Tower\BottleTower.h" />
+    <ClInclude Include="..\Classes\Tower\ShitTower.h" />
+    <ClInclude Include="..\Classes\Tower\Tower.h" />
     <ClInclude Include="..\Classes\Way.h" />
     <ClInclude Include="ChooseLevel.h" />
     <ClInclude Include="EnterScene.h" />
-    <ClInclude Include="GameMap.h" />
+    <ClInclude Include="GameMap1.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="MainScene.h" />
     <ClInclude Include="resource.h" />
