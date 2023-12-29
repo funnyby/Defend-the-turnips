@@ -2,7 +2,7 @@
 #include"..\Classes\Monster\My_monster.h"
 #include"..\Classes\BulletClasses\BottleTowerBullet.h"
 
-//只有bottletower需要转动，其他只需要子弹
+
 
 BottleTower::BottleTower()
 {
@@ -84,17 +84,10 @@ void BottleTower::update(float d)
             BulletSprite1->initGreenBullet(level);
 
             //BulletSprite1->monsterContainer.pushBack(monsterSprite);
-            // 
-            //----------todo：子弹不能按照正确的路径打出
-            //----------todo：对接出现问题，应该是参数传递有问题
             BulletSprite1->inputBulletAction(Vec2::ZERO, target_pos - my_pos);//src\dst
             BulletSprite1->shoot();
 
         }
-    }
-    else {
-        //实现不在攻击范围内，炮塔回到原来位置
-        setRotation( 0);
     }
     
 }

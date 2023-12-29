@@ -5,9 +5,7 @@ USING_NS_CC;
 
 Tower::Tower()
     : state(TowerState::IDLE),
-    target(nullptr),
-    attackRange(100.0f),
-    attackInterval(2.0f),
+    attackInterval(0.5f),//设置的初始攻击间隔是0.5s
     attackTimer(0.0f)
 {
     level = 1;
@@ -32,17 +30,16 @@ bool Tower::init(const std::string& towerImage)
     {
         return false;
     }
-
     // 初始化其他属性
+
+
+    //----------------todo：攻击范围---可以再改一下，因为我是随便设的参数-----
+    attackrange = 80 * 0.6 * (level + 3);
+
 
     return true;
 }
-
-void Tower::setTarget(Sprite* target)
-{
-    this->target = target;
-}
-
+//---------------------暂时没用基类的这个函数------------------
 void Tower::update(float dt)
 {
     if (state == TowerState::ATTACKING)
@@ -60,27 +57,15 @@ void Tower::update(float dt)
     }
 }
 
-void Tower::startAttack()
+bool Tower::isTargetInRange() 
 {
-    state = TowerState::ATTACKING;
-}
-
-void Tower::stopAttack()
-{
-    state = TowerState::IDLE;
-}
-
-float Tower::getAttackRange() const
-{
-    return attackRange;
-}
-
-bool Tower::isTargetInRange() const
-{
-    if (target)
-    {
-        float distance = this->getPosition().getDistance(target->getPosition());
-        return distance <= attackRange;
+    my_pos = getPosition();//获得我的位置
+    for (auto target : monsterContainer) {
+        target_pos = target->getPosition();//获得目标位置
+        float distance = my_pos.distance(target_pos);
+        if (distance <= attackrange) {
+            return true;
+        }
     }
     return false;
 }
@@ -88,7 +73,7 @@ bool Tower::isTargetInRange() const
 void Tower::performAttack()
 {
     // 在这里执行防御塔的攻击逻辑，可以创建子弹、特效等
-
+    
     // 示例：简单地输出一条信息
     CCLOG("Tower attacks the target!");
 }

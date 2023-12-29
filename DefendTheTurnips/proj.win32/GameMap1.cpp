@@ -151,9 +151,7 @@ void GameMap1::setPauseButton(Layer* layerUI)
 			isGamePaused = true;
 			pausebtn->loadTextures("GameMap/pause_1.png", "GameMap/pause_1.png");
 		}
-	// 消耗触摸事件，阻止传递给其他节点
-	Event* event = static_cast<Event*>(sender);
-	event->stopPropagation();
+
 		});
 }
 bool GameMap1::is_out_of_range(int x, int y)
@@ -423,8 +421,7 @@ void GameMap1::onMouseDown(EventMouse* event)
 			upgradeShit(st);
 		//---------------todo:升级----------------------
 	}
-	// 吞噬触摸事件，阻止其传递给下层的节点
-	event->stopPropagation();
+	
 }
 //升级按钮的回调函数
 void GameMap1::upgradebuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType type, const std::string& towerImage,BottleTower*bt,ShitTower*st)

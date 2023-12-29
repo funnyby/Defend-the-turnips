@@ -44,7 +44,7 @@ void GreenTowerBullet::rotateSpriteToDirection() {
 	const float rotation = CC_RADIANS_TO_DEGREES(angle);
 
 	// 设置精灵的旋转角度
-	bulletSprite->setRotation(-rotation);
+	bulletSprite->setRotation(-rotation+90);
 
 	//射击动画
 	shootBy = MoveBy::create(durTime, direction);
