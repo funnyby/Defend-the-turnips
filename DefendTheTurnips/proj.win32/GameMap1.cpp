@@ -7,6 +7,7 @@
 #include"..\Classes\Tower\Tower.h"
 #include"..\Classes\Tower\BottleTower.h"
 #include"..\Classes\Tower\ShitTower.h"
+#include"Barrier.h"
 #include<vector>
 
 #define i_max 6
@@ -106,6 +107,11 @@ bool GameMap1::init()
 	this->addChild(CarrotSprite, 100);
 	CarrotSprite->initCarrot();
 	CarrotSprite->schedule(schedule_selector(Carrot::update), 0.4f);
+	//-----------------------------------放置障碍物----------------------------------------------------------
+	auto BarrierSprite = Barrier::create();
+	this->addChild(BarrierSprite, 100);
+	BarrierSprite->initBarrier();
+	BarrierSprite->schedule(schedule_selector(Barrier::update), 0.4f);
 
 	//-------------------------------------设置点击事件监听----------------------------------------------
 	// 设置点击事件监听
@@ -117,7 +123,7 @@ bool GameMap1::init()
 	current_wave = 1;
 	monsternum = 0;
 	die_monsternum = 0;
-	this->scheduleOnce(schedule_selector(GameMap1::bo), 1);
+	this->scheduleOnce(schedule_selector(GameMap1::bo), 5);
 	/*auto BulletSprite1 = GreenTowerBullet::create();
 	this->addChild(BulletSprite1, 3);
 	BulletSprite1->initGreenBullet(1);
