@@ -1,5 +1,6 @@
 #include "ChooseLevel.h"
 #include "MainScene.h"
+#include "SimpleAudioEngine.h"
 #include"EnterScene.h"
 #include"GameMap1.h"
 #include <string.h>
@@ -20,6 +21,7 @@
 
 USING_NS_CC;
 using namespace cocos2d::ui;
+using namespace CocosDenshion;
 //-------------------------------------  全局变量 ------------------------------------------------
 //关卡选项
 int if_speed_up;//是否加速
@@ -71,6 +73,11 @@ bool GameMap1::init()
 {
 	if (!Scene::init())
 		return false;
+	// 预加载音乐文件
+	SimpleAudioEngine::getInstance()->preloadBackgroundMusic("Music/BGMusic01.mp3");
+
+	// 播放音乐
+	SimpleAudioEngine::getInstance()->playBackgroundMusic("Music/BGMusic01.mp3", true);
 
 	//---------------------------------------设置背景地图-----------------------------------------------
 	auto visibleSize = Director::getInstance()->getVisibleSize();
