@@ -4,6 +4,7 @@
 #include "GameMap1.h"
 USING_NS_CC;
 using namespace cocos2d::ui;
+using namespace CocosDenshion;
 
 cocos2d::Scene* EnterScene::createScene()
 {
@@ -26,6 +27,12 @@ bool EnterScene::init()
 
 bool EnterScene::InitUI()
 {
+	// Ô¤¼ÓÔØÒôÀÖÎÄ¼þ
+	SimpleAudioEngine::getInstance()->preloadBackgroundMusic("Music/StartBGMusic.mp3");
+
+	// ²¥·ÅÒôÀÖ
+	SimpleAudioEngine::getInstance()->playBackgroundMusic("Music/StartBGMusic.mp3", true);
+
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 	// Ìí¼Ó±³¾°
@@ -61,6 +68,7 @@ bool EnterScene::InitUI()
 			{
 				//log("_startGameBtn ENDERD");
 				 //Ìø×ª³¡¾°
+				SimpleAudioEngine::getInstance()->stopBackgroundMusic();
 				auto chooseLevel = ChooseLevel::createScene();
 				Director::getInstance()->replaceScene(chooseLevel);
 				break;
@@ -89,6 +97,7 @@ bool EnterScene::InitUI()
 			{
 				//log("_startGameBtn ENDERD");
 				 //Ìø×ª³¡¾°
+				SimpleAudioEngine::getInstance()->stopBackgroundMusic();
 				auto GameMap = GameMap1::createScene();
 				Director::getInstance()->replaceScene(GameMap);
 				break;

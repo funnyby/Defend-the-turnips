@@ -1,11 +1,13 @@
 #include "ChooseLevel.h"
 #include "MainScene.h"
 #include"EnterScene.h"
+#include "SimpleAudioEngine.h"
+using namespace CocosDenshion;
 #include<vector>
-
 USING_NS_CC;
-using namespace cocos2d::ui;
 using namespace std;
+using namespace cocos2d::ui;
+using namespace CocosDenshion;
 
 
 //枚举，其中保存着各类节点的层级，这样使得各类节点的层级便于管理
@@ -38,6 +40,12 @@ bool ChooseLevel::init()
 //UI层初始化
 void ChooseLevel::InitUI()
 {
+	// 预加载音乐文件
+	SimpleAudioEngine::getInstance()->preloadBackgroundMusic("Music/StartBGMusic.mp3");
+
+	// 播放音乐
+	SimpleAudioEngine::getInstance()->playBackgroundMusic("Music/StartBGMusic.mp3", true);
+
 	//背景滚动界面
 	auto scrollView = ScrollView::create();
 	//设置滚动方向
@@ -132,6 +140,8 @@ void ChooseLevel::InitUI()
 			button->addTouchEventListener([](Ref* sender, Widget::TouchEventType type) {
 				if (type == ui::Widget::TouchEventType::ENDED)
 				{
+					SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+
 					//当前关卡等级，根据Tag值加载对应关卡的数据
 					log("hello %d", ((Button*)sender)->getTag());
 

@@ -1,4 +1,7 @@
 #include "..\Classes\Tower\BottleTower.h"
+#include "SimpleAudioEngine.h"
+using namespace CocosDenshion;
+
 
 BottleTower::BottleTower()
 {
