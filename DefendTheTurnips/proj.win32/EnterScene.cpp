@@ -1,7 +1,7 @@
 #include "EnterScene.h"
 #include "SimpleAudioEngine.h"
 #include "ChooseLevel.h"
-#include "GameMap.h"
+#include "GameMap1.h"
 USING_NS_CC;
 using namespace cocos2d::ui;
 
@@ -89,7 +89,7 @@ bool EnterScene::InitUI()
 			{
 				//log("_startGameBtn ENDERD");
 				 //Ìø×ª³¡¾°
-				auto GameMap = GameMap::createScene();
+				auto GameMap = GameMap1::createScene();
 				Director::getInstance()->replaceScene(GameMap);
 				break;
 			}

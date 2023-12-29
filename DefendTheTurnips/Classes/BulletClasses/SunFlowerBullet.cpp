@@ -17,12 +17,12 @@ bool SunFlowerBullet::initSunBullet(int grade)
 	speed = (grade - 1) * 40 + 100;
 	attackDamage = 10 + (grade - 1) * 2;
 	bulletSprite->initWithFile("Bullets/SunFlowerBullets/TSun-hd11.png");//初始化
-	
+
 	return true;
 }
 
 void SunFlowerBullet::spreadSpriteToScope() {
-	
+
 	//扩散的距离
 	const float distance = attackRange - 40;
 
@@ -30,7 +30,7 @@ void SunFlowerBullet::spreadSpriteToScope() {
 	const float durTime = (distance / speed);
 
 	//设置精灵的扩散动画
-	spreadTo = ScaleTo::create(durTime, attackRange /40.0f);
+	spreadTo = ScaleTo::create(durTime, attackRange / 40.0f);
 	//bulletSprite->runAction(spreadTo); test use
 }
 

@@ -4,18 +4,6 @@
     <Filter Include="win32">
       <UniqueIdentifier>{84a8ebd7-7cf0-47f6-b75e-d441df67da40}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src">
-      <UniqueIdentifier>{bb6c862e-70e9-49d9-81b7-3829a6f50471}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\ChooseLevel">
-      <UniqueIdentifier>{e46a3a47-86ac-4fb8-a9bb-d6b664ec4884}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\EnterScene">
-      <UniqueIdentifier>{136dbe6c-1d10-47bc-a391-f08195b32e61}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\GameMap">
-      <UniqueIdentifier>{497a2a63-d4d4-4c1c-a76b-64aa3eaa9211}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Carrot">
       <UniqueIdentifier>{458ca448-20f3-48c8-901d-e2d8c55bc28a}</UniqueIdentifier>
     </Filter>
@@ -40,6 +28,21 @@
     <Filter Include="Bullet\Shit">
       <UniqueIdentifier>{b6ef702b-2567-448c-8870-6d879917959b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{bb6c862e-70e9-49d9-81b7-3829a6f50471}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ChooseLevel">
+      <UniqueIdentifier>{e46a3a47-86ac-4fb8-a9bb-d6b664ec4884}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\EnterScene">
+      <UniqueIdentifier>{136dbe6c-1d10-47bc-a391-f08195b32e61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\GameMap">
+      <UniqueIdentifier>{497a2a63-d4d4-4c1c-a76b-64aa3eaa9211}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tower">
+      <UniqueIdentifier>{fbaf55bd-dcc2-43b5-a7df-bcba650a376a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -60,9 +63,6 @@
     <ClCompile Include="EnterScene.cpp">
       <Filter>src\EnterScene</Filter>
     </ClCompile>
-    <ClCompile Include="GameMap.cpp">
-      <Filter>src\GameMap</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\Monster\My_monster.cpp">
       <Filter>Monster</Filter>
     </ClCompile>
@@ -80,6 +80,18 @@
     </ClCompile>
     <ClCompile Include="..\Classes\BulletClasses\shit.cpp">
       <Filter>Bullet\Shit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Tower\ShitTower.cpp">
+      <Filter>Tower</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Tower\Tower.cpp">
+      <Filter>Tower</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMap1.cpp">
+      <Filter>src\GameMap</Filter>
+    </ClCompile>
+    <ClCompile Include="BottleTower.cpp">
+      <Filter>Tower</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -107,9 +119,6 @@
     <ClInclude Include="..\Classes\Way.h">
       <Filter>Monster</Filter>
     </ClInclude>
-    <ClInclude Include="GameMap.h">
-      <Filter>src\GameMap</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\Monster\My_monster.h">
       <Filter>Monster</Filter>
     </ClInclude>
@@ -127,6 +136,18 @@
     </ClInclude>
     <ClInclude Include="..\Classes\BulletClasses\shit.h">
       <Filter>Bullet\Shit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Tower\ShitTower.h">
+      <Filter>Tower</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Tower\Tower.h">
+      <Filter>Tower</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMap1.h">
+      <Filter>src\GameMap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Tower\BottleTower.h">
+      <Filter>Tower</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
