@@ -161,6 +161,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Monster\My_monster.cpp" />
     <ClCompile Include="..\Classes\Tower\ShitTower.cpp" />
     <ClCompile Include="..\Classes\Tower\Tower.cpp" />
+    <ClCompile Include="Barrier.cpp" />
     <ClCompile Include="BottleTower.cpp" />
     <ClCompile Include="ChooseLevel.cpp" />
     <ClCompile Include="EnterScene.cpp" />
@@ -181,6 +182,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Tower\ShitTower.h" />
     <ClInclude Include="..\Classes\Tower\Tower.h" />
     <ClInclude Include="..\Classes\Way.h" />
+    <ClInclude Include="Barrier.h" />
     <ClInclude Include="ChooseLevel.h" />
     <ClInclude Include="EnterScene.h" />
     <ClInclude Include="GameMap1.h" />

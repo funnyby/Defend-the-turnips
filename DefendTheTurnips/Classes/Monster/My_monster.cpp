@@ -5,7 +5,7 @@ using namespace cocos2d::ui;
 
 bool choose_a_object = 0;
 int blood;
-
+extern int game_money;//½ğÇ®
 extern int monsternum;
 extern int die_monsternum;
 
@@ -32,6 +32,7 @@ void Monster::initmonster_type1() {
 	waypoint = 1;
 	isalive = 1;
 
+	this->setMoney(15.0f);
 	this->create_Health_bar();
 	this->scheduleBlood();
 	this->setPosition(170, 485);
@@ -73,6 +74,7 @@ void Monster::initmonster_type2() {
 	waypoint = 1;
 	isalive = 1;
 
+	this->setMoney(16.5f);
 	this->create_Health_bar();
 	this->scheduleBlood();
 	this->setPosition(170, 485);
@@ -114,6 +116,7 @@ void Monster::initmonster_type3() {
 	waypoint = 1;
 	isalive = 1;
 
+	this->setMoney(14.5f);
 	this->create_Health_bar();
 	this->scheduleBlood();
 	this->setPosition(170, 485);
@@ -352,6 +355,7 @@ bool Monster::isDie() {
 		this->runAction(RepeatForever::create(Animate::create(animation)));
 		this->schedule(schedule_selector(Monster::deletemonster), 0.4);
 		die_monsternum++;
+		game_money += this->getMoney();
 		return true;
 	}
 	else

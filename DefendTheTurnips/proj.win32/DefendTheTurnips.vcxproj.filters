@@ -43,6 +43,9 @@
     <Filter Include="Tower">
       <UniqueIdentifier>{fbaf55bd-dcc2-43b5-a7df-bcba650a376a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Barrier">
+      <UniqueIdentifier>{e7cd3b40-5562-4f73-b568-8bf0a475cecd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -92,6 +95,9 @@
     </ClCompile>
     <ClCompile Include="BottleTower.cpp">
       <Filter>Tower</Filter>
+    </ClCompile>
+    <ClCompile Include="Barrier.cpp">
+      <Filter>Barrier</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +154,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Tower\BottleTower.h">
       <Filter>Tower</Filter>
+    </ClInclude>
+    <ClInclude Include="Barrier.h">
+      <Filter>Barrier</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

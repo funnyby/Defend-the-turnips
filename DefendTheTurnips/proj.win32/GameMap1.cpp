@@ -703,6 +703,12 @@ void GameMap1::countDown()
 
 //
 
+
+
+
+
+
+
 void GameMap1::init_m1(float delta) {
 	auto monsterSprite = Monster::create();
 	this->addChild(monsterSprite, 100 - monsternum);
