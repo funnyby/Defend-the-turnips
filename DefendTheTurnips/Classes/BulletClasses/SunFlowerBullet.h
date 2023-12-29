@@ -8,17 +8,19 @@ public:
     virtual bool initSunBullet(int grade);
 
     CREATE_FUNC(SunFlowerBullet);
-    
+
     void spread();
-    
+
     void removeBullet();
-    
+
     virtual void inputBulletAction(Point towerLoc);
-   // cocos2d::Vector<Monster*> monsterContainer;
+
+    void spreadSpriteToScope();
+    // cocos2d::Vector<Monster*> monsterContainer;
 private:
     int speed;
 
-    MoveTo* spreadTo;
+    ScaleTo* spreadTo;
 
     Point src;
 
