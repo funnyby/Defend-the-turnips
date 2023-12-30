@@ -9,11 +9,14 @@
 #include"..\Classes\Tower\BottleTower.h"
 #include"..\Classes\Tower\ShitTower.h"
 #include"..\Classes\Barrier\Barrier.h"
+#include "SimpleAudioEngine.h"
+
 #include<vector>
 
 
 USING_NS_CC;
 using namespace cocos2d::ui;
+using namespace CocosDenshion;
 //-------------------------------------  全局变量 ------------------------------------------------
 int monsternum;
 int die_monsternum;
@@ -35,7 +38,10 @@ bool GameMap1::init()
 {
 	if (!Scene::init())
 		return false;
+	SimpleAudioEngine::getInstance()->preloadBackgroundMusic("Music/BackGroundMusic/BGMusic01.mp3");
 
+	// 播放音乐
+	SimpleAudioEngine::getInstance()->playBackgroundMusic("Music/BackGroundMusic/BGMusic01.mp3", true);
 	//---------------------------------------设置背景地图-----------------------------------------------
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
@@ -178,6 +184,7 @@ void GameMap1::setMenuButton(Layer* layerUI)
 	menubtn->addClickEventListener([=](Ref* sender) {
 
 		auto gamemenu = Sprite::create("GameMap/gamemenu.png");
+	SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
 	// 设置菜单位置
 	gamemenu->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2,
 		Director::getInstance()->getVisibleSize().height * 2));
@@ -195,6 +202,7 @@ void GameMap1::setMenuButton(Layer* layerUI)
 	continuebtn->setScale(1.12);
 	continuebtn->addClickEventListener([=](Ref* sender) {
 		isGamePaused = false;
+	SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
 	Director::getInstance()->resume();
 	gamemenu->removeFromParent();
 		});
@@ -207,6 +215,11 @@ void GameMap1::setMenuButton(Layer* layerUI)
 	chooselevelbtn->setScale(1.12);
 	chooselevelbtn->addClickEventListener([=](Ref* sender) {
 		auto chooselevel = ChooseLevel::create();
+	SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+	return false;
+	SimpleAudioEngine::getInstance()->preloadBackgroundMusic("Music/BackGroundMusic/StartBGMusic.mp3");
+	// 播放音乐
+	SimpleAudioEngine::getInstance()->playBackgroundMusic("Music/BackGroundMusic/StartBGMusic.mp3", true);
 	Director::getInstance()->replaceScene(chooselevel);
 	//?????????????????再次进入会卡住
 		});
@@ -219,6 +232,7 @@ void GameMap1::setMenuButton(Layer* layerUI)
 	restartbtn->setScale(1.12);
 	restartbtn->addClickEventListener([=](Ref* sender) {
 		auto gamemap1 = GameMap1::create();
+	SimpleAudioEngine::getInstance()->stopBackgroundMusic();
 	Director::getInstance()->replaceScene(gamemap1);
 	//?????????????????再次进入会卡住
 		});
@@ -248,12 +262,14 @@ void GameMap1::setPauseButton(Layer* layerUI)
 			Director::getInstance()->resume();
 			isGamePaused = false;
 			pausebtn->loadTextures("GameMap/pause_0.png", "GameMap/pause_0.png");
+			SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
 		}
 		else {
 			// 游戏暂停
 			Director::getInstance()->pause();
 			isGamePaused = true;
 			pausebtn->loadTextures("GameMap/pause_1.png", "GameMap/pause_1.png");
+			SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
 		}
 
 		});
@@ -304,6 +320,7 @@ void GameMap1::bottlebuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Wid
 {
 	// 处理按钮点击事件
 	if (type == cocos2d::ui::Widget::TouchEventType::ENDED) {
+		SimpleAudioEngine::getInstance()->playEffect("Music/TowerMusic/TowerBulid.mp3");
 		CCLOG("Button Clicked!");
 
 		map[i][j] = PLACED;
@@ -329,7 +346,7 @@ void GameMap1::shitbuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Widge
 	// 处理按钮点击事件
 	if (type == cocos2d::ui::Widget::TouchEventType::ENDED) {
 		CCLOG("Button Clicked!");
-
+		SimpleAudioEngine::getInstance()->playEffect("Music/TowerMusic/TowerBulid.mp3");
 		map[i][j] = PLACED;
 
 		// 移除所有按钮
@@ -445,6 +462,7 @@ void GameMap1::onMouseDown(EventMouse* event)
 
 		// 创建警告精灵并设置图片
 		auto warning = Sprite::create("GameMap/warning.png");
+		SimpleAudioEngine::getInstance()->playEffect("Music/SelectFault.mp3");
 		warning->setScale(0.8);
 		warning->setPosition(clickLocation);
 
@@ -533,6 +551,7 @@ void GameMap1::upgradebuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Wi
 	// 处理按钮点击事件
 	if (type == cocos2d::ui::Widget::TouchEventType::ENDED) {
 		CCLOG("Button Clicked!");
+		SimpleAudioEngine::getInstance()->playEffect("Music/ToerMusic/TowerUpdata.mp3");
 		if (bt ) {
 			//更新等级
 			bt->level++;

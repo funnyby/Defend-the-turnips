@@ -1,5 +1,6 @@
 #include"My_monster.h"
-
+#include "SimpleAudioEngine.h"
+using namespace CocosDenshion;
 USING_NS_CC;
 using namespace cocos2d::ui;
 
@@ -340,6 +341,7 @@ bool Monster::isDie() {
 		auto texture = Director::getInstance()->getTextureCache()->addImage("monster/2.png");
 		// 设置新的纹理  
 		this->setTexture(texture);
+		SimpleAudioEngine::getInstance()->playEffect("Music/MonsterDieMusic/Fly151.mp3");
 		//2.创建动画，设置间隔
 		Animation* animation = Animation::create();
 		animation->setDelayPerUnit(0.4 / 6);//动画共16帧，运行时间1秒

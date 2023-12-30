@@ -1,6 +1,8 @@
 #include "..\Classes\Tower\BottleTower.h"
 #include"..\Classes\Monster\My_monster.h"
 #include"..\Classes\BulletClasses\BottleTowerBullet.h"
+#include "SimpleAudioEngine.h"
+using namespace CocosDenshion;
 
 //只有bottletower需要转动，其他只需要子弹
 
@@ -78,7 +80,7 @@ void BottleTower::update(float d)
         performAttack();
         if (attackTimer >= attackInterval) {
             attackTimer = 0.0f;  // 重置计时器
-
+            SimpleAudioEngine::getInstance()->playEffect("Music/TowerMusic/Bottle.mp3");
             auto BulletSprite1 = GreenTowerBullet::create();
             this->addChild(BulletSprite1, -1);
             BulletSprite1->initGreenBullet(level);
@@ -87,6 +89,7 @@ void BottleTower::update(float d)
             // 
             //----------todo：子弹不能按照正确的路径打出
             //----------todo：对接出现问题，应该是参数传递有问题
+
             BulletSprite1->inputBulletAction(Vec2(40,40), target_pos - my_pos);//src\dst
             BulletSprite1->shoot();
 

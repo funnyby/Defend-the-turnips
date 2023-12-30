@@ -1,6 +1,8 @@
 #include "ShitTower.h"
 #include"..\Classes\Monster\My_monster.h"
 #include"..\Classes\BulletClasses\shit.h"
+#include "SimpleAudioEngine.h"
+using namespace CocosDenshion;
 ShitTower::ShitTower()
 {
 
@@ -58,7 +60,7 @@ void ShitTower::update(float d)
         performAttack();
         if (attackTimer >= attackInterval) {
             attackTimer = 0.0f;  // ÖØÖÃ¼ÆÊ±Æ÷
-
+            SimpleAudioEngine::getInstance()->playEffect("Music/TowerMusic/Shit.mp3");
             auto BulletSprite1 = shitBullet::create();
             this->addChild(BulletSprite1, -1);
             BulletSprite1->initshitBullet(level);

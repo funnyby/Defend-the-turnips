@@ -2,9 +2,11 @@
 #include "MainScene.h"
 #include"EnterScene1.h"
 #include"EnterScene2.h"
+#include "SimpleAudioEngine.h"
 #include<vector>
 
 USING_NS_CC;
+using namespace CocosDenshion;
 using namespace cocos2d::ui;
 using namespace std;
 
@@ -138,6 +140,7 @@ void ChooseLevel::InitUI()
 
 					
 					 //跳转场景
+					SimpleAudioEngine::getInstance()->stopBackgroundMusic();
 					auto enterscene = EnterScene1::createScene();
 					Director::getInstance()->replaceScene(enterscene);
 				}
@@ -153,6 +156,7 @@ void ChooseLevel::InitUI()
 
 
 					//跳转场景
+					SimpleAudioEngine::getInstance()->stopBackgroundMusic();
 					auto enterscene = EnterScene2::createScene();
 					Director::getInstance()->replaceScene(enterscene);
 				}

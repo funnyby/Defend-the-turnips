@@ -1,4 +1,6 @@
 #include "..\Classes\Carrot.h"
+#include "SimpleAudioEngine.h"
+using namespace CocosDenshion;
 USING_NS_CC;
 Vector<Carrot*> myCarrot;
 /*-----------------public---------------------*/
@@ -75,6 +77,8 @@ void Carrot::runTwistAnimation() {
 	twistAnimation->addSpriteFrameWithTexture(texture11, Rect(0, 0, 150, 168));
 	Texture2D* texture12 = Director::getInstance()->getTextureCache()->addImage("Carrot/CarrotTwist/hlb1_21.png");
 	twistAnimation->addSpriteFrameWithTexture(texture12, Rect(0, 0, 150, 168));
+	SimpleAudioEngine::getInstance()->playEffect("Music/carrot.mp3");
+
 	this->runAction(Animate::create(twistAnimation));
 }
 

@@ -1,5 +1,7 @@
 #include "SunTower.h"
 #include"..\Classes\BulletClasses\SunFlowerBullet.h"
+#include "SimpleAudioEngine.h"
+using namespace CocosDenshion;
 SunTower::SunTower()
 {
 
@@ -54,7 +56,7 @@ void SunTower::update(float d)
         performAttack();
         if (attackTimer >= attackInterval) {
             attackTimer = 0.0f;  // ÖØÖÃ¼ÆÊ±Æ÷
-
+            SimpleAudioEngine::getInstance()->playEffect("Music/TowerMusic/Sun.mp3");
             auto BulletSprite1 = SunFlowerBullet::create();
             this->addChild(BulletSprite1, -1);
             BulletSprite1->initSunBullet(level);
