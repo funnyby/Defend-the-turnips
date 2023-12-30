@@ -89,6 +89,25 @@ bool GameMap2::init()
 	current_wave = 1;
 	monsternum = 0;
 	die_monsternum = 0;
+	this->scheduleOnce(schedule_selector(GameMap2::bo), 5);
+
+	auto wave_background = Sprite::create("GameMap/waves_bg.png");  // 使用你的背景图片文件名
+	wave_background->setPosition(570, 592);
+	layerUI->addChild(wave_background);
+
+	auto wave_05 = Sprite::create("GameMap/wave05.png");  // 使用你的背景图片文件名
+	wave_05->setPosition(570, 600);
+	layerUI->addChild(wave_05);
+	scaleX = 0.78;
+	scaleY = 0.78;
+	// 设置精灵的缩放
+	wave_05->setScale(scaleX, scaleY);
+
+	wave = Sprite::create("GameMap/wave_0.png");  // 使用你的背景图片文件名
+	wave->setPosition(505, 600);
+	layerUI->addChild(wave);
+
+	this->schedule(schedule_selector(Monster::update), 0.05f);
 	//this->scheduleOnce(schedule_selector(GameMap2::bo), 5);
 	
 

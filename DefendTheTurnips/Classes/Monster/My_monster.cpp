@@ -1,12 +1,13 @@
 #include"My_monster.h"
 #include "SimpleAudioEngine.h"
+#include "GameMap1.h"
 using namespace CocosDenshion;
 USING_NS_CC;
 using namespace cocos2d::ui;
 
 bool choose_a_object = 0;
 int blood;
-
+extern int game_money1;
 extern int monsternum;
 extern int die_monsternum;
 
@@ -16,7 +17,7 @@ void Monster::initmonster_type1() {
 	//在地图起点处放置一个怪物
 	monsterContainer.pushBack(this);
 	initWithFile("monster/13.png");
-
+	setMoney(14);
 
 
 	behit = Sprite::create();
@@ -64,7 +65,7 @@ void Monster::initmonster_type2() {
 	//在地图起点处放置一个怪物
 	monsterContainer.pushBack(this);
 	initWithFile("monster/F11.png");
-
+	setMoney(16);
 	behit = Sprite::create();
 	behit->setPosition(60, 24); //设置框的位置
 	behit->setVisible(false); // 设置为可见  
@@ -110,7 +111,7 @@ void Monster::initmonster_type3() {
 	//在地图起点处放置一个怪物
 	monsterContainer.pushBack(this);
 	initWithFile("monster/L11.png");
-
+	setMoney(15);
 	behit = Sprite::create();
 	behit->setPosition(60, 24); //设置框的位置
 	behit->setVisible(false); // 设置为可见  
@@ -327,6 +328,8 @@ void Monster::unFreezed(float a) {
 bool Monster::isDie() {
 	if (_hp <= 0)
 	{
+		//赚钱
+		game_money1 += getMoney();
 		if (this->choosed == 1 && this->choice != nullptr)
 		{
 			getActionManager()->removeAllActionsFromTarget(choice);

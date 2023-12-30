@@ -2,6 +2,7 @@
 #define __BOTTLE_TOWER_BULLET_H_
 #include "..\Classes\BulletClasses\Bullet.h"
 #include "..\Classes\Monster\My_monster.h"
+#include"..\Classes\Barrier\Barrier.h"
 using namespace cocos2d;
 class GreenTowerBullet : public Bullet {
 public:

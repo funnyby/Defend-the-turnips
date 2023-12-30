@@ -60,6 +60,7 @@ private:
 	cocos2d::ui::Button* menubtn;
 	cocos2d::Sprite* setTower;
 	cocos2d::Sprite* range;
+	cocos2d::Sprite* wave;
 	cocos2d::ui::Button* bottlebtn;
 	cocos2d::ui::Button* shitbtn;
 	cocos2d::ui::Button* sunbtn;

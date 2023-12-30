@@ -138,15 +138,12 @@ bool Barrier::isDie() {
 		if (this->choosed == 1 && this->choice != nullptr)
 		{
 			getActionManager()->removeAllActionsFromTarget(choice);
-			choice->removeFromParent();
+			this->choice->removeFromParent();
 			choose_a_object = 0;
 		}
 		bloodbox->removeFromParent();
 		getActionManager()->removeAllActionsFromTarget(this);
-		sprBlood->removeFromParent();
-		auto progress = (ProgressTimer*)this->getChildByTag(BLOOD_BAR);
-		progress->removeFromParent();
-		getActionManager()->removeAllActionsFromTarget(this);
+		
 		isalive = 0;
 		//精灵爆炸
 		auto texture = Director::getInstance()->getTextureCache()->addImage("monster/2.png");
@@ -187,7 +184,8 @@ void Barrier::deletemonster(float a) {
 void Barrier::behurt(int monster_blood, int type) {
 	_hp -= monster_blood;
 	behit->setVisible(true); // 设置为可见  
-	bloodbox->setVisible(true);
+	if (this->bloodbox != nullptr)
+		bloodbox->setVisible(true);
 	auto progress = (ProgressTimer*)this->getChildByTag(BLOOD_BAR);
 	progress->setVisible(true);
 	if (type == 1)
@@ -207,6 +205,7 @@ void Barrier::behurt(int monster_blood, int type) {
 		//4.运行动画
 		behit->runAction(RepeatForever::create(Animate::create(animation)));
 	}
+	this->isDie();
 	schedule(schedule_selector(Barrier::deletebehit), 0.4);
 }
 

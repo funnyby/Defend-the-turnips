@@ -65,7 +65,7 @@ void SunTower::update(float d)
             // 
             //----------todo：子弹不能按照正确的路径打出
             //----------todo：对接出现问题，应该是参数传递有问题
-            BulletSprite1->inputBulletAction(Vec2(0, 0));//src\dst
+            BulletSprite1->inputBulletAction(Vec2(0, 0));//src
             BulletSprite1->spread();
 
         }

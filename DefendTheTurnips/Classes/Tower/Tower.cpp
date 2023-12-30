@@ -60,13 +60,37 @@ void Tower::update(float dt)
 bool Tower::isTargetInRange() 
 {
     my_pos = getPosition();//获得我的位置
+
+    for (auto barrier : BarrierContainer) {
+        if (barrier->choosed) {
+            target_pos = barrier->getPosition();
+            float distance = my_pos.distance(target_pos);
+            if (distance <= attackrange) {
+                return true;
+            }
+        }
+    }
+    //有被选中的怪物
     for (auto target : monsterContainer) {
+        if (target->choosed) {
+            target_pos = target->getPosition();//获得目标位置
+            float distance = my_pos.distance(target_pos);
+            if (distance <= attackrange) {
+                return true;
+            }
+        }
+    }
+    //什么也没有选中，就只攻击距离最近的怪物
+    for (auto target : monsterContainer) {
+
         target_pos = target->getPosition();//获得目标位置
         float distance = my_pos.distance(target_pos);
         if (distance <= attackrange) {
             return true;
         }
+
     }
+
     return false;
 }
 

@@ -67,6 +67,16 @@ void GreenTowerBullet::removeBullet() {
 			isMissed = false;
 		}
 	}
+	for (int j = 0;j < BarrierContainer.size();j++) {
+		auto barrier = BarrierContainer.at(j);
+		auto barrierRect = barrier->getBoundingBox();
+
+		if (barrier->choosed && barrierRect.intersectsRect(bulletRect)) {
+			barrier->behurt(this->getAttackDamage(), 1);
+
+			isMissed = false;
+		}
+	}
 
 	if (isMissed) {
 		//½¥½¥ÏûÊ§

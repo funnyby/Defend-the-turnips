@@ -10,10 +10,7 @@
 
 #define i_max 6
 #define j_max 13
-#define x_min 90
-#define x_max 1050
-#define y_min 90
-#define y_max 550
+
 
 class GameMap1 :public cocos2d::Scene
 {
@@ -39,7 +36,7 @@ public:
 	int if_speed_up;//是否加速
 	bool isGamePaused = false;//是否暂停
 	//游戏内数据
-	int game_money;//金钱
+	
 	int current_wave;//当前波数
 
 	int max_waves;//总波数

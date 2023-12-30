@@ -181,6 +181,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\BulletClasses\SunFlowerBullet.h" />
     <ClInclude Include="..\Classes\Carrot.h" />
     <ClInclude Include="..\Classes\HelloWorldScene.h" />
+    <ClInclude Include="..\Classes\Monster\My_monster.h" />
     <ClInclude Include="..\Classes\Tower\BottleTower.h" />
     <ClInclude Include="..\Classes\Tower\ShitTower.h" />
     <ClInclude Include="..\Classes\Tower\SunTower.h" />
@@ -193,7 +194,6 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="GameMap2.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="MainScene.h" />
-    <ClInclude Include="My_monster.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>

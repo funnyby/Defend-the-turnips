@@ -24,13 +24,13 @@ bool SunFlowerBullet::initSunBullet(int grade)
 void SunFlowerBullet::spreadSpriteToScope() {
 
 	//扩散的距离
-	const float distance = attackRange - 40;
+	const float distance = attackRange ;
 
 	//动作持续时间
-	const float durTime = (distance / speed);
+	const float durTime = (distance / speed)*10;
 
 	//设置精灵的扩散动画
-	spreadTo = ScaleTo::create(durTime, attackRange / 40.0f);
+	spreadTo = ScaleTo::create(durTime, distance / 40.0f);
 	//bulletSprite->runAction(spreadTo); test use
 }
 
@@ -42,14 +42,12 @@ void SunFlowerBullet::inputBulletAction(Point towerLoc) {
 
 void SunFlowerBullet::spread() {//run射击动画动作序列
 	bulletSprite->runAction(spreadTo);
-	Sleep(200);
 	runAction(Sequence::create(
 		CallFuncN::create(CC_CALLBACK_0(SunFlowerBullet::removeBullet, this)), NULL));
 }
 
 void SunFlowerBullet::removeBullet() {
 	bool isMissed = true;
-	auto instance = Director::getInstance();
 
 	auto bulletRect = Rect(this->getPositionX() + this->getParent()->getPositionX() - this->getContentSize().width / 2,
 		this->getPositionY() + this->getParent()->getPositionY() - this->getContentSize().height / 2,

@@ -173,7 +173,7 @@
     <ClInclude Include="..\Classes\Tower\SunTower.h">
       <Filter>Tower</Filter>
     </ClInclude>
-    <ClInclude Include="My_monster.h">
+    <ClInclude Include="..\Classes\Monster\My_monster.h">
       <Filter>Monster</Filter>
     </ClInclude>
   </ItemGroup>

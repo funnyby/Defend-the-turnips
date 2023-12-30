@@ -2,6 +2,7 @@
 #define __SHIT_H_
 #include "..\Classes\BulletClasses\Bullet.h"
 #include "..\Classes\Monster\My_monster.h"
+#include"..\Classes\Barrier\Barrier.h"
 using namespace cocos2d;
 class shitBullet : public Bullet {
 public:

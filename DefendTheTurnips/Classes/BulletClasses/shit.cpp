@@ -73,6 +73,18 @@ void shitBullet::removeBullet() {
 		auto monsterRect = monster->getBoundingBox();    
 		if (monsterRect.intersectsRect(bulletRect)) {
 			monster->behurt(this->getAttackDamage(), 2);
+			monster->isFreezed();
+			isMissed = false;
+		}
+	}
+	for (int j = 0;j < BarrierContainer.size();j++) {
+		
+		auto barrier = BarrierContainer.at(j);
+
+		auto barrierRect = barrier->getBoundingBox();
+
+		if (barrier->choosed && barrierRect.intersectsRect(bulletRect)) {
+			barrier->behurt(this->getAttackDamage(), 2);
 			isMissed = false;
 		}
 	}

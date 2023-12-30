@@ -10,7 +10,10 @@
 #include"..\Classes\Tower\ShitTower.h"
 #include"..\Classes\Barrier\Barrier.h"
 #include "SimpleAudioEngine.h"
-
+#define x_min 90
+#define x_max 1050
+#define y_min 100
+#define y_max 550
 #include<vector>
 
 
@@ -20,7 +23,7 @@ using namespace CocosDenshion;
 //-------------------------------------  全局变量 ------------------------------------------------
 int monsternum;
 int die_monsternum;
-
+int game_money1;//金钱
 //----------------------------------------- GameMap1 ------------------------------------------------
 cocos2d::Scene* GameMap1::createScene()
 {
@@ -38,6 +41,7 @@ bool GameMap1::init()
 {
 	if (!Scene::init())
 		return false;
+	game_money1 = 550;
 	SimpleAudioEngine::getInstance()->preloadBackgroundMusic("Music/BackGroundMusic/BGMusic01.mp3");
 
 	// 播放音乐
@@ -304,7 +308,7 @@ int GameMap1::getStatus(int x, int y)
 	if (is_out_of_range(x,y))
 		return -1;
 	//如果在路径上或者是障碍，则不能被放置
-	if (map[i][j] == PATH|| map[i][j] == BARRIER)
+	if (map[i][j] == PATH)
 		return -1;
 	//如果位置为空，则可以放置
 	if (map[i][j] == EMPTY)
@@ -312,6 +316,8 @@ int GameMap1::getStatus(int x, int y)
 	//如果位置有炮塔，则可以升级
 	if (map[i][j] == PLACED)
 		return PLACED;
+	if (map[i][j] == BARRIER)
+		return BARRIER;
 	return -1;
 }
 
@@ -327,6 +333,8 @@ void GameMap1::bottlebuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Wid
 
 		// 移除所有按钮
 		hideButton();
+		//扣钱
+		game_money1 -= 100;
 
 		// 创建BottleTower
 		auto bottletower = BottleTower::create("Tower/Bottle11.png");
@@ -351,7 +359,8 @@ void GameMap1::shitbuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Widge
 
 		// 移除所有按钮
 		hideButton();
-
+		//扣钱
+		game_money1 -= 120;
 		// 创建ShitTower
 		auto shittower = ShitTower::create("Tower/shit1.png");
 		shittower->pos_i = i;
@@ -516,7 +525,7 @@ void GameMap1::onMouseDown(EventMouse* event)
 			this->addChild(bottlebtn, 10);
 		}
 	}
-	else {//当前位置有炮塔用来升级
+	else if(status==PLACED){//当前位置有炮塔用来升级
 
 		transform_xy_to_ij(i, j, mousex, mousey);
 		selectedPosition = clickLocation;
@@ -543,7 +552,9 @@ void GameMap1::onMouseDown(EventMouse* event)
 			upgradeShit(st);
 		//---------------todo:升级----------------------
 	}
-	
+	else if (status == BARRIER) {
+		
+	}
 }
 //升级按钮的回调函数
 void GameMap1::upgradebuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType type, const std::string& towerImage,BottleTower*bt,ShitTower*st)
@@ -559,6 +570,10 @@ void GameMap1::upgradebuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Wi
 			bt->setTexture(towerImage);
 			// 移除所有按钮
 			hideButton();
+			if (bt->level == 1)
+				game_money1 -= 180;
+			else if(bt->level == 2)
+				game_money1 -= 260;
 			return;
 		}
 		if (st ) {
@@ -569,6 +584,11 @@ void GameMap1::upgradebuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Wi
 			st->setScale(0.9);
 			// 移除所有按钮
 			hideButton();
+			if (st->level == 1)
+				game_money1 -= 220;
+			else if (st->level == 2)
+				game_money1 -= 260;
+			return;
 			return;
 		}
 	}
@@ -596,6 +616,12 @@ void GameMap1::cancelbuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Wid
 			}
 			// 移除所有按钮
 			hideButton();
+			if (bt->level == 1)
+				game_money1 += 80;
+			else if (bt->level == 2)
+				game_money1 += 224;
+			else if (bt->level == 3)
+				game_money1 += 432;
 			return;
 		}
 		//拆除shit
@@ -613,6 +639,12 @@ void GameMap1::cancelbuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Wid
 			}
 			// 移除所有按钮
 			hideButton();
+			if (st->level == 1)
+				game_money1 += 96;
+			else if (st->level == 2)
+				game_money1 += 272;
+			else if (st->level == 3)
+				game_money1 += 480;
 			return;
 		}
 	}
