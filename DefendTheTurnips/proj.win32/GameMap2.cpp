@@ -1,12 +1,13 @@
 #include "ChooseLevel.h"
 #include "MainScene.h"
-#include"EnterScene1.h"
-#include"GameMap1.h"
+#include"EnterScene2.h"
+#include"GameMap2.h"
 #include <string.h>
 #include"..\Classes\Monster\My_monster.h"
 #include"..\Classes\Tower\Tower.h"
 #include"..\Classes\Tower\BottleTower.h"
 #include"..\Classes\Tower\ShitTower.h"
+#include"..\Classes\Tower\SunTower.h"
 #include"..\Classes\Barrier\Barrier.h"
 #include<vector>
 
@@ -16,13 +17,14 @@
 USING_NS_CC;
 using namespace cocos2d::ui;
 //-------------------------------------  全局变量 ------------------------------------------------
-int monsternum;
-int die_monsternum;
+extern int monsternum;
+extern int die_monsternum;
+  
 
-//----------------------------------------- GameMap1 ------------------------------------------------
-cocos2d::Scene* GameMap1::createScene()
+//----------------------------------------- GameMap2 ------------------------------------------------
+cocos2d::Scene* GameMap2::createScene()
 {
-	return GameMap1::create();
+	return GameMap2::create();
 }
 
 static void problemLoading(const char* filename)
@@ -32,7 +34,7 @@ static void problemLoading(const char* filename)
 }
 
 
-bool GameMap1::init()
+bool GameMap2::init()
 {
 	if (!Scene::init())
 		return false;
@@ -41,7 +43,7 @@ bool GameMap1::init()
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 	// 添加背景
-	auto background = Sprite::create("GameMap/map.png");  // 使用你的背景图片文件名
+	auto background = Sprite::create("GameMap/map2.png");  // 使用你的背景图片文件名
 	background->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));
 	// 计算缩放比例，以适应屏幕
 	float scaleX = visibleSize.width / background->getContentSize().width;
@@ -49,10 +51,7 @@ bool GameMap1::init()
 	// 设置精灵的缩放
 	background->setScale(scaleX, scaleY);
 	this->addChild(background);
-	// 怪物桩子
-	auto flag = Sprite::create("GameMap/flag.png");  // 使用你的背景图片文件名
-	flag->setPosition(165, 505);
-	this->addChild(flag);
+
 	//---------------------------------------UI按钮控件栏------------------------------------------------
 	auto layerUI = Layer::create();
 	this->addChild(layerUI,7);
@@ -60,143 +59,44 @@ bool GameMap1::init()
 
 	auto upPanel = Sprite::create(upPanelPinfo);
 	upPanel->setAnchorPoint(Vec2(0, 1));
-	upPanel->setPosition(0, Director::getInstance()->getVisibleSize().height+330);
+	upPanel->setPosition(0, Director::getInstance()->getVisibleSize().height + 330);
 	upPanel->setScale(1.05);
 	layerUI->addChild(upPanel);
 
 	setPauseButton(layerUI);
-	setMenuButton(layerUI);
+
 	//倒计时
-	countDown();
+	//countDown();
 
 	//-------------------------------------放置萝卜------------------------------------------------------
 	auto CarrotSprite = Carrot::create();
-	CarrotSprite->setLocation(Vec2(1000, 485));
+	CarrotSprite->setLocation(Vec2(950, 485));
 	this->addChild(CarrotSprite, 100);
 	CarrotSprite->initCarrot();
 	CarrotSprite->schedule(schedule_selector(Carrot::update), 0.4f);
 	//-----------------------------------放置障碍物----------------------------------------------------------
-	InitBarrier();
+	//auto BarrierSprite = Barrier::create();
+	//this->addChild(BarrierSprite, 100);
+	//BarrierSprite->initBarrier();
+	//BarrierSprite->schedule(schedule_selector(Barrier::update), 0.4f);
 
 	//-------------------------------------设置点击事件监听----------------------------------------------
 	// 设置点击事件监听
-	auto listener = EventListenerMouse::create();
-	listener->onMouseDown = CC_CALLBACK_1(GameMap1::onMouseDown, this);
+	auto listener = EventListenerTouchOneByOne::create();
+	listener->setSwallowTouches(true);
+	listener->onTouchBegan = CC_CALLBACK_2(GameMap2::onTouchBegan, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-	
+
 	//-----------------------------------怪物波数----------------------------------------------------------
 	current_wave = 1;
 	monsternum = 0;
 	die_monsternum = 0;
-	this->scheduleOnce(schedule_selector(GameMap1::bo), 5);
-
-	auto wave_background = Sprite::create("GameMap/waves_bg.png");  // 使用你的背景图片文件名
-	wave_background->setPosition(570, 592);
-	layerUI->addChild(wave_background);
-
-	auto wave_05 = Sprite::create("GameMap/wave05.png");  // 使用你的背景图片文件名
-	wave_05->setPosition(570, 600);
-	layerUI->addChild(wave_05);
-	scaleX = 0.78;
-	scaleY = 0.78;
-	// 设置精灵的缩放
-	wave_05->setScale(scaleX, scaleY);
-
-	wave = Sprite::create("GameMap/wave_0.png");  // 使用你的背景图片文件名
-	wave->setPosition(505, 600);
-	layerUI->addChild(wave);
-
-	this->schedule(schedule_selector(Monster::update), 0.05f);
-
+	//this->scheduleOnce(schedule_selector(GameMap2::bo), 5);
+	
 
 	return true;
 }
-void GameMap1::InitBarrier()
-{
-	Texture2D* texture41 = Director::getInstance()->getTextureCache()->addImage("Barrier/barrier41.png");
-	Texture2D* texture42 = Director::getInstance()->getTextureCache()->addImage("Barrier/barrier42.png");
-	Texture2D* texture21 = Director::getInstance()->getTextureCache()->addImage("Barrier/barrier21.png");
-	Texture2D* texture11 = Director::getInstance()->getTextureCache()->addImage("Barrier/barrier11.png");
-	Texture2D* texture12 = Director::getInstance()->getTextureCache()->addImage("Barrier/barrier12.png");
-
-	auto BarrierSprite1 = Barrier::create();
-	this->addChild(BarrierSprite1, 5);
-	BarrierSprite1->initBarrier(300, 300, texture41, Vec2(460, 485));
-
-	auto BarrierSprite2 = Barrier::create();
-	this->addChild(BarrierSprite2, 0);
-	BarrierSprite2->initBarrier(2500, 2500, texture42, Vec2(620, 405));
-
-	auto BarrierSprite3 = Barrier::create();
-	this->addChild(BarrierSprite3, 0);
-	BarrierSprite3->initBarrier(150, 150, texture21, Vec2(620, 205));
-
-	auto BarrierSprite4 = Barrier::create();
-	this->addChild(BarrierSprite4, 0);
-	BarrierSprite4->initBarrier(70, 70, texture11, Vec2(420, 205));
-
-	auto BarrierSprite5 = Barrier::create();
-	this->addChild(BarrierSprite5, 0);
-	BarrierSprite5->initBarrier(70, 70, texture12, Vec2(250, 365));
-
-	auto BarrierSprite6 = Barrier::create();
-	this->addChild(BarrierSprite6, 0);
-	BarrierSprite6->initBarrier(70, 70, texture11, Vec2(250, 525));
-
-	auto BarrierSprite7 = Barrier::create();
-	this->addChild(BarrierSprite7, 0);
-	BarrierSprite7->initBarrier(70, 70, texture11, Vec2(420, 365));
-
-	auto BarrierSprite8 = Barrier::create();
-	this->addChild(BarrierSprite8, 0);
-	BarrierSprite8->initBarrier(70, 70, texture11, Vec2(500, 365));
-
-	auto BarrierSprite9 = Barrier::create();
-	this->addChild(BarrierSprite9, 0);
-	BarrierSprite9->initBarrier(70, 70, texture11, Vec2(580, 285));
-
-	auto BarrierSprite10 = Barrier::create();
-	this->addChild(BarrierSprite10, 0);
-	BarrierSprite10->initBarrier(70, 70, texture12, Vec2(905, 205));
-
-	auto BarrierSprite11 = Barrier::create();
-	this->addChild(BarrierSprite11, 0);
-	BarrierSprite11->initBarrier(150, 150, texture21, Vec2(945, 365));
-
-	auto BarrierSprite12 = Barrier::create();
-	this->addChild(BarrierSprite12, 0);
-	BarrierSprite12->initBarrier(70, 70, texture12, Vec2(745, 285));
-}
-void GameMap1::setMenuButton(Layer* layerUI)
-{
-	menubtn = Button::create("GameMap/menu.png", "GameMap/menu.png");
-	menubtn->setPressedActionEnabled(true);
-	menubtn->setPosition(Vec2(975, 590));
-	menubtn->setScale(1.05);
-	layerUI->addChild(menubtn);
-
-	// 设置按钮点击事件监听器
-	/*menubtn->addClickEventListener([=](Ref* sender) {
-		// 游戏暂停
-		isGamePaused = true;
-		Director::getInstance()->pause();
-		auto Layermenu = Layer::create();
-		Layermenu->addChild(Layermenu, 200);
-
-		auto gamemenu = Sprite::create("GameMap/gamemenu.png");
-		// 设置菜单位置
-		gamemenu->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2,
-			Director::getInstance()->getVisibleSize().height / 2));
-		Layermenu->addChild(gamemenu);
-		// 执行菜单从上方移动到中央的动作
-		auto moveAction = MoveTo::create(0.5f, Vec2(Director::getInstance()->getVisibleSize().width / 2,
-			Director::getInstance()->getVisibleSize().height / 2));
-		gamemenu->runAction(moveAction);
-
-		});
-		*/
-}
-void GameMap1::setPauseButton(Layer* layerUI)
+void GameMap2::setPauseButton(Layer* layerUI)
 {
 	pausebtn = Button::create("GameMap/pause_0.png", "GameMap/pause_0.png");
 	pausebtn->setPressedActionEnabled(true);
@@ -221,7 +121,7 @@ void GameMap1::setPauseButton(Layer* layerUI)
 
 		});
 }
-bool GameMap1::is_out_of_range(int x, int y)
+bool GameMap2::is_out_of_range(int x, int y)
 {
 	if (x<x_min || x>x_max || y<y_min || y>y_max)
 		return true;
@@ -229,29 +129,29 @@ bool GameMap1::is_out_of_range(int x, int y)
 		return false;
 }
 
-void GameMap1::transform_xy_to_ij(int& i, int& j, const int x, const int y)
+void GameMap2::transform_xy_to_ij(int& i, int& j, const int x, const int y)
 {
-	j = (x - 50) / 80;
-	i = 6 - (y - 10) / 80;
+	j = (x - 80) / 82;
+	i = 6 - (y + 40) / 82;
 }
 
-void GameMap1::transform_ij_to_xy(const int i, const int j, int& x, int& y)
+void GameMap2::transform_ij_to_xy(const int i, const int j, int& x, int& y)
 {
-	x = 90 + 80 * j;
-	y = 40 + 80 * (6 - i);
+	x = 120 + 82 * j;
+	y = -10 + 82 * (6 - i);
 
 }
 
-int GameMap1::getStatus(int x, int y)
+int GameMap2::getStatus(int x, int y)
 {
 	int i, j;
 	transform_xy_to_ij(i, j, x, y);
-	
+
 	//如果在地图边缘，则不能放置
-	if (is_out_of_range(x,y))
+	if (is_out_of_range(x, y))
 		return -1;
 	//如果在路径上或者是障碍，则不能被放置
-	if (map[i][j] == PATH|| map[i][j] == BARRIER)
+	if (map[i][j] == PATH || map[i][j] == BARRIER)
 		return -1;
 	//如果位置为空，则可以放置
 	if (map[i][j] == EMPTY)
@@ -263,7 +163,7 @@ int GameMap1::getStatus(int x, int y)
 }
 
 // 设置bottle按钮点击事件处理函数
-void GameMap1::bottlebuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType type,int i,int j,int placex,int placey)
+void GameMap2::bottlebuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType type, int i, int j, int placex, int placey)
 {
 	// 处理按钮点击事件
 	if (type == cocos2d::ui::Widget::TouchEventType::ENDED) {
@@ -281,13 +181,13 @@ void GameMap1::bottlebuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Wid
 		bottletower->setPosition(Vec2(placex, placey));
 
 		// 将防御塔添加到场景和容器中
-		this->addChild(bottletower,8);
+		this->addChild(bottletower, 8);
 		bottletowers.pushBack(bottletower);
 	}
 }
 
 // 设置shit按钮点击事件处理函数
-void GameMap1::shitbuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType type, int i, int j, int placex, int placey)
+void GameMap2::shitbuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType type, int i, int j, int placex, int placey)
 {
 	// 处理按钮点击事件
 	if (type == cocos2d::ui::Widget::TouchEventType::ENDED) {
@@ -311,8 +211,33 @@ void GameMap1::shitbuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Widge
 	}
 }
 
+// 设置sun按钮点击事件处理函数
+void GameMap2::sunbuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType type, int i, int j, int placex, int placey)
+{
+	// 处理按钮点击事件
+	if (type == cocos2d::ui::Widget::TouchEventType::ENDED) {
+		CCLOG("Button Clicked!");
+
+		map[i][j] = PLACED;
+
+		// 移除所有按钮
+		hideButton();
+
+		// 创建SunTower
+		auto suntower = SunTower::create("Tower/sun11.png");
+		suntower->pos_i = i;
+		suntower->pos_j = j;
+		suntower->setPosition(Vec2(placex, placey));
+
+		// 将防御塔添加到场景和容器中
+		this->addChild(suntower, 8);
+		suntowers.pushBack(suntower);
+	}
+}
+
+
 //移除button
-void GameMap1::hideButton()
+void GameMap2::hideButton()
 {
 	if (setTower) {
 		setTower->removeFromParent();
@@ -325,6 +250,10 @@ void GameMap1::hideButton()
 	if (shitbtn) {
 		shitbtn->removeFromParent();
 		shitbtn = NULL;
+	}
+	if (sunbtn) {
+		sunbtn->removeFromParent();
+		sunbtn = NULL;
 	}
 	if (upgradebtn) {
 		upgradebtn->removeFromParent();
@@ -367,13 +296,13 @@ void GameMap1::hideButton()
 	selectedPosition = Vec2::ZERO;
 }
 
-void GameMap1::onMouseDown(EventMouse* event)
+bool GameMap2::onTouchBegan(Touch* touch, Event* event)
 {
 	// 获取点击的位置
-	int mousex = event->getCursorX();
-	int mousey = event->getCursorY();
 	int placex, placey;
-	Vec2 clickLocation = Vec2(mousex, mousey);
+	Vec2 clickLocation = touch->getLocation();
+	int mousex = clickLocation.x;
+	int mousey = clickLocation.y;
 	int i, j;
 	int status = getStatus(mousex, mousey);
 
@@ -383,24 +312,27 @@ void GameMap1::onMouseDown(EventMouse* event)
 		//消除所有按钮和显示
 		if (bottlebtn && bottlebtn->getBoundingBox().containsPoint(clickLocation)) {
 			// 如果点击到了按钮，则不取消选中，而是处理按钮点击事件
-			return;
+			return true;
 		}
 		else if (shitbtn && shitbtn->getBoundingBox().containsPoint(clickLocation)) {
-			return;
+			return true;
+		}
+		else if (sunbtn && sunbtn->getBoundingBox().containsPoint(clickLocation)) {
+			return true;
 		}
 		else if (upgradebtn && upgradebtn->getBoundingBox().containsPoint(clickLocation)) {
-			return;
+			return true;
 		}
 		else if (cancelbtn && cancelbtn->getBoundingBox().containsPoint(clickLocation)) {
-			return;
+			return true;
 		}
 		else if (maxbtn && maxbtn->getBoundingBox().containsPoint(clickLocation)) {
-			return;
+			return true;
 		}
 		else {
 			hideButton();
 			selectedPosition = Vec2::ZERO;
-			return;
+			return true;
 		}
 	}
 
@@ -420,7 +352,7 @@ void GameMap1::onMouseDown(EventMouse* event)
 		auto sequence = Sequence::create(delayAction, removeAction, nullptr);
 
 		warning->runAction(sequence);
-		return;
+		return true;
 	}
 	else if (status == EMPTY) {//当前位置可以放置炮塔
 
@@ -429,7 +361,7 @@ void GameMap1::onMouseDown(EventMouse* event)
 
 		//显示添加炮塔的图片框
 		setTower = Sprite::create("GameMap/select_01.png");
-		setTower->setPosition(Vec2(90 + 80 * j, 40 + 80 * (6 - i)));
+		setTower->setPosition(Vec2(120 + 82 * j, -10 + 82 * (6 - i)));
 		this->addChild(setTower, 5);
 		selectedPosition = clickLocation;
 
@@ -439,16 +371,22 @@ void GameMap1::onMouseDown(EventMouse* event)
 		if (/*money_is_enough*/1) {
 			// 创建按钮
 			bottlebtn = Button::create("Tower/Bottle01.png", "Tower/Bottle01.png", "");
-			bottlebtn->setPosition(Vec2(placex - 40, placey - 70));
+			bottlebtn->setPosition(Vec2(placex - 70, placey - 70));
 			bottlebtn->setScale(0.8);
-			bottlebtn->addTouchEventListener(CC_CALLBACK_2(GameMap1::bottlebuttonClickCallback, this, i, j, placex, placey));
+			bottlebtn->addTouchEventListener(CC_CALLBACK_2(GameMap2::bottlebuttonClickCallback, this, i, j, placex, placey));
 			this->addChild(bottlebtn, 10);
 
 			shitbtn = Button::create("Tower/shit01.png", "Tower/shit01.png", "");
-			shitbtn->setPosition(Vec2(placex + 40, placey - 70));
+			shitbtn->setPosition(Vec2(placex + 70, placey - 70));
 			shitbtn->setScale(0.7);
-			shitbtn->addTouchEventListener(CC_CALLBACK_2(GameMap1::shitbuttonClickCallback, this, i, j, placex, placey));
+			shitbtn->addTouchEventListener(CC_CALLBACK_2(GameMap2::shitbuttonClickCallback, this, i, j, placex, placey));
 			this->addChild(shitbtn, 10);
+
+			sunbtn = Button::create("Tower/sun01.png", "Tower/sun01.png", "");
+			sunbtn->setPosition(Vec2(placex , placey - 70));
+			sunbtn->setScale(0.75);
+			sunbtn->addTouchEventListener(CC_CALLBACK_2(GameMap2::sunbuttonClickCallback, this, i, j, placex, placey));
+			this->addChild(sunbtn, 10);
 
 		}
 		else {
@@ -482,21 +420,31 @@ void GameMap1::onMouseDown(EventMouse* event)
 			}
 		}
 
+		SunTower* sunt = NULL;//找到（i，j）位置的suntower，找不到就是NULL
+		for (auto tower : suntowers) {
+			if (tower->pos_i == i && tower->pos_j == j) {
+				sunt = tower;
+				break;
+			}
+		}
+
 		if (bt != NULL)
 			upgradeBottle(bt);
 		if (st != NULL)
 			upgradeShit(st);
+		if (sunt != NULL)
+			upgradeSun(sunt);
 		//---------------todo:升级----------------------
 	}
-	
+	return true;
 }
 //升级按钮的回调函数
-void GameMap1::upgradebuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType type, const std::string& towerImage,BottleTower*bt,ShitTower*st)
+void GameMap2::upgradebuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType type, const std::string& towerImage, BottleTower* bt, ShitTower* st, SunTower* sunt)
 {
 	// 处理按钮点击事件
 	if (type == cocos2d::ui::Widget::TouchEventType::ENDED) {
 		CCLOG("Button Clicked!");
-		if (bt ) {
+		if (bt) {
 			//更新等级
 			bt->level++;
 			//升级换图片
@@ -505,7 +453,7 @@ void GameMap1::upgradebuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Wi
 			hideButton();
 			return;
 		}
-		if (st ) {
+		if (st) {
 			//更新等级
 			st->level++;
 			//升级换图片
@@ -515,11 +463,20 @@ void GameMap1::upgradebuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Wi
 			hideButton();
 			return;
 		}
+		if (sunt) {
+			//更新等级
+			sunt->level++;
+			//升级换图片
+			sunt->setTexture(towerImage);
+			// 移除所有按钮
+			hideButton();
+			return;
+		}
 	}
 }
 
 //拆除按钮的回调函数
-void GameMap1::cancelbuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType type, BottleTower* bt, ShitTower* st)
+void GameMap2::cancelbuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType type, BottleTower* bt, ShitTower* st, SunTower* sunt)
 {
 	// 处理按钮点击事件
 	if (type == cocos2d::ui::Widget::TouchEventType::ENDED) {
@@ -559,13 +516,31 @@ void GameMap1::cancelbuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Wid
 			hideButton();
 			return;
 		}
+		//拆除sun
+		if (sunt) {
+			map[sunt->pos_i][sunt->pos_j] = EMPTY;
+			sunt->removeFromParent();
+			auto it = suntowers.begin();
+			while (it != suntowers.end()) {
+				if (*it == sunt) {//找到当前炮塔
+					delete* it;  // 如果需要手动释放内存
+					it = suntowers.erase(it);  // 从 vector 中删除元素
+				}
+				else
+					++it;
+			}
+			// 移除所有按钮
+			hideButton();
+			return;
+		}
 	}
 }
 
 
-void GameMap1::upgradeBottle(BottleTower* bt) 
+void GameMap2::upgradeBottle(BottleTower* bt)
 {
-	ShitTower* emptytower = NULL;
+	ShitTower* emptyshit = NULL;
+	SunTower* emptysun = NULL;
 	int pos_x, pos_y;
 	transform_ij_to_xy(bt->pos_i, bt->pos_j, pos_x, pos_y);
 	float scale1 = 0.4;
@@ -574,7 +549,7 @@ void GameMap1::upgradeBottle(BottleTower* bt)
 
 	/*一级炮塔升级*/
 	if (bt->level == 1) {
-		
+
 		//放置范围灰色圈
 		setRange(scale1, pos_x, pos_y);
 
@@ -583,9 +558,9 @@ void GameMap1::upgradeBottle(BottleTower* bt)
 		std::string towerImage = "Tower/Bottle21.png";
 		std::string cancelbtnImage = "Tower/cancelbottle1.png";
 
-		setUpgradeButton(upgradebtnImage, towerImage, pos_x, pos_y, 1, bt, emptytower);
-		setCancelButton(cancelbtnImage, pos_x, pos_y, bt, emptytower);
-		
+		setUpgradeButton(upgradebtnImage, towerImage, pos_x, pos_y, 1, bt, emptyshit,emptysun);
+		setCancelButton(cancelbtnImage, pos_x, pos_y, bt, emptyshit, emptysun);
+
 	}
 	/*二级炮塔升级*/
 	else if (bt->level == 2) {
@@ -598,8 +573,8 @@ void GameMap1::upgradeBottle(BottleTower* bt)
 		std::string towerImage = "Tower/Bottle31.png";
 		std::string cancelbtnImage = "Tower/cancelbottle2.png";
 
-		setUpgradeButton(upgradebtnImage, towerImage, pos_x, pos_y, 1, bt, emptytower);
-		setCancelButton(cancelbtnImage, pos_x, pos_y, bt, emptytower);
+		setUpgradeButton(upgradebtnImage, towerImage, pos_x, pos_y, 1, bt, emptyshit, emptysun);
+		setCancelButton(cancelbtnImage, pos_x, pos_y, bt, emptyshit, emptysun);
 
 	}
 	/*三级炮塔升级（不能升只能拆）*/
@@ -615,13 +590,14 @@ void GameMap1::upgradeBottle(BottleTower* bt)
 		maxbtn->setScale(0.8);
 		this->addChild(maxbtn, 10);
 
-		setCancelButton(cancelbtnImage, pos_x, pos_y, bt, emptytower);
+		setCancelButton(cancelbtnImage, pos_x, pos_y, bt, emptyshit, emptysun);
 	}
 }
 
-void GameMap1::upgradeShit(ShitTower*st)
+void GameMap2::upgradeShit(ShitTower* st)
 {
-	BottleTower* emptytower = NULL;
+	BottleTower* emptybottle = NULL;
+	SunTower* emptysun = NULL;
 	int pos_x, pos_y;
 	transform_ij_to_xy(st->pos_i, st->pos_j, pos_x, pos_y);
 	float scale1 = 0.4;
@@ -639,8 +615,8 @@ void GameMap1::upgradeShit(ShitTower*st)
 		std::string towerImage = "Tower/shit2.png";
 		std::string cancelbtnImage = "Tower/cancelshit1.png";
 
-		setUpgradeButton(upgradebtnImage, towerImage, pos_x, pos_y, 1, emptytower, st);
-		setCancelButton(cancelbtnImage, pos_x, pos_y, emptytower, st);
+		setUpgradeButton(upgradebtnImage, towerImage, pos_x, pos_y, 1, emptybottle, st, emptysun);
+		setCancelButton(cancelbtnImage, pos_x, pos_y, emptybottle, st, emptysun);
 
 	}
 	/*二级炮塔升级*/
@@ -654,8 +630,8 @@ void GameMap1::upgradeShit(ShitTower*st)
 		std::string towerImage = "Tower/shit3.png";
 		std::string cancelbtnImage = "Tower/cancelshit2.png";
 
-		setUpgradeButton(upgradebtnImage, towerImage, pos_x, pos_y, 1, emptytower, st);
-		setCancelButton(cancelbtnImage, pos_x, pos_y, emptytower, st);
+		setUpgradeButton(upgradebtnImage, towerImage, pos_x, pos_y, 1, emptybottle, st, emptysun);
+		setCancelButton(cancelbtnImage, pos_x, pos_y, emptybottle, st, emptysun);
 
 	}
 	/*三级炮塔升级（不能升只能拆）*/
@@ -671,40 +647,97 @@ void GameMap1::upgradeShit(ShitTower*st)
 		maxbtn->setScale(0.8);
 		this->addChild(maxbtn, 10);
 
-		setCancelButton(cancelbtnImage, pos_x, pos_y, emptytower, st);
+		setCancelButton(cancelbtnImage, pos_x, pos_y, emptybottle, st, emptysun);
+	}
+}
+
+void GameMap2::upgradeSun(SunTower* sunt)
+{
+	BottleTower* emptybottle = NULL;
+	ShitTower* emptyshit = NULL;
+	int pos_x, pos_y;
+	transform_ij_to_xy(sunt->pos_i, sunt->pos_j, pos_x, pos_y);
+	float scale1 = 0.4;
+	float scale2 = 0.5;
+	float scale3 = 0.65;
+
+	/*一级炮塔升级*/
+	if (sunt->level == 1) {
+
+		//放置范围灰色圈
+		setRange(scale1, pos_x, pos_y);
+
+		//放置升级和删除的按钮
+		std::string upgradebtnImage = "Tower/upgradesun1.png";
+		std::string towerImage = "Tower/sun22.png";
+		std::string cancelbtnImage = "Tower/cancelsun1.png";
+
+		setUpgradeButton(upgradebtnImage, towerImage, pos_x, pos_y, 1, emptybottle,emptyshit, sunt);
+		setCancelButton(cancelbtnImage, pos_x, pos_y, emptybottle, emptyshit, sunt);
+
+	}
+	/*二级炮塔升级*/
+	else if (sunt->level == 2) {
+
+		//放置范围灰色圈
+		setRange(scale2, pos_x, pos_y);
+
+		//放置升级和删除的按钮
+		std::string upgradebtnImage = "Tower/upgradesun2.png";
+		std::string towerImage = "Tower/sun33.png";
+		std::string cancelbtnImage = "Tower/cancelsun2.png";
+
+		setUpgradeButton(upgradebtnImage, towerImage, pos_x, pos_y, 1, emptybottle, emptyshit, sunt);
+		setCancelButton(cancelbtnImage, pos_x, pos_y, emptybottle, emptyshit, sunt);
+
+	}
+	/*三级炮塔升级（不能升只能拆）*/
+	else {
+
+		std::string cancelbtnImage = "Tower/cancelsun3.png";
+		//放置范围灰色圈
+		setRange(scale3, pos_x, pos_y);
+
+		//放置max和删除的按钮
+		maxbtn = Button::create("Tower/max.png", "Tower/max.png", "");
+		maxbtn->setPosition(Vec2(pos_x, pos_y + 70));
+		maxbtn->setScale(0.8);
+		this->addChild(maxbtn, 10);
+
+		setCancelButton(cancelbtnImage, pos_x, pos_y, emptybottle, emptyshit, sunt);
 	}
 }
 
 
-void GameMap1::setUpgradeButton(const std::string& btnImage, const std::string& towerImage, int pos_x, int pos_y, bool can_be_clicked, BottleTower* bt, ShitTower* st)
+void GameMap2::setUpgradeButton(const std::string& btnImage, const std::string& towerImage, int pos_x, int pos_y, bool can_be_clicked, BottleTower* bt, ShitTower* st,SunTower*sunt)
 {
 	upgradebtn = Button::create(btnImage, btnImage, "");
 	upgradebtn->setPosition(Vec2(pos_x, pos_y + 70));
 	upgradebtn->setScale(0.8);
 	if (can_be_clicked)
-		upgradebtn->addTouchEventListener(CC_CALLBACK_2(GameMap1::upgradebuttonClickCallback, this, towerImage, bt, st));
+		upgradebtn->addTouchEventListener(CC_CALLBACK_2(GameMap2::upgradebuttonClickCallback, this, towerImage, bt, st,sunt));
 	this->addChild(upgradebtn, 10);
 }
 
-void GameMap1::setRange(float scale, int pos_x, int pos_y)
+void GameMap2::setRange(float scale, int pos_x, int pos_y)
 {
 	range = Sprite::create("Tower/range.png");
 	range->setPosition(Vec2(pos_x, pos_y));
 	range->setScale(scale);
-	this->addChild(range,9);
+	this->addChild(range);
 }
 
-void GameMap1::setCancelButton(const std::string& btnImage, int pos_x, int pos_y, BottleTower* bt, ShitTower* st)
+void GameMap2::setCancelButton(const std::string& btnImage, int pos_x, int pos_y, BottleTower* bt, ShitTower* st, SunTower* sunt)
 {
 	cancelbtn = Button::create(btnImage, btnImage, "");
 	cancelbtn->setPosition(Vec2(pos_x, pos_y - 70));
 	cancelbtn->setScale(0.8);
-	cancelbtn->addTouchEventListener(CC_CALLBACK_2(GameMap1::cancelbuttonClickCallback, this, bt,st));
+	cancelbtn->addTouchEventListener(CC_CALLBACK_2(GameMap2::cancelbuttonClickCallback, this, bt, st,sunt));
 	this->addChild(cancelbtn, 10);
 }
 
 //倒计时
-void GameMap1::countDown()
+void GameMap2::countDown()
 {
 	//获取屏幕大小
 	auto visibleSize = Director::getInstance()->getVisibleSize();
@@ -713,7 +746,7 @@ void GameMap1::countDown()
 	//if_pause = 1;
 	//倒计时页
 	auto time_layer = Layer::create();
-	this->addChild(time_layer,500);
+	this->addChild(time_layer);
 
 	auto listener = EventListenerTouchOneByOne::create();
 	listener->setSwallowTouches(true);
@@ -724,17 +757,17 @@ void GameMap1::countDown()
 
 	//倒计时背景盘
 	auto timepanel = Sprite::create("GameMap/timepanel.png");
-	timepanel->setPosition(Vec2(origin.x + visibleSize.width / 2,origin.y + visibleSize.height / 2));
+	timepanel->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2));
 	time_layer->addChild(timepanel);
 
 	//倒计时数字
 	auto number = Sprite::create("GameMap/time3.png");
-	number->setPosition(Vec2(origin.x + visibleSize.width * 0.5,origin.y + visibleSize.height / 2+10));
+	number->setPosition(Vec2(origin.x + visibleSize.width * 0.5, origin.y + visibleSize.height / 2 + 10));
 	time_layer->addChild(number);
 
 	//倒计时转圈
 	auto circle = Sprite::create("GameMap/timecircle.png");
-	circle->setPosition(Vec2(visibleSize.width / 2+2, + visibleSize.height / 2));
+	circle->setPosition(Vec2(visibleSize.width / 2 + 2, +visibleSize.height / 2));
 	circle->setAnchorPoint(Vec2(1, 0.5));
 	circle->setScale(0.95);
 	time_layer->addChild(circle);
@@ -761,7 +794,7 @@ void GameMap1::countDown()
 
 //
 
-void GameMap1::init_m1(float delta) {
+void GameMap2::init_m1(float delta) {
 	auto monsterSprite = Monster::create();
 	this->addChild(monsterSprite, 100 - monsternum);
 	monsterSprite->initmonster_type1();
@@ -769,7 +802,7 @@ void GameMap1::init_m1(float delta) {
 	monsternum++;
 }
 
-void GameMap1::init_m2(float delta) {
+void GameMap2::init_m2(float delta) {
 	auto monsterSprite = Monster::create();
 	this->addChild(monsterSprite, 100 - monsternum);
 	monsterSprite->initmonster_type2();
@@ -777,7 +810,7 @@ void GameMap1::init_m2(float delta) {
 	monsternum++;
 }
 
-void GameMap1::init_m3(float delta) {
+void GameMap2::init_m3(float delta) {
 	monsternum++;
 	auto monsterSprite = Monster::create();
 	this->addChild(monsterSprite, 100 - monsternum);
@@ -788,76 +821,50 @@ void GameMap1::init_m3(float delta) {
 
 
 
-void GameMap1::bo(float a) {
-	cocos2d::Texture2D* texture;
+void GameMap2::bo(float a) {
+
 	switch (current_wave)
 	{
 		case 1:
 			//第一波：五个便便怪
-			schedule(schedule_selector(GameMap1::init_m3), 1, 4, 1);
-			texture = Director::getInstance()->getTextureCache()->addImage("Gamemap/wave_1.png");
-			// 设置新的纹理  
-			wave->setTexture(texture);
+			schedule(schedule_selector(GameMap2::init_m3), 1, 4, 1);
 			break;
 		case 2:
 			//第二波：五个黑煤球
-			texture = Director::getInstance()->getTextureCache()->addImage("Gamemap/wave_2.png");
-			// 设置新的纹理  
-			wave->setTexture(texture);
-			schedule(schedule_selector(GameMap1::init_m1), 1, 4, 1);
+			schedule(schedule_selector(GameMap2::init_m1), 1, 4, 1);
 			break;
 		case 3:
 			//第三波：五个小蝙蝠
-			texture = Director::getInstance()->getTextureCache()->addImage("Gamemap/wave_3.png");
-			// 设置新的纹理  
-			wave->setTexture(texture);
-			schedule(schedule_selector(GameMap1::init_m2), 1, 4, 1);
+			schedule(schedule_selector(GameMap2::init_m2), 1, 4, 1);
 			break;
 		case 4:
 			//第四波：五个便便怪
-			texture = Director::getInstance()->getTextureCache()->addImage("Gamemap/wave_4.png");
-			// 设置新的纹理  
-			wave->setTexture(texture);
-			schedule(schedule_selector(GameMap1::init_m3), 1, 4, 1);
+			schedule(schedule_selector(GameMap2::init_m3), 1, 4, 1);
 			break;
 		case 5:
-			texture = Director::getInstance()->getTextureCache()->addImage("Gamemap/wave_5.png");
-			// 设置新的纹理  
-			wave->setTexture(texture);
-			schedule(schedule_selector(GameMap1::init_m3), 1, 4, 1);
+			schedule(schedule_selector(GameMap2::init_m3), 1, 4, 1);
 			break;
 		case 6:
 			//第五波：各五个
-			schedule(schedule_selector(GameMap1::init_m2), 1, 4, 1);
+			schedule(schedule_selector(GameMap2::init_m2), 1, 4, 1);
 			break;
 		case 7:
-			schedule(schedule_selector(GameMap1::init_m1), 1, 4, 1);
+			schedule(schedule_selector(GameMap2::init_m1), 1, 4, 1);
 			break;
 	}
 	current_wave++;
-	if (current_wave >= 8)
-		this->schedule(schedule_selector(GameMap1::next_bo), 0.05f);
 	if (current_wave < 6)
-		this->schedule(schedule_selector(GameMap1::next_bo), 3);
+		this->schedule(schedule_selector(GameMap2::next_bo), 3);
 	else
 	{
-		this->scheduleOnce(schedule_selector(GameMap1::bo), 5);
+		this->scheduleOnce(schedule_selector(GameMap2::bo), 5);
 	}
 }
 
-void GameMap1::next_bo(float a) {
-	if (current_wave >= 8) {
-		if (die_monsternum >= 35)
-		{//-------------------todo:判断输赢的接口--------------------------------------------------------------------------
-			auto gameover = Sprite::create("GameMap/gameover.png");  // 使用你的背景图片文件名
-			gameover->setPosition(505, 300);
-			this->addChild(gameover, 15);
-			this->unschedule(schedule_selector(GameMap1::next_bo));
-		}
-	}
-	else if (monsterContainer.empty())
+void GameMap2::next_bo(float a) {
+	if (die_monsternum == monsternum)
 	{
-		this->unschedule(schedule_selector(GameMap1::next_bo));
-		this->GameMap1::bo(0.1f);
+		this->unschedule(schedule_selector(GameMap2::next_bo));
+		this->GameMap2::bo(0.1f);
 	}
 }

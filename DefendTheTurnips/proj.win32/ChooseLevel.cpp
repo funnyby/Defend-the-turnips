@@ -1,6 +1,7 @@
 #include "ChooseLevel.h"
 #include "MainScene.h"
-#include"EnterScene.h"
+#include"EnterScene1.h"
+#include"EnterScene2.h"
 #include<vector>
 
 USING_NS_CC;
@@ -137,7 +138,22 @@ void ChooseLevel::InitUI()
 
 					
 					 //跳转场景
-					auto enterscene = EnterScene::createScene();
+					auto enterscene = EnterScene1::createScene();
+					Director::getInstance()->replaceScene(enterscene);
+				}
+				});
+		}
+		else if (i == 1) {
+			//触摸事件监听器
+			button->addTouchEventListener([](Ref* sender, Widget::TouchEventType type) {
+				if (type == ui::Widget::TouchEventType::ENDED)
+				{
+					//当前关卡等级，根据Tag值加载对应关卡的数据
+					log("hello %d", ((Button*)sender)->getTag());
+
+
+					//跳转场景
+					auto enterscene = EnterScene2::createScene();
 					Director::getInstance()->replaceScene(enterscene);
 				}
 				});

@@ -2,7 +2,6 @@
 #pragma once
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
-#include "EnterScene.h"
 #include "Carrot.h"
 #include "Way.h"
 #include "My_monster.h"
@@ -60,7 +59,7 @@ private:
     //选中后产生头上红点
     void betouched();
     void deletebehit(float a);
-    void initBarrier();
+    void initBarrier(int hp, int money, Texture2D* texture, Vec2 pos);
     CREATE_FUNC(Barrier);
 };
 

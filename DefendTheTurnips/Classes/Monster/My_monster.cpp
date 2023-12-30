@@ -26,8 +26,8 @@ void Monster::initmonster_type1() {
 	freeze_total = 88;
 	_walkSpeed = 88;
 	//_walkSpeed =0.01;
-	hp_total = 100;
-	_hp = 100;
+	hp_total = 70;
+	_hp = 70;
 	_freeze = -10;
 	waypoint = 1;
 	isalive = 1;
@@ -63,6 +63,11 @@ void Monster::initmonster_type2() {
 	//在地图起点处放置一个怪物
 	monsterContainer.pushBack(this);
 	initWithFile("monster/F11.png");
+
+	behit = Sprite::create();
+	behit->setPosition(60, 24); //设置框的位置
+	behit->setVisible(false); // 设置为可见  
+	this->addChild(behit);            //加到默认图层里面去
 
 	freeze_total = 137;
 	_walkSpeed = 137;
@@ -105,11 +110,16 @@ void Monster::initmonster_type3() {
 	monsterContainer.pushBack(this);
 	initWithFile("monster/L11.png");
 
+	behit = Sprite::create();
+	behit->setPosition(60, 24); //设置框的位置
+	behit->setVisible(false); // 设置为可见  
+	this->addChild(behit);            //加到默认图层里面去
+
 	freeze_total = 48;
 	_walkSpeed = 48;
 	//_walkSpeed =0.01;
-	_hp = 200;
-	hp_total = 200;
+	_hp = 100;
+	hp_total = 100;
 	_freeze = -1;
 	waypoint = 1;
 	isalive = 1;
@@ -176,6 +186,8 @@ bool Monster::judge_dest() {
 				Carrot->set_beBiten(true);
 			}
 			//myCarrot[0]->set_beBiten(true);
+			auto progress = (ProgressTimer*)this->getChildByTag(BLOOD_BAR_m);
+			progress->removeFromParent();
 			this->_hp = 0;
 			this->isDie();
 			return true;
@@ -214,12 +226,12 @@ void Monster::create_Health_bar() {
 	//从右到左减少血量
 	progress->setMidpoint(Point(0, 0.5));     //如果是从左到右的话，改成(1,0.5)即可
 	progress->setBarChangeRate(Point(1, 0));
-	progress->setTag(BLOOD_BAR);       //做一个标记
+	progress->setTag(BLOOD_BAR_m);       //做一个标记
 	this->addChild(progress);
 }
 
 void Monster::scheduleBlood() {
-	auto progress = (ProgressTimer*)this->getChildByTag(BLOOD_BAR);
+	auto progress = (ProgressTimer*)this->getChildByTag(BLOOD_BAR_m);
 	progress->setPercentage(((_hp) / hp_total) * 100);  //这里是百分制显示
 }
 
@@ -317,14 +329,11 @@ bool Monster::isDie() {
 		if (this->choosed == 1 && this->choice != nullptr)
 		{
 			getActionManager()->removeAllActionsFromTarget(choice);
-			choice->removeFromParent();
+			this->choice->removeFromParent();
 			choose_a_object = 0;
 		}
-		bloodbox->removeFromParent();
-		getActionManager()->removeAllActionsFromTarget(this);
-		sprBlood->removeFromParent();
-		auto progress = (ProgressTimer*)this->getChildByTag(BLOOD_BAR);
-		progress->removeFromParent();
+		if (this->bloodbox != nullptr)
+			this->bloodbox->removeFromParent();
 		getActionManager()->removeAllActionsFromTarget(this);
 		isalive = 0;
 		//精灵爆炸
@@ -350,8 +359,9 @@ bool Monster::isDie() {
 		animation->addSpriteFrameWithTexture(texture6, Rect(0, 0, 100, 100));
 		//4.运行动画
 		this->runAction(RepeatForever::create(Animate::create(animation)));
-		this->schedule(schedule_selector(Monster::deletemonster), 0.4);
 		die_monsternum++;
+		monsterContainer.eraseObject(this, 0);
+		this->schedule(schedule_selector(Monster::deletemonster), 0.4);
 		return true;
 	}
 	else
@@ -383,10 +393,26 @@ void Monster::behurt(int monster_blood, int type) {
 		//4.运行动画
 		behit->runAction(RepeatForever::create(Animate::create(animation)));
 	}
+	if (type == 2)
+	{
+		auto texture = Director::getInstance()->getTextureCache()->addImage("monster/shit.png");
+		// 设置新的纹理  
+		behit->setTexture(texture);
+		//2.创建动画，设置间隔
+		Animation* animation = Animation::create();
+		animation->setDelayPerUnit(0.2 / 2);//动画共16帧，运行时间1秒
+		animation->setRestoreOriginalFrame(true);//动画执行完后返回第一帧
+		//3.加载精灵帧
+		Texture2D* texture1 = Director::getInstance()->getTextureCache()->addImage("monster/shit.png");
+		animation->addSpriteFrameWithTexture(texture1, Rect(0, 0, 100, 100));
+		Texture2D* texture2 = Director::getInstance()->getTextureCache()->addImage("monster/7.png");
+		animation->addSpriteFrameWithTexture(texture2, Rect(0, 0, 100, 100));
+		//4.运行动画
+		behit->runAction(RepeatForever::create(Animate::create(animation)));
+	}
 	schedule(schedule_selector(Monster::deletebehit), 0.4);
 }
 
 void Monster::deletebehit(float a) {
 	behit->setVisible(false);
 }
-

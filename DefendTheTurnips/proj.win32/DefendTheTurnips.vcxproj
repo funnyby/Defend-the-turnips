@@ -70,7 +70,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LibraryPath>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>D:\Defend-the-turnips\DefendTheTurnips;D:\Defend-the-turnips\DefendTheTurnips\proj.win32;C:\Users\boring\Documents\GitHub\Defend-the-turnips\DefendTheTurnips\proj.win32;$(IncludePath)</IncludePath>
+    <IncludePath>D:\Defend-the-turnips\DefendTheTurnips\Classes\Monster;D:\Defend-the-turnips\DefendTheTurnips\Classes;D:\Defend-the-turnips\DefendTheTurnips\proj.win32;C:\Users\boring\Documents\GitHub\Defend-the-turnips\DefendTheTurnips\proj.win32;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LibraryPath>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
@@ -152,6 +152,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
+    <ClCompile Include="..\Classes\Barrier\Barrier.cpp" />
     <ClCompile Include="..\Classes\BulletClasses\BottleTowerBullet.cpp" />
     <ClCompile Include="..\Classes\BulletClasses\Bullet.cpp" />
     <ClCompile Include="..\Classes\BulletClasses\shit.cpp" />
@@ -160,32 +161,39 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
     <ClCompile Include="..\Classes\Monster\My_monster.cpp" />
     <ClCompile Include="..\Classes\Tower\ShitTower.cpp" />
+    <ClCompile Include="..\Classes\Tower\SunTower.cpp" />
     <ClCompile Include="..\Classes\Tower\Tower.cpp" />
     <ClCompile Include="BottleTower.cpp" />
     <ClCompile Include="ChooseLevel.cpp" />
-    <ClCompile Include="EnterScene.cpp" />
+    <ClCompile Include="EnterScene1.cpp" />
+    <ClCompile Include="EnterScene2.cpp" />
     <ClCompile Include="GameMap1.cpp" />
+    <ClCompile Include="GameMap2.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
+    <ClInclude Include="..\Classes\Barrier\Barrier.h" />
     <ClInclude Include="..\Classes\BulletClasses\BottleTowerBullet.h" />
     <ClInclude Include="..\Classes\BulletClasses\Bullet.h" />
     <ClInclude Include="..\Classes\BulletClasses\shit.h" />
     <ClInclude Include="..\Classes\BulletClasses\SunFlowerBullet.h" />
     <ClInclude Include="..\Classes\Carrot.h" />
     <ClInclude Include="..\Classes\HelloWorldScene.h" />
-    <ClInclude Include="..\Classes\Monster\My_monster.h" />
     <ClInclude Include="..\Classes\Tower\BottleTower.h" />
     <ClInclude Include="..\Classes\Tower\ShitTower.h" />
+    <ClInclude Include="..\Classes\Tower\SunTower.h" />
     <ClInclude Include="..\Classes\Tower\Tower.h" />
     <ClInclude Include="..\Classes\Way.h" />
     <ClInclude Include="ChooseLevel.h" />
-    <ClInclude Include="EnterScene.h" />
+    <ClInclude Include="EnterScene1.h" />
+    <ClInclude Include="EnterScene2.h" />
     <ClInclude Include="GameMap1.h" />
+    <ClInclude Include="GameMap2.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="MainScene.h" />
+    <ClInclude Include="My_monster.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>

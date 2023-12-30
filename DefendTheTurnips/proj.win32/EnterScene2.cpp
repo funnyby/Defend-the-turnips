@@ -1,13 +1,13 @@
-#include "EnterScene.h"
+#include "EnterScene2.h"
 #include "SimpleAudioEngine.h"
 #include "ChooseLevel.h"
-#include "GameMap1.h"
+#include "GameMap2.h"
 USING_NS_CC;
 using namespace cocos2d::ui;
 
-cocos2d::Scene* EnterScene::createScene()
+cocos2d::Scene* EnterScene2::createScene()
 {
-	return EnterScene::create();
+	return EnterScene2::create();
 }
 
 static void problemLoading(const char* filename)
@@ -16,7 +16,7 @@ static void problemLoading(const char* filename)
 	printf("Depending on how you compiled you might have to add 'Resources/' in front of filenames in EnterScene.cpp\n");
 }
 
-bool EnterScene::init()
+bool EnterScene2::init()
 {
 	if (!InitUI())
 		return false;
@@ -24,12 +24,12 @@ bool EnterScene::init()
 	return true;
 }
 
-bool EnterScene::InitUI()
+bool EnterScene2::InitUI()
 {
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 	// 添加背景
-	auto background = Sprite::create("EnterScene/enterscene1.png");  // 使用你的背景图片文件名
+	auto background = Sprite::create("EnterScene/enterscene2.png");  // 使用你的背景图片文件名
 	background->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));
 	// 计算缩放比例，以适应屏幕
 	float scaleX = visibleSize.width / background->getContentSize().width;
@@ -40,7 +40,7 @@ bool EnterScene::InitUI()
 	this->addChild(background);
 
 	// 在这里可以添加其他场景元素，如角色、按钮等
-	
+
 
 	//添加返回上一界面按钮
 	auto returnBtn = Button::create("EnterScene/return1.png", "EnterScene/return1.png", "null.png");
@@ -69,7 +69,7 @@ bool EnterScene::InitUI()
 				break;
 		}
 		});
-		
+
 	//添加开始游戏按钮
 	auto startBtn = Button::create("EnterScene/startbtn1.png", "EnterScene/startbtn1.png", "null.png");
 	startBtn->setPosition(Vec2(origin.x + 562, origin.y + 75));
@@ -89,7 +89,7 @@ bool EnterScene::InitUI()
 			{
 				//log("_startGameBtn ENDERD");
 				 //跳转场景
-				auto GameMap = GameMap1::createScene();
+				auto GameMap = GameMap2::createScene();
 				Director::getInstance()->replaceScene(GameMap);
 				break;
 			}

@@ -43,6 +43,9 @@
     <Filter Include="Tower">
       <UniqueIdentifier>{fbaf55bd-dcc2-43b5-a7df-bcba650a376a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Barrier">
+      <UniqueIdentifier>{e799c217-be01-491d-bfbd-029ec261b872}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -60,11 +63,8 @@
     <ClCompile Include="ChooseLevel.cpp">
       <Filter>src\ChooseLevel</Filter>
     </ClCompile>
-    <ClCompile Include="EnterScene.cpp">
+    <ClCompile Include="EnterScene1.cpp">
       <Filter>src\EnterScene</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Monster\My_monster.cpp">
-      <Filter>Monster</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\BulletClasses\Bullet.cpp">
       <Filter>Bullet\BaseBullet</Filter>
@@ -93,6 +93,21 @@
     <ClCompile Include="BottleTower.cpp">
       <Filter>Tower</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Barrier\Barrier.cpp">
+      <Filter>Barrier</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMap2.cpp">
+      <Filter>src\GameMap</Filter>
+    </ClCompile>
+    <ClCompile Include="EnterScene2.cpp">
+      <Filter>src\EnterScene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Tower\SunTower.cpp">
+      <Filter>Tower</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Monster\My_monster.cpp">
+      <Filter>Monster</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -110,16 +125,13 @@
     <ClInclude Include="ChooseLevel.h">
       <Filter>src\ChooseLevel</Filter>
     </ClInclude>
-    <ClInclude Include="EnterScene.h">
+    <ClInclude Include="EnterScene1.h">
       <Filter>src\EnterScene</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Way.h">
-      <Filter>Monster</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Monster\My_monster.h">
       <Filter>Monster</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\BulletClasses\Bullet.h">
@@ -148,6 +160,21 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Tower\BottleTower.h">
       <Filter>Tower</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Barrier\Barrier.h">
+      <Filter>Barrier</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMap2.h">
+      <Filter>src\GameMap</Filter>
+    </ClInclude>
+    <ClInclude Include="EnterScene2.h">
+      <Filter>src\EnterScene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Tower\SunTower.h">
+      <Filter>Tower</Filter>
+    </ClInclude>
+    <ClInclude Include="My_monster.h">
+      <Filter>Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

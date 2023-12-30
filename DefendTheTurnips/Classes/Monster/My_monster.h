@@ -1,9 +1,8 @@
 #pragma once
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
-#include "EnterScene.h"
 #include "Carrot.h"
-#include "Barrier.h"
+#include "..\Classes\Barrier\Barrier.h"
 //#include"GameMap.h"
 #include "Way.h"
 #define CREATE_FUNC(__TYPE__) \
@@ -53,7 +52,7 @@ private:
     CC_SYNTHESIZE(float, _money, Money);
     //冰冻
     CC_SYNTHESIZE(float, _freeze, Freeze);
-    int BLOOD_BAR;
+    int BLOOD_BAR_m;
     //精灵序号，为每种精灵编一个序号
     int _spriteIndex;
     //GameMediator* m;

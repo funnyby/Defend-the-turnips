@@ -8,13 +8,13 @@ public:
     virtual bool initGreenBullet(int grade);
 
     CREATE_FUNC(GreenTowerBullet);
-    
+
     void shoot();
-    
+
     void removeBullet();
-    
+
     virtual void inputBulletAction(Point towerLoc, Point MonsterLoc);
-    
+
     void rotateSpriteToDirection();
 private:
     int speed;

@@ -80,21 +80,18 @@ void BottleTower::update(float d)
             attackTimer = 0.0f;  // 重置计时器
 
             auto BulletSprite1 = GreenTowerBullet::create();
-            this->addChild(BulletSprite1, 9);
+            this->addChild(BulletSprite1, -1);
             BulletSprite1->initGreenBullet(level);
 
             //BulletSprite1->monsterContainer.pushBack(monsterSprite);
             // 
             //----------todo：子弹不能按照正确的路径打出
             //----------todo：对接出现问题，应该是参数传递有问题
-            BulletSprite1->inputBulletAction(Vec2::ZERO, target_pos - my_pos);//src\dst
+            BulletSprite1->inputBulletAction(Vec2(40,40), target_pos - my_pos);//src\dst
             BulletSprite1->shoot();
 
         }
     }
-    else {
-        //实现不在攻击范围内，炮塔回到原来位置
-        setRotation( 0);
-    }
+   
     
 }

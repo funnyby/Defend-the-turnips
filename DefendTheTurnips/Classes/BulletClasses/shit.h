@@ -17,7 +17,6 @@ public:
     
     void rotateSpriteToDirection();
     
-    cocos2d::Vector<Monster*> monsterContainer;
 private:
     int speed;
     

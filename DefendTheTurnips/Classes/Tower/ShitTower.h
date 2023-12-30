@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef __SHITTOWER_TOWER_H__
-#define __SHITTOWER_TOWER_H__
+#ifndef __SHIT_TOWER_H__
+#define __SHIT_TOWER_H__
 
 #include "Tower.h"
 
@@ -20,7 +20,7 @@ public:
     // 重写父类的攻击行为
     void performAttack() override;
 
-   
+    void update(float d);
 };
 
 #endif  __SHITTOWER_TOWER_H__

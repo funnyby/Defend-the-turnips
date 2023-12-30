@@ -2,7 +2,6 @@
 #define __CARROT_H_
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
-#include "EnterScene.h"
 
 #define CREATE_FUNC(__TYPE__) \
 static __TYPE__* create() \

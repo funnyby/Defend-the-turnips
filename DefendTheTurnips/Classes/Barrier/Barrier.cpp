@@ -6,24 +6,28 @@ using namespace cocos2d::ui;
 
 cocos2d::Vector<Barrier*> BarrierContainer;
 
-void Barrier::initBarrier() {
+void Barrier::initBarrier(int hp, int money, Texture2D* texture, Vec2 pos) {
 	//在地图起点处放置一个怪物
 	BarrierContainer.pushBack(this);
-	initWithFile("Barrier/1.png");
+	initWithTexture(texture);
 
+	hp_total = hp;
+	_money = money;
+	this->setPosition(pos);
 
 	behit = Sprite::create();
-	behit->setPosition(60, 24); //设置框的位置
+	behit->setPosition(60, 10); //设置框的位置
 	behit->setVisible(false); // 设置为可见  
 	this->addChild(behit);            //加到默认图层里面去
 
-	hp_total = 100;
-	_hp = 100;
+	//hp_total = 100;
+	_hp = hp_total;
 	isalive = 1;
 
 	this->create_Health_bar();
 	this->scheduleBlood();
-	this->setPosition(470, 485);
+	this->schedule(schedule_selector(Barrier::update), 0.4f);
+	//this->setPosition(470, 485);
 
 }
 
@@ -41,11 +45,13 @@ void Barrier::create_Health_bar() {
 	bloodbox->setScaleY(0.1f); // 将精灵在y轴上的大小缩小到原来的50%
 	bloodbox->setPosition(42, 90); //设置框的位置
 	this->addChild(bloodbox);            //加到默认图层里面去
+	bloodbox->setVisible(false);
 	sprBlood = Sprite::create("monster/4.png");  //创建血条
 	ProgressTimer* progress = ProgressTimer::create(sprBlood); //创建progress对象
 	progress->setType(ProgressTimer::Type::BAR);        //类型：条状
 	progress->setScaleX(0.1f); // 将精灵在x轴上的大小缩小到原来的50%  
 	progress->setScaleY(0.1f); // 将精灵在y轴上的大小缩小到原来的50%
+	progress->setVisible(false);
 	progress->setPosition(40, 90);
 	//从右到左减少血量
 	progress->setMidpoint(Point(0, 0.5));     //如果是从左到右的话，改成(1,0.5)即可
@@ -64,7 +70,7 @@ void Barrier::betouched() {
 		return;
 	choice = Sprite::create("monster/16.png");   //创建进度框
 	this->addChild(choice, 10000);            //加到默认图层里面去
-	choice->setPosition(50, 120); //设置框的位置
+	choice->setPosition(50, 100); //设置框的位置
 	//2.创建动画，设置间隔
 	Animation* animation = Animation::create();
 	animation->setDelayPerUnit(0.2 / 2);//动画共16帧，运行时间1秒
@@ -181,6 +187,9 @@ void Barrier::deletemonster(float a) {
 void Barrier::behurt(int monster_blood, int type) {
 	_hp -= monster_blood;
 	behit->setVisible(true); // 设置为可见  
+	bloodbox->setVisible(true);
+	auto progress = (ProgressTimer*)this->getChildByTag(BLOOD_BAR);
+	progress->setVisible(true);
 	if (type == 1)
 	{
 		auto texture = Director::getInstance()->getTextureCache()->addImage("monster/behit1.png");
@@ -204,4 +213,3 @@ void Barrier::behurt(int monster_blood, int type) {
 void Barrier::deletebehit(float a) {
 	behit->setVisible(false);
 }
-

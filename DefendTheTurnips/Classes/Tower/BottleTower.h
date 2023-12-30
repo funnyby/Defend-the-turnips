@@ -9,10 +9,7 @@
 class BottleTower : public Tower
 {
 public:
-    cocos2d::Sprite* range;
-    cocos2d::ui::Button* upgradebtn;
-    cocos2d::ui::Button* cancelbtn;
-    cocos2d::Vec2 selectedPosition; // 选中的位置
+    
     // 创建炮塔
     static BottleTower* create(const std::string& towerImage);
 

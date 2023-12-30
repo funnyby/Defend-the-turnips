@@ -61,15 +61,7 @@ void SunFlowerBullet::removeBullet() {
 		auto monsterRect = monster->getBoundingBox();
 
 		if (monsterRect.intersectsRect(bulletRect)) {
-			auto currHp = monster->getHP();
-
-			currHp = currHp - this->getAttackDamage();
-
-			if (currHp <= 0) {
-				currHp = 0;
-			}
-			monster->setHP(currHp);
-			monster->update(1);//?
+			monster->behurt(this->getAttackRange(), 3);
 			isMissed = false;
 		}
 	}

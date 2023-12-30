@@ -10,7 +10,7 @@ bool shitBullet::initshitBullet(int grade)
 	myGrade = grade;
 	speed = (grade - 1) * 200 + 1000;
 	attackDamage = 10 + (grade - 1) * 2;
-	_freeze = -10*grade;
+	_freeze = -10 * grade;
 
 	bulletSprite->initWithFile("Bullets/ShitBullets/Shit" + StringUtils::toString(grade * 10 + 1) + ".png");//初始化
 	//飞的过程的纹理的变化设置
@@ -49,37 +49,30 @@ void shitBullet::rotateSpriteToDirection() {
 }
 void shitBullet::inputBulletAction(Point towerLoc, Point MonsterLoc) {
 	src = towerLoc, dst = MonsterLoc;//设置两个点
-	bulletSprite->setPosition(src);//初始定位
+	bulletSprite->setPosition(Vec2(40, 40));//初始定位
 	this->rotateSpriteToDirection();//计算角度制作动画
 }
 void shitBullet::shoot() {
+	
 	runAction(Sequence::create(shootBy,
 		CallFuncN::create(CC_CALLBACK_0(shitBullet::removeBullet, this)), NULL));
+	/*runAction(Sequence::create(shootBy,
+		CallFuncN::create(CC_CALLBACK_0(shitBullet::removeBullet, this)), NULL));*/
 }
 void shitBullet::removeBullet() {
-	bool isMissed = true;
-	auto instance = Director::getInstance();
 
+	bool isMissed = true;
+	Vec2 childAbsolutePosition = bulletSprite->getParent()->convertToWorldSpace(bulletSprite->getPosition());
 	auto bulletRect = Rect(this->getPositionX() + this->getParent()->getPositionX() - this->getContentSize().width / 2,
 		this->getPositionY() + this->getParent()->getPositionY() - this->getContentSize().height / 2,
 		this->bulletSprite->getContentSize().width,
 		this->bulletSprite->getContentSize().height);
-	
+
 	for (int j = 0; j < monsterContainer.size(); j++) {
 		auto monster = monsterContainer.at(j);
-		auto monsterRect = monster->getBoundingBox();
-
-		if (monsterRect.intersectsRect(bulletRect)){
-			auto currHp = monster->getHP();
-
-			currHp = currHp - this->getAttackDamage() ;
-
-			if (currHp <= 0) {
-				currHp = 0;
-			}
-			monster->setHP(currHp);
-			monster->setFreeze(myGrade);//待改动
-			monster->update(1);//?
+		auto monsterRect = monster->getBoundingBox();    
+		if (monsterRect.intersectsRect(bulletRect)) {
+			monster->behurt(this->getAttackDamage(), 2);
 			isMissed = false;
 		}
 	}
