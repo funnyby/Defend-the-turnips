@@ -19,7 +19,7 @@ public:
 
     // 重写父类的攻击行为
     void performAttack() override;
-
+    void update(float d);
 
 };
 

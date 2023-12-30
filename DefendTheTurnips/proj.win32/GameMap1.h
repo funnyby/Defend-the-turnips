@@ -99,6 +99,9 @@ private:
 	 void setMenuButton(cocos2d::Layer* layerUI);
 	 void InitBarrier();
 
+	 void win();
+	 void lose();
+
 	 //波数、怪物出现有关
 	 int boshu;
 	 void init_m1(float delta);

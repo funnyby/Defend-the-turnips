@@ -12,8 +12,6 @@
 #include<vector>
 
 
-
-
 USING_NS_CC;
 using namespace cocos2d::ui;
 //-------------------------------------  全局变量 ------------------------------------------------
@@ -66,7 +64,7 @@ bool GameMap2::init()
 	setPauseButton(layerUI);
 
 	//倒计时
-	//countDown();
+	countDown();
 
 	//-------------------------------------放置萝卜------------------------------------------------------
 	auto CarrotSprite = Carrot::create();

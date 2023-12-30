@@ -41,6 +41,7 @@ public:
     void beTouched();   //when touched twist
 
     virtual void update(float dt);//update carrot state
+    bool getIsAlive() { return isAlive; }
 private:
 
     Point CarrotPos;    //different maps'destination
