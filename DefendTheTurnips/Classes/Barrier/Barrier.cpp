@@ -1,4 +1,6 @@
 #include"Barrier.h"
+#include"GameMap1.h"
+#include"GameMap2.h"
 
 USING_NS_CC;
 using namespace cocos2d::ui;
@@ -63,6 +65,19 @@ void Barrier::create_Health_bar() {
 void Barrier::scheduleBlood() {
 	auto progress = (ProgressTimer*)this->getChildByTag(BLOOD_BAR);
 	progress->setPercentage(((_hp) / hp_total) * 100);  //这里是百分制显示
+}
+
+void Barrier::clear() {
+	for (int i = 0; i < 4; i++) {
+		if (position[i].x == 0 && position[i].y == 0) {
+			break;
+		}
+		else
+		{
+			map[position[i].x][position[i].y] = 0;
+			map1[position[i].x][position[i].y] = 0;
+		}
+	}
 }
 
 void Barrier::betouched() {
@@ -136,6 +151,7 @@ bool Barrier::isDie() {
 	if (_hp <= 0)
 	{
 		game_money1 += getMoney();
+		this->clear();
 		if (this->choosed == 1 && this->choice != nullptr)
 		{
 			getActionManager()->removeAllActionsFromTarget(choice);

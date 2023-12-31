@@ -76,6 +76,7 @@ bool Tower::isTargetInRange()
             target_pos = target->getPosition();//获得目标位置
             float distance = my_pos.distance(target_pos);
             if (distance <= attackrange) {
+                target->beshoot = 1;
                 return true;
             }
         }
@@ -86,6 +87,7 @@ bool Tower::isTargetInRange()
         target_pos = target->getPosition();//获得目标位置
         float distance = my_pos.distance(target_pos);
         if (distance <= attackrange) {
+            target->beshoot = 1;
             return true;
         }
 

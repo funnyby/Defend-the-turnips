@@ -127,7 +127,8 @@ void Carrot::beTouched() {
 /*-----------------private---------------------*/
 void Carrot::changeCarrotAppearance() {
 	// 在动画完成后执行的逻辑
-	this->setTexture(bitenTectures[int(_hp - 1)].fileName);//according to _hp callback to tecture
+	if(_hp>0)
+		this->setTexture(bitenTectures[int(_hp - 1)].fileName);//according to _hp callback to tecture
 }
 
 void Carrot::createBloodBox() {
@@ -157,6 +158,12 @@ bool Carrot::isDie() {
 		isAlive = false;
 
 		//director 跳转场景至gameover
+		// 获取场景类的实例  
+		GameMap1* sceneInstance = dynamic_cast<GameMap1*>(this->getParent());
+		if (sceneInstance) {
+			// 调用自定义函数  
+			sceneInstance->lose();
+		}
 		return true;
 	}
 	else

@@ -11,6 +11,7 @@
 #define i_max 6
 #define j_max 13
 
+extern int map[i_max][j_max];
 
 class GameMap1 :public cocos2d::Scene
 {
@@ -22,15 +23,6 @@ public:
 	CREATE_FUNC(GameMap1);
 
 	enum { EMPTY, PATH, PLACED, BARRIER };
-
-	int map[i_max][j_max] = {
-	0,0,3,0,3,3,0,0,0,0,0,0,0,
-	0,1,1,1,3,3,3,3,0,1,1,1,0,
-	0,0,3,1,3,3,3,3,0,1,3,3,0,
-	0,0,0,1,0,0,3,0,3,1,0,0,0,
-	0,0,0,1,3,0,3,3,0,1,3,0,0,
-	0,0,0,1,1,1,1,1,1,1,0,0,0
-	};
 
 	//关卡选项
 	int if_speed_up;//是否加速
@@ -51,6 +43,8 @@ public:
 	int monster_total;//击杀怪物总数
 	int boss_total;//击杀boss总数
 	int barrier_total;//摧毁障碍总数
+
+	void lose();
 
 private:
 	 cocos2d::ui::Button* pausebtn;
@@ -103,7 +97,6 @@ private:
 	 void InitBarrier();
 
 	 void win();
-	 void lose();
 
 	 //波数、怪物出现有关
 	 int boshu;

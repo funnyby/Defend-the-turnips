@@ -34,6 +34,7 @@ public:
     //是否受伤，子弹每次攻击时调用该函数
     void behurt(int monster_blood, int type);
     bool choosed;
+    bool beshoot=0;
     Sprite* choice;
 private:
     Sprite* bloodbox;

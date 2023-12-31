@@ -29,7 +29,7 @@ bool EnterScene2::InitUI()
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 	// 添加背景
-	auto background = Sprite::create("EnterScene/enterscene2.png");  // 使用你的背景图片文件名
+	auto background = Sprite::create("EnterScene/enterscene02.jpg");  // 使用你的背景图片文件名
 	background->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));
 	// 计算缩放比例，以适应屏幕
 	float scaleX = visibleSize.width / background->getContentSize().width;

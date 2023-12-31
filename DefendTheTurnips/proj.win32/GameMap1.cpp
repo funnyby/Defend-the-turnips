@@ -14,6 +14,8 @@
 #define x_max 1050
 #define y_min 100
 #define y_max 550
+#define i_max 6
+#define j_max 13
 #include<vector>
 
 
@@ -24,6 +26,14 @@ using namespace CocosDenshion;
 int monsternum;
 int die_monsternum;
 int game_money1;//金钱
+int map[i_max][j_max] = {
+0,0,3,0,3,3,0,0,0,0,0,0,0,
+0,1,1,1,3,3,3,3,0,1,1,1,0,
+0,0,3,1,3,3,3,3,0,1,3,3,0,
+0,0,0,1,0,0,3,0,3,1,0,0,0,
+0,0,0,1,3,0,3,3,0,1,3,0,0,
+0,0,0,1,1,1,1,1,1,1,0,0,0
+};
 //----------------------------------------- GameMap1 ------------------------------------------------
 cocos2d::Scene* GameMap1::createScene()
 {
@@ -146,6 +156,9 @@ bool GameMap1::init()
 void GameMap1::updatemoney(float a) {
 	int temp;
 	if (game_money1 > 999) {
+		qianwei->setVisible(true);
+		baiwei->setVisible(true);
+		shiwei->setVisible(true);
 		temp = game_money1 / 10;
 		int j = temp % 10;
 		shiwei->setTextureRect(Rect(30 * j, 0, 30, 28));
@@ -159,6 +172,8 @@ void GameMap1::updatemoney(float a) {
 	}
 	qianwei->setVisible(false);
 	if (game_money1 > 99) {
+		baiwei->setVisible(true);
+		shiwei->setVisible(true);
 		temp = game_money1 / 10;
 		int j = temp % 10;
 		shiwei->setTextureRect(Rect(30 * j, 0, 30, 28));
@@ -169,6 +184,7 @@ void GameMap1::updatemoney(float a) {
 	}
 	baiwei->setVisible(false);
 	if (game_money1 > 9) {
+		shiwei->setVisible(true);
 		temp = game_money1 / 10;
 		shiwei->setTextureRect(Rect(temp * 30, 0, 30, 28));
 		return;
@@ -187,50 +203,70 @@ void GameMap1::InitBarrier()
 	auto BarrierSprite1 = Barrier::create();
 	this->addChild(BarrierSprite1, 5);
 	BarrierSprite1->initBarrier(300, 300, texture41, Vec2(460, 485));
+	BarrierSprite1->position[0] = { 0,4 };
+	BarrierSprite1->position[1] = { 0,5 };
+	BarrierSprite1->position[2] = { 1,4 };
+	BarrierSprite1->position[3] = { 1,5 };
 
 	auto BarrierSprite2 = Barrier::create();
 	this->addChild(BarrierSprite2, 0);
 	BarrierSprite2->initBarrier(2500, 2500, texture42, Vec2(620, 405));
+	BarrierSprite2->position[0] = { 1,6 };
+	BarrierSprite2->position[1] = { 1,7 };
+	BarrierSprite2->position[2] = { 2,6 };
+	BarrierSprite2->position[3] = { 2,7 };
 
 	auto BarrierSprite3 = Barrier::create();
 	this->addChild(BarrierSprite3, 0);
 	BarrierSprite3->initBarrier(150, 150, texture21, Vec2(620, 205));
+	BarrierSprite3->position[0] = { 4,6 };
+	BarrierSprite3->position[1] = { 4,7 };
 
 	auto BarrierSprite4 = Barrier::create();
 	this->addChild(BarrierSprite4, 0);
 	BarrierSprite4->initBarrier(70, 70, texture11, Vec2(420, 205));
+	BarrierSprite4->position[0] = { 4,4 };
 
 	auto BarrierSprite5 = Barrier::create();
 	this->addChild(BarrierSprite5, 0);
 	BarrierSprite5->initBarrier(70, 70, texture12, Vec2(250, 365));
+	BarrierSprite5->position[0] = { 2,2 };
 
 	auto BarrierSprite6 = Barrier::create();
 	this->addChild(BarrierSprite6, 0);
 	BarrierSprite6->initBarrier(70, 70, texture11, Vec2(250, 525));
+	BarrierSprite6->position[0] = { 0,2 };
 
 	auto BarrierSprite7 = Barrier::create();
 	this->addChild(BarrierSprite7, 0);
 	BarrierSprite7->initBarrier(70, 70, texture11, Vec2(420, 365));
+	BarrierSprite7->position[0] = { 2,4 };
 
 	auto BarrierSprite8 = Barrier::create();
 	this->addChild(BarrierSprite8, 0);
 	BarrierSprite8->initBarrier(70, 70, texture11, Vec2(500, 365));
+	BarrierSprite8->position[0] = { 2,5 };
 
 	auto BarrierSprite9 = Barrier::create();
 	this->addChild(BarrierSprite9, 0);
 	BarrierSprite9->initBarrier(70, 70, texture11, Vec2(580, 285));
+	BarrierSprite9->position[0] = { 3,6 };
 
 	auto BarrierSprite10 = Barrier::create();
 	this->addChild(BarrierSprite10, 0);
 	BarrierSprite10->initBarrier(70, 70, texture12, Vec2(905, 205));
+	BarrierSprite10->position[0] = {4,10 };
 
 	auto BarrierSprite11 = Barrier::create();
 	this->addChild(BarrierSprite11, 0);
 	BarrierSprite11->initBarrier(150, 150, texture21, Vec2(945, 365));
+	BarrierSprite11->position[0] = { 2,10 };
+	BarrierSprite11->position[1] = { 2,11 };
 
 	auto BarrierSprite12 = Barrier::create();
 	this->addChild(BarrierSprite12, 0);
 	BarrierSprite12->initBarrier(70, 70, texture12, Vec2(745, 285));
+	BarrierSprite12->position[0] = {3,8 };
 }
 void GameMap1::setMenuButton(Layer* layerUI)
 {
@@ -385,12 +421,16 @@ void GameMap1::bottlebuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Wid
 		SimpleAudioEngine::getInstance()->playEffect("Music/TowerMusic/TowerBulid.mp3");
 		CCLOG("Button Clicked!");
 
+		//扣钱
+		if (game_money1 >= 100)
+			game_money1 -= 100;
+		else
+			return;
+
 		map[i][j] = PLACED;
 
 		// 移除所有按钮
 		hideButton();
-		//扣钱
-		game_money1 -= 100;
 
 		// 创建BottleTower
 		auto bottletower = BottleTower::create("Tower/Bottle11.png");
@@ -412,11 +452,14 @@ void GameMap1::shitbuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Widge
 		CCLOG("Button Clicked!");
 		SimpleAudioEngine::getInstance()->playEffect("Music/TowerMusic/TowerBulid.mp3");
 		map[i][j] = PLACED;
+		//扣钱
+		if (game_money1 >= 120)
+			game_money1 -= 120;
+		else
+			return;
 
 		// 移除所有按钮
 		hideButton();
-		//扣钱
-		game_money1 -= 120;
 		// 创建ShitTower
 		auto shittower = ShitTower::create("Tower/shit1.png");
 		shittower->pos_i = i;
@@ -620,19 +663,47 @@ void GameMap1::upgradebuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Wi
 		CCLOG("Button Clicked!");
 		SimpleAudioEngine::getInstance()->playEffect("Music/ToerMusic/TowerUpdata.mp3");
 		if (bt ) {
+			if (bt->level == 1)
+			{
+				//扣钱
+				if (game_money1 >= 180)
+					game_money1 -= 180;
+				else
+					return;
+			}
+			else if (bt->level == 2)
+			{
+				//扣钱
+				if (game_money1 >= 260)
+					game_money1 -= 260;
+				else
+					return;
+			}
 			//更新等级
 			bt->level++;
 			//升级换图片
 			bt->setTexture(towerImage);
 			// 移除所有按钮
 			hideButton();
-			if (bt->level == 1)
-				game_money1 -= 180;
-			else if(bt->level == 2)
-				game_money1 -= 260;
 			return;
 		}
 		if (st ) {
+			if (st->level == 1)
+			{
+				//扣钱
+				if (game_money1 >= 220)
+					game_money1 -= 220;
+				else
+					return;
+			}
+			else if (st->level == 2)
+			{
+				//扣钱
+				if (game_money1 >= 260)
+					game_money1 -= 260;
+				else
+					return;
+			}
 			//更新等级
 			st->level++;
 			//升级换图片
@@ -640,10 +711,6 @@ void GameMap1::upgradebuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Wi
 			st->setScale(0.9);
 			// 移除所有按钮
 			hideButton();
-			if (st->level == 1)
-				game_money1 -= 220;
-			else if (st->level == 2)
-				game_money1 -= 260;
 			return;
 			return;
 		}
@@ -659,6 +726,12 @@ void GameMap1::cancelbuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Wid
 
 		//拆除bottle
 		if (bt) {
+			if (bt->level == 1)
+				game_money1 += 80;
+			else if (bt->level == 2)
+				game_money1 += 224;
+			else if (bt->level == 3)
+				game_money1 += 432;
 			map[bt->pos_i][bt->pos_j] = EMPTY;
 			bt->removeFromParent();
 			auto it = bottletowers.begin();
@@ -672,16 +745,16 @@ void GameMap1::cancelbuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Wid
 			}
 			// 移除所有按钮
 			hideButton();
-			if (bt->level == 1)
-				game_money1 += 80;
-			else if (bt->level == 2)
-				game_money1 += 224;
-			else if (bt->level == 3)
-				game_money1 += 432;
 			return;
 		}
 		//拆除shit
 		if (st) {
+			if (st->level == 1)
+				game_money1 += 96;
+			else if (st->level == 2)
+				game_money1 += 272;
+			else if (st->level == 3)
+				game_money1 += 480;
 			map[st->pos_i][st->pos_j] = EMPTY;
 			st->removeFromParent();
 			auto it = shittowers.begin();
@@ -695,12 +768,6 @@ void GameMap1::cancelbuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Wid
 			}
 			// 移除所有按钮
 			hideButton();
-			if (st->level == 1)
-				game_money1 += 96;
-			else if (st->level == 2)
-				game_money1 += 272;
-			else if (st->level == 3)
-				game_money1 += 480;
 			return;
 		}
 	}

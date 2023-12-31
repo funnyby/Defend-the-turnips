@@ -61,9 +61,9 @@ void GreenTowerBullet::removeBullet() {
 		auto monster = monsterContainer.at(j);
 		auto monsterRect = monster->getBoundingBox();
 
-		if (monsterRect.intersectsRect(bulletRect)) {
+		if (monsterRect.intersectsRect(bulletRect)&&monster->beshoot==1) {
 			monster->behurt(this->getAttackDamage(), 1);
-
+			monster->beshoot = 0;
 			isMissed = false;
 		}
 	}

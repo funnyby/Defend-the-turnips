@@ -36,6 +36,11 @@ public:
     void behurt(int monster_blood, int type);
     Sprite* choice;
     bool choosed;
+    struct pos {
+        int x;
+        int y;
+    };
+    pos position[4] = { (0,0), (0,0), (0,0), (0,0) };
 private:
     Sprite* bloodbox;
     Sprite* behit;
@@ -61,6 +66,7 @@ private:
     void betouched();
     void deletebehit(float a);
     void initBarrier(int hp, int money, Texture2D* texture, Vec2 pos);
+    void clear();
     CREATE_FUNC(Barrier);
 };
 

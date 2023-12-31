@@ -15,6 +15,7 @@
 #define x_max 1050
 #define y_min 40
 #define y_max 520
+extern int map1[i_max][j_max];
 
 class GameMap2 :public cocos2d::Scene
 {
@@ -26,15 +27,6 @@ public:
 	CREATE_FUNC(GameMap2);
 
 	enum { EMPTY, PATH, PLACED, BARRIER };
-
-	int map[i_max][j_max] = {
-	0,0,0,0,0,0,0,0,0,0,1,0,
-	0,1,1,1,1,0,0,0,0,0,1,0,
-	0,1,0,0,1,1,1,1,1,0,1,0,
-	0,1,0,0,0,0,0,0,1,0,1,0,
-	0,1,1,0,0,0,0,0,1,1,1,0,
-	0,0,1,1,1,1,1,0,0,0,0,0
-	};
 
 	//关卡选项
 	int if_speed_up;//是否加速
