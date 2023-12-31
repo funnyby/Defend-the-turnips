@@ -53,11 +53,22 @@ void Monster::initmonster_type1() {
 
 	//4.运行动画
 	this->runAction(RepeatForever::create(Animate::create(animation)));
+	if (map_num == 1)
+	{
+		beginningWaypoint.x = Path[0].x;
+		beginningWaypoint.y = Path[0].y;
+		destinationWaypoint.x = Path[1].x;
+		destinationWaypoint.y = Path[1].y;
+	}
+	else
+	{
+		this->setFlippedX(true);
+		beginningWaypoint.x = Path1[0].x;
+		beginningWaypoint.y = Path1[0].y;
+		destinationWaypoint.x = Path1[1].x;
+		destinationWaypoint.y = Path1[1].y;
+	}
 
-	beginningWaypoint.x = Path[0].x;
-	beginningWaypoint.y = Path[0].y;
-	destinationWaypoint.x = Path[1].x;
-	destinationWaypoint.y = Path[1].y;
 
 }
 
@@ -100,10 +111,22 @@ void Monster::initmonster_type2() {
 	//4.运行动画
 	this->runAction(RepeatForever::create(Animate::create(animation)));
 
-	beginningWaypoint.x = Path[0].x;
-	beginningWaypoint.y = Path[0].y;
-	destinationWaypoint.x = Path[1].x;
-	destinationWaypoint.y = Path[1].y;
+	if (map_num == 1)
+	{
+		beginningWaypoint.x = Path[0].x;
+		beginningWaypoint.y = Path[0].y;
+		destinationWaypoint.x = Path[1].x;
+		destinationWaypoint.y = Path[1].y;
+	}
+	else
+	{
+		this->setFlippedX(true);
+		beginningWaypoint.x = Path1[0].x;
+		beginningWaypoint.y = Path1[0].y;
+		destinationWaypoint.x = Path1[1].x;
+		destinationWaypoint.y = Path1[1].y;
+	}
+
 
 }
 
@@ -146,10 +169,22 @@ void Monster::initmonster_type3() {
 	//4.运行动画
 	this->runAction(RepeatForever::create(Animate::create(animation)));
 
-	beginningWaypoint.x = Path[0].x;
-	beginningWaypoint.y = Path[0].y;
-	destinationWaypoint.x = Path[1].x;
-	destinationWaypoint.y = Path[1].y;
+	if (map_num == 1)
+	{
+		beginningWaypoint.x = Path[0].x;
+		beginningWaypoint.y = Path[0].y;
+		destinationWaypoint.x = Path[1].x;
+		destinationWaypoint.y = Path[1].y;
+	}
+	else
+	{
+		this->setFlippedX(true);
+		beginningWaypoint.x = Path1[0].x;
+		beginningWaypoint.y = Path1[0].y;
+		destinationWaypoint.x = Path1[1].x;
+		destinationWaypoint.y = Path1[1].y;
+	}
+
 
 }
 
@@ -160,34 +195,37 @@ void Monster::update(float dt) {
 	this->walk();
 	this->judge_dest();
 	this->touched();
-	this->BiteTurnips();
 	if (!this->isalive)
 		this->unschedule(schedule_selector(Monster::update));
 }
-
-void Monster::BiteTurnips() {
-	Vec2 location;
-	location.x = Path[6].x - 10;
-	location.y = Path[6].y;
-	if (this->getBoundingBox().containsPoint(location)) {
-		_hp = -6;
-		this->isDie();
-		//调用萝卜被咬的函数
-	}
-}
-
 
 bool Monster::judge_dest() {
 	Vec2 pos = this->getPosition();
 	if ((destinationWaypoint.x - pos.x) * (destinationWaypoint.x - pos.x) + (destinationWaypoint.y - pos.y) * (destinationWaypoint.y - pos.y) <= 666)
 	{
 		waypoint++;
-		if (waypoint == 6)
+		if (waypoint == 6 && map_num == 1)
 		{
 			for (auto Carrot : myCarrot) {
 				Carrot->set_beBiten(true);
 			}
-			//myCarrot[0]->set_beBiten(true);
+			auto progress = (ProgressTimer*)this->getChildByTag(BLOOD_BAR_m);
+			progress->removeFromParent();
+			this->_hp = 0;
+			this->isDie();
+			return true;
+		}
+		if (waypoint == 2 && map_num != 1)
+			this->setFlippedX(FALSE);
+		if (waypoint == 3 && map_num != 1)
+			this->setFlippedX(true);
+		if (waypoint == 4 && map_num != 1)
+			this->setFlippedX(FALSE);
+		if (waypoint == 11)
+		{
+			for (auto Carrot : myCarrot) {
+				Carrot->set_beBiten(true);
+			}
 			auto progress = (ProgressTimer*)this->getChildByTag(BLOOD_BAR_m);
 			progress->removeFromParent();
 			this->_hp = 0;
@@ -196,17 +234,34 @@ bool Monster::judge_dest() {
 		}
 		beginningWaypoint.x = destinationWaypoint.x;
 		beginningWaypoint.y = destinationWaypoint.y;
-		destinationWaypoint.x = Path[waypoint].x;
-		destinationWaypoint.y = Path[waypoint].y;
+		if (map_num == 1)
+		{
+			destinationWaypoint.x = Path[waypoint].x;
+			destinationWaypoint.y = Path[waypoint].y;
+		}
+		else
+		{
+			destinationWaypoint.x = Path1[waypoint].x;
+			destinationWaypoint.y = Path1[waypoint].y;
+		}
 		return true;
 	}
 	else
 		return false;
 }
 
+
 void Monster::walk() {
 	Vec2 pos = this->getPosition();
-	float path = Path[waypoint].path;
+	float path;
+	if (map_num == 1)
+	{
+		path = Path[waypoint].path;
+	}
+	else
+	{
+		path = Path1[waypoint].path;
+	}
 	float x = _walkSpeed * 0.1f * (destinationWaypoint.x - beginningWaypoint.x) / path + pos.x;
 	float y = _walkSpeed * 0.1f * (destinationWaypoint.y - beginningWaypoint.y) / path + pos.y;
 	MoveTo* moveto = MoveTo::create(0.1f, Point(x, y));

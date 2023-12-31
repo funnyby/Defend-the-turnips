@@ -65,9 +65,15 @@ private:
 	 cocos2d::Vec2 selectedPosition; // 选中的位置
 	 cocos2d::Sprite* wave;
 
+	 cocos2d::Sprite* shiwei;
+	 cocos2d::Sprite* baiwei;
+	 cocos2d::Sprite* qianwei;
+
 	 void InitUI();
 	 void InitBackground();      // 初始化背景
 	 void InitEvent();
+
+	 void updatemoney(float a);
 
 
 	 // 防御塔容器

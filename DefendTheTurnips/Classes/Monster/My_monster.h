@@ -3,7 +3,6 @@
 #include "ui/CocosGUI.h"
 #include "Carrot.h"
 #include "..\Classes\Barrier\Barrier.h"
-//#include"GameMap.h"
 #include "Way.h"
 #define CREATE_FUNC(__TYPE__) \
 static __TYPE__* create() \
@@ -25,6 +24,7 @@ static __TYPE__* create() \
 class Monster : public cocos2d::CCSprite
 {
 public:
+    int map_num;
     //精灵是否还活着
     bool isalive;
     virtual void update(float dt);
@@ -64,8 +64,6 @@ private:
     cocos2d::Point beginningWaypoint;
     //结束路点
     cocos2d::Point destinationWaypoint;
-    //是否成功咬了萝卜
-    void BiteTurnips();
     //是否死亡
     bool isDie();
     //是否被冰冻

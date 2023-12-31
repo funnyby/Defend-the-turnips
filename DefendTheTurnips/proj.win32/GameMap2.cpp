@@ -17,7 +17,7 @@ using namespace cocos2d::ui;
 //-------------------------------------  全局变量 ------------------------------------------------
 extern int monsternum;
 extern int die_monsternum;
-  
+extern int game_money1;//金钱  
 
 //----------------------------------------- GameMap2 ------------------------------------------------
 cocos2d::Scene* GameMap2::createScene()
@@ -36,6 +36,7 @@ bool GameMap2::init()
 {
 	if (!Scene::init())
 		return false;
+	game_money1 = 550;
 
 	//---------------------------------------设置背景地图-----------------------------------------------
 	auto visibleSize = Director::getInstance()->getVisibleSize();
@@ -49,6 +50,10 @@ bool GameMap2::init()
 	// 设置精灵的缩放
 	background->setScale(scaleX, scaleY);
 	this->addChild(background);
+	// 怪物桩子
+	auto flag = Sprite::create("GameMap/flag.png");  // 使用你的背景图片文件名
+	flag->setPosition(620, 120);
+	this->addChild(flag, 10);
 
 	//---------------------------------------UI按钮控件栏------------------------------------------------
 	auto layerUI = Layer::create();
@@ -60,6 +65,25 @@ bool GameMap2::init()
 	upPanel->setPosition(0, Director::getInstance()->getVisibleSize().height + 330);
 	upPanel->setScale(1.05);
 	layerUI->addChild(upPanel);
+
+	auto money0 = Sprite::create("GameMap/num.png");  // 使用你的背景图片文件名
+	money0->setTextureRect(Rect(0, 0, 27, 28));
+	money0->setPosition(200, 603);
+	layerUI->addChild(money0);
+
+	shiwei = Sprite::create("GameMap/num.png");  // 使用你的背景图片文件名
+	shiwei->setPosition(175, 603);
+	layerUI->addChild(shiwei);
+
+	baiwei = Sprite::create("GameMap/num.png");  // 使用你的背景图片文件名
+	baiwei->setPosition(150, 603);
+	layerUI->addChild(baiwei);
+
+	qianwei = Sprite::create("GameMap/num.png");  // 使用你的背景图片文件名
+	qianwei->setPosition(125, 603);
+	layerUI->addChild(qianwei);
+
+	this->schedule(schedule_selector(GameMap2::updatemoney), 0.05f);
 
 	setPauseButton(layerUI);
 
@@ -73,10 +97,7 @@ bool GameMap2::init()
 	CarrotSprite->initCarrot();
 	CarrotSprite->schedule(schedule_selector(Carrot::update), 0.4f);
 	//-----------------------------------放置障碍物----------------------------------------------------------
-	//auto BarrierSprite = Barrier::create();
-	//this->addChild(BarrierSprite, 100);
-	//BarrierSprite->initBarrier();
-	//BarrierSprite->schedule(schedule_selector(Barrier::update), 0.4f);
+	InitBarrier();
 
 	//-------------------------------------设置点击事件监听----------------------------------------------
 	// 设置点击事件监听
@@ -113,6 +134,102 @@ bool GameMap2::init()
 
 	return true;
 }
+
+void GameMap2::updatemoney(float a) {
+	int temp;
+	if (game_money1 > 999) {
+		temp = game_money1 / 10;
+		int j = temp % 10;
+		shiwei->setTextureRect(Rect(30 * j, 0, 30, 28));
+		temp = temp / 10;
+		j = temp % 10;
+		baiwei->setTextureRect(Rect(30 * j, 0, 30, 28));
+		temp = temp / 10;
+		j = temp % 10;
+		qianwei->setTextureRect(Rect(30 * j, 0, 30, 28));
+		return;
+	}
+	qianwei->setVisible(false);
+	if (game_money1 > 99) {
+		temp = game_money1 / 10;
+		int j = temp % 10;
+		shiwei->setTextureRect(Rect(30 * j, 0, 30, 28));
+		temp = temp / 10;
+		j = temp % 10;
+		baiwei->setTextureRect(Rect(30 * j, 0, 30, 28));
+		return;
+	}
+	baiwei->setVisible(false);
+	if (game_money1 > 9) {
+		temp = game_money1 / 10;
+		shiwei->setTextureRect(Rect(temp * 30, 0, 30, 28));
+		return;
+	}
+	shiwei->setVisible(false);
+}
+
+void GameMap2::InitBarrier()
+{
+	Texture2D* texture41 = Director::getInstance()->getTextureCache()->addImage("Barrier/barrier41.png");
+	Texture2D* texture42 = Director::getInstance()->getTextureCache()->addImage("Barrier/barrier42.png");
+	Texture2D* texture21 = Director::getInstance()->getTextureCache()->addImage("Barrier/barrier21.png");
+	Texture2D* texture11 = Director::getInstance()->getTextureCache()->addImage("Barrier/barrier11.png");
+	Texture2D* texture12 = Director::getInstance()->getTextureCache()->addImage("Barrier/barrier12.png");
+
+	auto BarrierSprite1 = Barrier::create();
+	this->addChild(BarrierSprite1, 5);
+	BarrierSprite1->initBarrier(300, 300, texture41, Vec2(650, 445));//
+
+	auto BarrierSprite2 = Barrier::create();
+	this->addChild(BarrierSprite2, 0);
+	BarrierSprite2->initBarrier(2500, 2500, texture42, Vec2(820, 445));//
+
+	auto BarrierSprite3 = Barrier::create();
+	this->addChild(BarrierSprite3, 0);
+	BarrierSprite3->initBarrier(150, 150, texture21, Vec2(575, 150));//
+
+	auto BarrierSprite4 = Barrier::create();
+	this->addChild(BarrierSprite4, 0);
+	BarrierSprite4->initBarrier(70, 70, texture11, Vec2(370, 315));
+
+	auto BarrierSprite5 = Barrier::create();
+	this->addChild(BarrierSprite5, 0);
+	BarrierSprite5->initBarrier(70, 70, texture12, Vec2(290, 475));
+
+	auto BarrierSprite6 = Barrier::create();
+	this->addChild(BarrierSprite6, 0);
+	BarrierSprite6->initBarrier(70, 70, texture11, Vec2(370, 155));//
+
+	auto BarrierSprite7 = Barrier::create();
+	this->addChild(BarrierSprite7, 0);
+	BarrierSprite7->initBarrier(70, 70, texture11, Vec2(530, 401));//
+
+	auto BarrierSprite8 = Barrier::create();
+	this->addChild(BarrierSprite8, 0);
+	BarrierSprite8->initBarrier(70, 70, texture11, Vec2(450, 235));//
+
+	auto BarrierSprite9 = Barrier::create();
+	this->addChild(BarrierSprite9, 0);
+	BarrierSprite9->initBarrier(70, 70, texture11, Vec2(530, 235));//
+
+	auto BarrierSprite10 = Barrier::create();
+	this->addChild(BarrierSprite10, 0);
+	BarrierSprite10->initBarrier(70, 70, texture12, Vec2(860, 235));//
+
+	auto BarrierSprite11 = Barrier::create();
+	this->addChild(BarrierSprite11, 0);
+	BarrierSprite11->initBarrier(150, 150, texture21, Vec2(900, 65));//
+
+	auto BarrierSprite12 = Barrier::create();
+	this->addChild(BarrierSprite12, 0);
+	BarrierSprite12->initBarrier(70, 70, texture12, Vec2(699, 235));//
+
+	auto BarrierSprite13 = Barrier::create();
+	this->addChild(BarrierSprite13, 0);
+	BarrierSprite13->initBarrier(70, 70, texture12, Vec2(110, 315));
+}
+
+
 void GameMap2::setPauseButton(Layer* layerUI)
 {
 	pausebtn = Button::create("GameMap/pause_0.png", "GameMap/pause_0.png");
@@ -763,7 +880,7 @@ void GameMap2::countDown()
 	//if_pause = 1;
 	//倒计时页
 	auto time_layer = Layer::create();
-	this->addChild(time_layer);
+	this->addChild(time_layer,50);
 
 	auto listener = EventListenerTouchOneByOne::create();
 	listener->setSwallowTouches(true);
@@ -814,60 +931,64 @@ void GameMap2::countDown()
 void GameMap2::init_m1(float delta) {
 	auto monsterSprite = Monster::create();
 	this->addChild(monsterSprite, 100 - monsternum);
+	(monsterSprite->map_num) = 2;
 	monsterSprite->initmonster_type1();
 	monsterSprite->schedule(schedule_selector(Monster::update), 0.05f);
 	monsternum++;
+	monsterSprite->setPosition(620, 80);
 }
 
 void GameMap2::init_m2(float delta) {
 	auto monsterSprite = Monster::create();
 	this->addChild(monsterSprite, 100 - monsternum);
+	(monsterSprite->map_num) = 2;
 	monsterSprite->initmonster_type2();
 	monsterSprite->schedule(schedule_selector(Monster::update), 0.05f);
 	monsternum++;
+	monsterSprite->setPosition(620, 80);
 }
 
 void GameMap2::init_m3(float delta) {
 	monsternum++;
 	auto monsterSprite = Monster::create();
 	this->addChild(monsterSprite, 100 - monsternum);
+	(monsterSprite->map_num) = 2;
 	monsterSprite->initmonster_type3();
 	monsterSprite->schedule(schedule_selector(Monster::update), 0.05f);
+	monsterSprite->setPosition(620, 80);
 }
-
-
 
 
 void GameMap2::bo(float a) {
 
 	switch (current_wave)
 	{
-		case 1:
-			//第一波：五个便便怪
-			schedule(schedule_selector(GameMap2::init_m3), 1, 4, 1);
-			break;
-		case 2:
-			//第二波：五个黑煤球
-			schedule(schedule_selector(GameMap2::init_m1), 1, 4, 1);
-			break;
-		case 3:
-			//第三波：五个小蝙蝠
-			schedule(schedule_selector(GameMap2::init_m2), 1, 4, 1);
-			break;
-		case 4:
-			//第四波：五个便便怪
-			schedule(schedule_selector(GameMap2::init_m3), 1, 4, 1);
-			break;
-		case 5:
-			schedule(schedule_selector(GameMap2::init_m3), 1, 4, 1);
-			break;
-		case 6:
-			//第五波：各五个
-			schedule(schedule_selector(GameMap2::init_m2), 1, 4, 1);
-			break;
-		case 7:
-			schedule(schedule_selector(GameMap2::init_m1), 1, 4, 1);
-			break;
+	case 1:
+		//第一波：五个便便怪
+		schedule(schedule_selector(GameMap2::init_m3), 1, 4, 1);
+		break;
+	case 2:
+		//第二波：五个黑煤球
+		schedule(schedule_selector(GameMap2::init_m1), 1, 4, 1);
+		break;
+	case 3:
+		//第三波：五个小蝙蝠
+		schedule(schedule_selector(GameMap2::init_m2), 1, 4, 1);
+		break;
+	case 4:
+		//第四波：五个便便怪
+		schedule(schedule_selector(GameMap2::init_m3), 1, 4, 1);
+		break;
+	case 5:
+		schedule(schedule_selector(GameMap2::init_m3), 1, 4, 1);
+		break;
+	case 6:
+		//第五波：各五个
+		schedule(schedule_selector(GameMap2::init_m2), 1, 4, 1);
+		break;
+	case 7:
+		schedule(schedule_selector(GameMap2::init_m1), 1, 4, 1);
+		break;
 	}
 	current_wave++;
 	if (current_wave < 6)

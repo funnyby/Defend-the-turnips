@@ -70,7 +70,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LibraryPath>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>D:\Defend-the-turnips\DefendTheTurnips\Classes\Monster;D:\Defend-the-turnips\DefendTheTurnips\Classes;D:\Defend-the-turnips\DefendTheTurnips\proj.win32;C:\Users\boring\Documents\GitHub\Defend-the-turnips\DefendTheTurnips\proj.win32;$(IncludePath)</IncludePath>
+    <IncludePath>D:\university\cocos2dx\Defend-the-turnips\DefendTheTurnips\proj.win32;D:\university\cocos2dx\Defend-the-turnips\DefendTheTurnips\Classes\Monster;D:\Defend-the-turnips\DefendTheTurnips\Classes\Monster;D:\Defend-the-turnips\DefendTheTurnips\Classes;D:\Defend-the-turnips\DefendTheTurnips\proj.win32;C:\Users\boring\Documents\GitHub\Defend-the-turnips\DefendTheTurnips\proj.win32;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LibraryPath>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>

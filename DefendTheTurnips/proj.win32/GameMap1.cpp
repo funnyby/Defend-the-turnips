@@ -62,6 +62,7 @@ bool GameMap1::init()
 	auto flag = Sprite::create("GameMap/flag.png");  // 使用你的背景图片文件名
 	flag->setPosition(165, 505);
 	this->addChild(flag);
+
 	//---------------------------------------UI按钮控件栏------------------------------------------------
 	auto layerUI = Layer::create();
 	this->addChild(layerUI,7);
@@ -73,10 +74,31 @@ bool GameMap1::init()
 	upPanel->setScale(1.05);
 	layerUI->addChild(upPanel);
 
+
+	auto money0 = Sprite::create("GameMap/num.png");  // 使用你的背景图片文件名
+	money0->setTextureRect(Rect(0, 0, 27, 28));
+	money0->setPosition(200, 603);
+	layerUI->addChild(money0);
+
+	shiwei = Sprite::create("GameMap/num.png");  // 使用你的背景图片文件名
+	shiwei->setPosition(175, 603);
+	layerUI->addChild(shiwei);
+
+	baiwei = Sprite::create("GameMap/num.png");  // 使用你的背景图片文件名
+	baiwei->setPosition(150, 603);
+	layerUI->addChild(baiwei);
+
+	qianwei = Sprite::create("GameMap/num.png");  // 使用你的背景图片文件名
+	qianwei->setPosition(125, 603);
+	layerUI->addChild(qianwei);
+
+	this->schedule(schedule_selector(GameMap1::updatemoney), 0.05f);
+
 	setPauseButton(layerUI);
 	setMenuButton(layerUI);
 	//倒计时
 	countDown();
+
 	
 	//-------------------------------------放置萝卜------------------------------------------------------
 	auto CarrotSprite = Carrot::create();
@@ -120,6 +142,40 @@ bool GameMap1::init()
 	//----------------------------------------------------------------------------------------------------
 	return true;
 }
+
+void GameMap1::updatemoney(float a) {
+	int temp;
+	if (game_money1 > 999) {
+		temp = game_money1 / 10;
+		int j = temp % 10;
+		shiwei->setTextureRect(Rect(30 * j, 0, 30, 28));
+		temp = temp / 10;
+		j = temp % 10;
+		baiwei->setTextureRect(Rect(30 * j, 0, 30, 28));
+		temp = temp / 10;
+		j = temp % 10;
+		qianwei->setTextureRect(Rect(30 * j, 0, 30, 28));
+		return;
+	}
+	qianwei->setVisible(false);
+	if (game_money1 > 99) {
+		temp = game_money1 / 10;
+		int j = temp % 10;
+		shiwei->setTextureRect(Rect(30 * j, 0, 30, 28));
+		temp = temp / 10;
+		j = temp % 10;
+		baiwei->setTextureRect(Rect(30 * j, 0, 30, 28));
+		return;
+	}
+	baiwei->setVisible(false);
+	if (game_money1 > 9) {
+		temp = game_money1 / 10;
+		shiwei->setTextureRect(Rect(temp * 30, 0, 30, 28));
+		return;
+	}
+	shiwei->setVisible(false);
+}
+
 void GameMap1::InitBarrier()
 {
 	Texture2D* texture41 = Director::getInstance()->getTextureCache()->addImage("Barrier/barrier41.png");
@@ -852,25 +908,31 @@ void GameMap1::countDown()
 void GameMap1::init_m1(float delta) {
 	auto monsterSprite = Monster::create();
 	this->addChild(monsterSprite, 100 - monsternum);
+	(monsterSprite->map_num) = 1;
 	monsterSprite->initmonster_type1();
 	monsterSprite->schedule(schedule_selector(Monster::update), 0.05f);
+	monsterSprite->setPosition(170, 485);
 	monsternum++;
 }
 
 void GameMap1::init_m2(float delta) {
 	auto monsterSprite = Monster::create();
 	this->addChild(monsterSprite, 100 - monsternum);
+	(monsterSprite->map_num) = 1;
 	monsterSprite->initmonster_type2();
 	monsterSprite->schedule(schedule_selector(Monster::update), 0.05f);
 	monsternum++;
+	monsterSprite->setPosition(170, 485);
 }
 
 void GameMap1::init_m3(float delta) {
 	monsternum++;
 	auto monsterSprite = Monster::create();
 	this->addChild(monsterSprite, 100 - monsternum);
+	(monsterSprite->map_num) = 1;
 	monsterSprite->initmonster_type3();
 	monsterSprite->schedule(schedule_selector(Monster::update), 0.05f);
+	monsterSprite->setPosition(170, 485);
 }
 
 
@@ -932,10 +994,9 @@ void GameMap1::bo(float a) {
 		this->scheduleOnce(schedule_selector(GameMap1::bo), 5);
 	}
 }
-
 void GameMap1::next_bo(float a) {
 	if (current_wave >= 8) {
-		if (die_monsternum >= 35)
+		if (monsternum >= 35&&monsterContainer.empty())
 		{//-------------------todo:判断输赢的接口--------------------------------------------------------------------------
 			win();
 			this->unschedule(schedule_selector(GameMap1::next_bo));

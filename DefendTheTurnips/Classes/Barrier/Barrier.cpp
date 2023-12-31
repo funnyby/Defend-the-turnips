@@ -138,12 +138,12 @@ bool Barrier::isDie() {
 		if (this->choosed == 1 && this->choice != nullptr)
 		{
 			getActionManager()->removeAllActionsFromTarget(choice);
-			this->choice->removeFromParent();
+			this->choice->setVisible(false);
 			choose_a_object = 0;
 		}
-		bloodbox->removeFromParent();
+		bloodbox->setVisible(false);
 		getActionManager()->removeAllActionsFromTarget(this);
-		
+
 		isalive = 0;
 		//精灵爆炸
 		auto texture = Director::getInstance()->getTextureCache()->addImage("monster/2.png");
@@ -169,6 +169,7 @@ bool Barrier::isDie() {
 		//4.运行动画
 		this->runAction(RepeatForever::create(Animate::create(animation)));
 		this->schedule(schedule_selector(Barrier::deletemonster), 0.4);
+		BarrierContainer.eraseObject(this, 0);
 		die_monsternum++;
 		return true;
 	}
