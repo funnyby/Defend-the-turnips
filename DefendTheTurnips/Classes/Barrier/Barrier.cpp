@@ -3,7 +3,7 @@
 USING_NS_CC;
 using namespace cocos2d::ui;
 
-
+extern int game_money1;
 cocos2d::Vector<Barrier*> BarrierContainer;
 
 void Barrier::initBarrier(int hp, int money, Texture2D* texture, Vec2 pos) {
@@ -135,6 +135,7 @@ void Barrier::touched() {
 bool Barrier::isDie() {
 	if (_hp <= 0)
 	{
+		game_money1 += getMoney();
 		if (this->choosed == 1 && this->choice != nullptr)
 		{
 			getActionManager()->removeAllActionsFromTarget(choice);
