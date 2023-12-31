@@ -1,8 +1,10 @@
 #include "..\Classes\Carrot.h"
 #include "SimpleAudioEngine.h"
+#include "GameMap1.h"
 using namespace CocosDenshion;
 USING_NS_CC;
 Vector<Carrot*> myCarrot;
+extern int game_money1;
 /*-----------------public---------------------*/
 bool Carrot::initCarrot() {
 	myCarrot.pushBack(this);
@@ -12,6 +14,8 @@ bool Carrot::initCarrot() {
 	}
 	this->setHP(10.0);
 	bitenDamage = 1;
+	scale = 1;
+	myGrade = 1;
 	_beBiten = false;
 	this->createBloodBox();
 	this->changeBloodBox();
@@ -30,7 +34,7 @@ bool Carrot::initCarrot() {
 	bitenTectures[7].fileName = "Carrot/CarrotBiten/hlb1_8.png";
 	bitenTectures[8].fileName = "Carrot/CarrotBiten/hlb1_9.png";
 	bitenTectures[9].fileName = "Carrot/CarrotBiten/hlb1_10.png";
-	
+
 	this->runTwistAnimation();
 }
 void Carrot::setLocation(Point mapDest) {
@@ -40,7 +44,7 @@ void Carrot::setLocation(Point mapDest) {
 	this->setPosition(CarrotPos);
 }
 
-void Carrot::setBitenAttack(float a ) {
+void Carrot::setBitenAttack(float a) {
 	bitenDamage = a;
 	_beBiten = true;
 }
@@ -54,29 +58,29 @@ void Carrot::runTwistAnimation() {
 
 	//加载精灵帧
 	Texture2D* texture1 = Director::getInstance()->getTextureCache()->addImage("Carrot/CarrotTwist/hlb1_10.png");
-	twistAnimation->addSpriteFrameWithTexture(texture1, Rect(0, 0, 150, 168));
+	twistAnimation->addSpriteFrameWithTexture(texture1, Rect(0, 0, 150 * scale, 168 * scale));
 	Texture2D* texture2 = Director::getInstance()->getTextureCache()->addImage("Carrot/CarrotTwist/hlb1_11.png");
-	twistAnimation->addSpriteFrameWithTexture(texture2, Rect(0, 0, 150, 168));
+	twistAnimation->addSpriteFrameWithTexture(texture2, Rect(0, 0, 150 * scale, 168 * scale));
 	Texture2D* texture3 = Director::getInstance()->getTextureCache()->addImage("Carrot/CarrotTwist/hlb1_12.png");
-	twistAnimation->addSpriteFrameWithTexture(texture3, Rect(0, 0, 150, 168));
+	twistAnimation->addSpriteFrameWithTexture(texture3, Rect(0, 0, 150 * scale, 168 * scale));
 	Texture2D* texture4 = Director::getInstance()->getTextureCache()->addImage("Carrot/CarrotTwist/hlb1_13.png");
-	twistAnimation->addSpriteFrameWithTexture(texture4, Rect(0, 0, 150, 168));
+	twistAnimation->addSpriteFrameWithTexture(texture4, Rect(0, 0, 150 * scale, 168 * scale));
 	Texture2D* texture5 = Director::getInstance()->getTextureCache()->addImage("Carrot/CarrotTwist/hlb1_14.png");
-	twistAnimation->addSpriteFrameWithTexture(texture5, Rect(0, 0, 150, 168));
+	twistAnimation->addSpriteFrameWithTexture(texture5, Rect(0, 0, 150 * scale, 168 * scale));
 	Texture2D* texture6 = Director::getInstance()->getTextureCache()->addImage("Carrot/CarrotTwist/hlb1_15.png");
-	twistAnimation->addSpriteFrameWithTexture(texture6, Rect(0, 0, 150, 168));
+	twistAnimation->addSpriteFrameWithTexture(texture6, Rect(0, 0, 150 * scale, 168 * scale));
 	Texture2D* texture7 = Director::getInstance()->getTextureCache()->addImage("Carrot/CarrotTwist/hlb1_16.png");
-	twistAnimation->addSpriteFrameWithTexture(texture7, Rect(0, 0, 150, 168));
+	twistAnimation->addSpriteFrameWithTexture(texture7, Rect(0, 0, 150 * scale, 168 * scale));
 	Texture2D* texture8 = Director::getInstance()->getTextureCache()->addImage("Carrot/CarrotTwist/hlb1_17.png");
-	twistAnimation->addSpriteFrameWithTexture(texture8, Rect(0, 0, 150, 168));
+	twistAnimation->addSpriteFrameWithTexture(texture8, Rect(0, 0, 150 * scale, 168 * scale));
 	Texture2D* texture9 = Director::getInstance()->getTextureCache()->addImage("Carrot/CarrotTwist/hlb1_18.png");
-	twistAnimation->addSpriteFrameWithTexture(texture9, Rect(0, 0, 150, 168));
+	twistAnimation->addSpriteFrameWithTexture(texture9, Rect(0, 0, 150 * scale, 168 * scale));
 	Texture2D* texture10 = Director::getInstance()->getTextureCache()->addImage("Carrot/CarrotTwist/hlb1_19.png");
-	twistAnimation->addSpriteFrameWithTexture(texture10, Rect(0, 0, 150, 168));
+	twistAnimation->addSpriteFrameWithTexture(texture10, Rect(0, 0, 150 * scale, 168 * scale));
 	Texture2D* texture11 = Director::getInstance()->getTextureCache()->addImage("Carrot/CarrotTwist/hlb1_20.png");
-	twistAnimation->addSpriteFrameWithTexture(texture11, Rect(0, 0, 150, 168));
+	twistAnimation->addSpriteFrameWithTexture(texture11, Rect(0, 0, 150 * scale, 168 * scale));
 	Texture2D* texture12 = Director::getInstance()->getTextureCache()->addImage("Carrot/CarrotTwist/hlb1_21.png");
-	twistAnimation->addSpriteFrameWithTexture(texture12, Rect(0, 0, 150, 168));
+	twistAnimation->addSpriteFrameWithTexture(texture12, Rect(0, 0, 150 * scale, 168 * scale));
 	SimpleAudioEngine::getInstance()->playEffect("Music/carrot.mp3");
 
 	this->runAction(Animate::create(twistAnimation));
@@ -89,19 +93,19 @@ void Carrot::update(float dt) {
 	this->beBiten();
 	if (_hp == 10)
 		this->beTouched();
-	if(!this->isAlive)
+	if (!this->isAlive)
 		this->unschedule(schedule_selector(Carrot::update));
 }
 
 void Carrot::beBiten() {
 	if (_beBiten == true) {
-		_hp-=bitenDamage;
+		_hp -= bitenDamage;
 		_beBiten = false;
 		bitenDamage = 1;
 		this->changeBloodBox();//更换血条数字
 		this->changeCarrotAppearance();//显示新的hp对应的萝卜
 	}
-	
+
 }
 
 void Carrot::beTouched() {
@@ -115,6 +119,7 @@ void Carrot::beTouched() {
 		if (this->getBoundingBox().containsPoint(location)) {
 			this->runTwistAnimation();
 			this->changeCarrotAppearance();//显示新的hp对应的萝卜
+			this->upgrade();
 		}
 	};
 	Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
@@ -122,7 +127,7 @@ void Carrot::beTouched() {
 /*-----------------private---------------------*/
 void Carrot::changeCarrotAppearance() {
 	// 在动画完成后执行的逻辑
-	this->setTexture(bitenTectures[int(_hp-1)].fileName);//according to _hp callback to tecture
+	this->setTexture(bitenTectures[int(_hp - 1)].fileName);//according to _hp callback to tecture
 }
 
 void Carrot::createBloodBox() {
@@ -133,7 +138,7 @@ void Carrot::createBloodBox() {
 	}
 	CarrotBloodBox->setScale(0.8f);//set sprite 0.8f size in x and y
 	CarrotBloodBox->setPosition(Vec2(85, 120));//height higher 50 than carrot
-	this->addChild(CarrotBloodBox,20);            //add to picture layer 
+	this->addChild(CarrotBloodBox, 20);            //add to picture layer 
 	BloodNum = Sprite::create("Carrot/CarrotBlood/number_10.png");  //create blood number_hp10
 	BloodNum->setScale(0.5f);
 	BloodNum->setPosition(Vec2(72, 120));
@@ -156,4 +161,30 @@ bool Carrot::isDie() {
 	}
 	else
 		return false;
+}
+bool Carrot::upgrade() {
+	if (game_money1 >= 550) {
+		myGrade += 1;
+		if (myGrade > 3){
+			myGrade = 3;
+			if (_hp < 3){
+				_hp = 10;
+				this->changeBloodBox();
+				this->changeCarrotAppearance();
+			}
+		}
+		else {
+			scale = myGrade / 20 + 1;
+			this->setScale(scale);
+			this->runTwistAnimation();
+			game_money1 -= 125;
+			for (int j = 0; j < monsterContainer.size(); j++) {
+				auto monster = monsterContainer.at(j);
+				monster->behurt(monster->getHP() / (myGrade * 10 - 10), 4);
+			}
+		}
+			return true;
+		
+	}
+	return false;
 }

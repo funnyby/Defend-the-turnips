@@ -7,9 +7,10 @@ bool SunFlowerBullet::initSunBullet(int grade)
 	{
 		return false;
 	}
+	setAnchorPoint(Vec2(0.5, 0.5));
 	myGrade = grade;
 	if (myGrade == 1)
-		setAttackRange(40 * 1.2 + 20);
+		setAttackRange(40 * 1.5 + 20);
 	else if (myGrade == 2)
 		setAttackRange(40 * 1.8 + 20);
 	else
@@ -24,19 +25,21 @@ bool SunFlowerBullet::initSunBullet(int grade)
 void SunFlowerBullet::spreadSpriteToScope() {
 
 	//扩散的距离
-	const float distance = attackRange ;
+	const float distance = attackRange;
 
 	//动作持续时间
-	const float durTime = (distance / speed)*10;
+	const float durTime = (distance / speed) * 100;
 
 	//设置精灵的扩散动画
-	spreadTo = ScaleTo::create(durTime, distance / 40.0f);
+	spreadTo = ScaleTo::create(durTime, 100 * distance / 20.0f);
 	//bulletSprite->runAction(spreadTo); test use
 }
 
 void SunFlowerBullet::inputBulletAction(Point towerLoc) {
 	src = towerLoc;//设置点位置
-	bulletSprite->setPosition(src);//初始定位
+	this->setScale(0.3);
+	this->setPosition(src);//初始定位
+
 	this->spreadSpriteToScope();
 }
 
@@ -60,7 +63,6 @@ void SunFlowerBullet::removeBullet() {
 
 		if (monsterRect.intersectsRect(bulletRect)) {
 			monster->behurt(this->getAttackRange(), 3);
-			isMissed = false;
 		}
 	}
 

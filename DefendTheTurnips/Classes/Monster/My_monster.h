@@ -39,6 +39,7 @@ private:
     Sprite* bloodbox;
     Sprite* behit;
     Sprite* sprBlood;
+    Sprite* freeze;
     //×ÜÑªÁ¿
     int hp_total;
     int freeze_total;

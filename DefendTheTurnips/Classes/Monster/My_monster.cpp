@@ -25,6 +25,13 @@ void Monster::initmonster_type1() {
 	behit->setVisible(false); // 设置为可见  
 	this->addChild(behit);            //加到默认图层里面去
 
+	freeze = Sprite::create("monster/5.png");   //创建进度框
+	freeze->setScaleX(0.03f); // 将精灵在x轴上的大小缩小到原来的50%  
+	freeze->setScaleY(0.03f); // 将精灵在y轴上的大小缩小到原来的50%
+	freeze->setPosition(45, 9); //设置框的位置
+	this->addChild(freeze);            //加到默认图层里面去
+	freeze->setVisible(false);
+
 	freeze_total = 88;
 	_walkSpeed = 88;
 	//_walkSpeed =0.01;
@@ -81,6 +88,13 @@ void Monster::initmonster_type2() {
 	behit->setPosition(60, 24); //设置框的位置
 	behit->setVisible(false); // 设置为可见  
 	this->addChild(behit);            //加到默认图层里面去
+
+	freeze = Sprite::create("monster/5.png");   //创建进度框
+	freeze->setScaleX(0.03f); // 将精灵在x轴上的大小缩小到原来的50%  
+	freeze->setScaleY(0.03f); // 将精灵在y轴上的大小缩小到原来的50%
+	freeze->setPosition(45, 9); //设置框的位置
+	this->addChild(freeze);            //加到默认图层里面去
+	freeze->setVisible(false);
 
 	freeze_total = 137;
 	_walkSpeed = 137;
@@ -139,6 +153,14 @@ void Monster::initmonster_type3() {
 	behit->setPosition(60, 24); //设置框的位置
 	behit->setVisible(false); // 设置为可见  
 	this->addChild(behit);            //加到默认图层里面去
+
+	freeze = Sprite::create("monster/5.png");   //创建进度框
+	freeze->setScaleX(0.03f); // 将精灵在x轴上的大小缩小到原来的50%  
+	freeze->setScaleY(0.03f); // 将精灵在y轴上的大小缩小到原来的50%
+	freeze->setPosition(45, 9); //设置框的位置
+	this->addChild(freeze);            //加到默认图层里面去
+	freeze->setVisible(false);
+
 
 	freeze_total = 48;
 	_walkSpeed = 48;
@@ -362,21 +384,20 @@ void Monster::touched() {
 
 
 bool Monster::isFreezed() {
+
 	if (_freeze == 1) {
-		_walkSpeed = 0.5 * freeze_total;;
-		this->schedule(schedule_selector(Monster::unFreezed), 3);
-		auto sprite = Sprite::create("monster/5.png");   //创建进度框
-		sprite->setScaleX(0.03f); // 将精灵在x轴上的大小缩小到原来的50%  
-		sprite->setScaleY(0.03f); // 将精灵在y轴上的大小缩小到原来的50%
-		sprite->setPosition(45, 9); //设置框的位置
-		this->addChild(sprite);            //加到默认图层里面去
+		_walkSpeed = 0.5 * freeze_total;
+		freeze->setVisible(true);
+		this->scheduleOnce(schedule_selector(Monster::unFreezed), 3);
+		_freeze = 0;
 		return true;
 	}
 	return false;
 }
 
 void Monster::unFreezed(float a) {
-	_freeze = 0;
+	freeze->setVisible(false);
+	_walkSpeed = freeze_total;
 }
 
 

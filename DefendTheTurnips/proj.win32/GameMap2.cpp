@@ -9,11 +9,13 @@
 #include"..\Classes\Tower\ShitTower.h"
 #include"..\Classes\Tower\SunTower.h"
 #include"..\Classes\Barrier\Barrier.h"
+#include "SimpleAudioEngine.h"
 #include<vector>
 
 
 USING_NS_CC;
 using namespace cocos2d::ui;
+using namespace CocosDenshion;
 //-------------------------------------  全局变量 ------------------------------------------------
 extern int monsternum;
 extern int die_monsternum;
@@ -37,6 +39,10 @@ bool GameMap2::init()
 	if (!Scene::init())
 		return false;
 	game_money1 = 550;
+	SimpleAudioEngine::getInstance()->preloadBackgroundMusic("Music/BackGroundMusic/BGMusic02.mp3");
+
+	// 播放音乐
+	SimpleAudioEngine::getInstance()->playBackgroundMusic("Music/BackGroundMusic/BGMusic02.mp3", true);
 
 	//---------------------------------------设置背景地图-----------------------------------------------
 	auto visibleSize = Director::getInstance()->getVisibleSize();
@@ -229,7 +235,81 @@ void GameMap2::InitBarrier()
 	BarrierSprite13->initBarrier(70, 70, texture12, Vec2(110, 315));
 }
 
+void GameMap2::setMenuButton(Layer* layerUI)
+{
+	menubtn = Button::create("GameMap/menu.png", "GameMap/menu.png");
+	menubtn->setPressedActionEnabled(true);
+	menubtn->setPosition(Vec2(975, 590));
+	menubtn->setScale(1.05);
+	layerUI->addChild(menubtn);
 
+	// 设置按钮点击事件监听器
+	menubtn->addClickEventListener([=](Ref* sender) {
+
+		auto gamemenu = Sprite::create("GameMap/gamemenu.png");
+	SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
+	// 设置菜单位置
+	gamemenu->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2,
+		Director::getInstance()->getVisibleSize().height * 2));
+	this->addChild(gamemenu, 200);
+	// 执行菜单从上方移动到中央的动作
+	auto moveAction = EaseBackOut::create(MoveTo::create(0.5f, Vec2(Director::getInstance()->getVisibleSize().width / 2,
+		Director::getInstance()->getVisibleSize().height / 2)));
+	gamemenu->runAction(moveAction);
+
+	//继续游戏按钮
+	auto continuebtn = Button::create("GameMap/continue.png", "GameMap/continue.png", "");
+	gamemenu->addChild(continuebtn);
+	continuebtn->setPressedActionEnabled(true);
+	continuebtn->setPosition(Vec2(233, 310));
+	continuebtn->setScale(1.12);
+	continuebtn->addClickEventListener([=](Ref* sender) {
+		isGamePaused = false;
+	SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+	Director::getInstance()->resume();
+	gamemenu->removeFromParent();
+		});
+
+	//选择关卡按钮
+	auto chooselevelbtn = Button::create("GameMap/chooselevel.png", "GameMap/chooselevel.png", "");
+	gamemenu->addChild(chooselevelbtn);
+	chooselevelbtn->setPressedActionEnabled(true);
+	chooselevelbtn->setPosition(Vec2(233, 202));
+	chooselevelbtn->setScale(1.12);
+	chooselevelbtn->addClickEventListener([=](Ref* sender) {
+		auto chooselevel = ChooseLevel::create();
+	SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+	return false;
+	SimpleAudioEngine::getInstance()->preloadBackgroundMusic("Music/BackGroundMusic/StartBGMusic.mp3");
+	// 播放音乐
+	SimpleAudioEngine::getInstance()->playBackgroundMusic("Music/BackGroundMusic/StartBGMusic.mp3", true);
+	Director::getInstance()->replaceScene(chooselevel);
+	//?????????????????再次进入会卡住
+		});
+
+	//重新开始按钮
+	auto restartbtn = Button::create("GameMap/restart.png", "GameMap/restart.png", "");
+	gamemenu->addChild(restartbtn);
+	restartbtn->setPressedActionEnabled(true);
+	restartbtn->setPosition(Vec2(233, 100));
+	restartbtn->setScale(1.12);
+	restartbtn->addClickEventListener([=](Ref* sender) {
+		auto gamemap1 = GameMap2::create();
+	SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+	Director::getInstance()->replaceScene(gamemap1);
+	//?????????????????再次进入会卡住
+		});
+
+	// 使用Sequence连接动作和回调函数
+	gamemenu->runAction(Sequence::create(moveAction, CallFunc::create([this]() {
+		// 在动作执行完后执行的回调函数
+		// 游戏暂停
+		isGamePaused = true;
+	Director::getInstance()->pause();
+		}), nullptr));
+
+		});
+}
 void GameMap2::setPauseButton(Layer* layerUI)
 {
 	pausebtn = Button::create("GameMap/pause_0.png", "GameMap/pause_0.png");
@@ -245,12 +325,14 @@ void GameMap2::setPauseButton(Layer* layerUI)
 			Director::getInstance()->resume();
 			isGamePaused = false;
 			pausebtn->loadTextures("GameMap/pause_0.png", "GameMap/pause_0.png");
+			SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
 		}
 		else {
 			// 游戏暂停
 			Director::getInstance()->pause();
 			isGamePaused = true;
 			pausebtn->loadTextures("GameMap/pause_1.png", "GameMap/pause_1.png");
+			SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
 		}
 
 		});
@@ -302,7 +384,7 @@ void GameMap2::bottlebuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Wid
 	// 处理按钮点击事件
 	if (type == cocos2d::ui::Widget::TouchEventType::ENDED) {
 		CCLOG("Button Clicked!");
-
+		SimpleAudioEngine::getInstance()->playEffect("Music/TowerMusic/TowerBulid.mp3");
 		map[i][j] = PLACED;
 
 		// 移除所有按钮
@@ -326,7 +408,7 @@ void GameMap2::shitbuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Widge
 	// 处理按钮点击事件
 	if (type == cocos2d::ui::Widget::TouchEventType::ENDED) {
 		CCLOG("Button Clicked!");
-
+		SimpleAudioEngine::getInstance()->playEffect("Music/TowerMusic/TowerBulid.mp3");
 		map[i][j] = PLACED;
 
 		// 移除所有按钮
@@ -351,7 +433,7 @@ void GameMap2::sunbuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Widget
 	// 处理按钮点击事件
 	if (type == cocos2d::ui::Widget::TouchEventType::ENDED) {
 		CCLOG("Button Clicked!");
-
+		SimpleAudioEngine::getInstance()->playEffect("Music/TowerMusic/TowerBulid.mp3");
 		map[i][j] = PLACED;
 
 		// 移除所有按钮
@@ -474,6 +556,7 @@ bool GameMap2::onTouchBegan(Touch* touch, Event* event)
 
 		// 创建警告精灵并设置图片
 		auto warning = Sprite::create("GameMap/warning.png");
+		SimpleAudioEngine::getInstance()->playEffect("Music/SelectFault.mp3");
 		warning->setScale(0.8);
 		warning->setPosition(clickLocation);
 
@@ -578,6 +661,7 @@ void GameMap2::upgradebuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Wi
 	// 处理按钮点击事件
 	if (type == cocos2d::ui::Widget::TouchEventType::ENDED) {
 		CCLOG("Button Clicked!");
+		SimpleAudioEngine::getInstance()->playEffect("Music/ToerMusic/TowerUpdata.mp3");
 		if (bt) {
 			//更新等级
 			bt->level++;

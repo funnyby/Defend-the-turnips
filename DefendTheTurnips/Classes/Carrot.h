@@ -30,28 +30,33 @@ class Carrot :public Sprite
 public:
     bool initCarrot();//init carrot state
 
-    void setBitenAttack(float a=1.0);
+    void setBitenAttack(float a = 1.0);
 
     void beBiten();//used outside,hp--,change tecctures
 
     void setLocation(Point mapDest);//set carrot location according to different map
-    
+
     void runTwistAnimation();
+
     void set_beBiten(bool set) { _beBiten = set; }
+
     void beTouched();   //when touched twist
 
     virtual void update(float dt);//update carrot state
-    bool getIsAlive() { return isAlive; }
-private:
 
+    bool getIsAlive() { return isAlive; }
+
+    bool upgrade();
+private:
+    float scale;
     Point CarrotPos;    //different maps'destination
     filesName bitenTectures[10];    //be biten then change
     Sprite* CarrotBloodBox;     //Carrot's blood
     Sprite* BloodNum;   //blood number
     bool _beBiten;  //true==_biten
     bool isAlive;
-    float bitenDamage=1.0f;//set by monster grade
-
+    float bitenDamage = 1.0f;//set by monster grade
+    float myGrade;
 
     CC_SYNTHESIZE(float, _hp, HP);    //to create a variable"_hp"and functions: setHP\ getHP
 

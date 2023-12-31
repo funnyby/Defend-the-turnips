@@ -36,7 +36,7 @@ bool ShitTower::init(const std::string& towerImage)
     schedule([=](float dt) {
         this->update(dt);
         }, "update_key");
-    
+
     return true;
 }
 
