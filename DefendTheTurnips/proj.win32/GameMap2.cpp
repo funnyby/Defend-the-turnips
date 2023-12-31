@@ -389,7 +389,8 @@ void GameMap2::bottlebuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Wid
 
 		// 移除所有按钮
 		hideButton();
-
+		//扣钱
+		game_money1 -= 100;
 		// 创建BottleTower
 		auto bottletower = BottleTower::create("Tower/Bottle11.png");
 		bottletower->pos_i = i;
@@ -413,7 +414,8 @@ void GameMap2::shitbuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Widge
 
 		// 移除所有按钮
 		hideButton();
-
+		//扣钱
+		game_money1 -= 120;
 		// 创建ShitTower
 		auto shittower = ShitTower::create("Tower/shit1.png");
 		shittower->pos_i = i;
@@ -438,7 +440,7 @@ void GameMap2::sunbuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Widget
 
 		// 移除所有按钮
 		hideButton();
-
+		game_money1 -= 180;
 		// 创建SunTower
 		auto suntower = SunTower::create("Tower/sun11.png");
 		suntower->pos_i = i;
@@ -669,6 +671,10 @@ void GameMap2::upgradebuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Wi
 			bt->setTexture(towerImage);
 			// 移除所有按钮
 			hideButton();
+			if (bt->level == 1)
+				game_money1 -= 180;
+			else if (bt->level == 2)
+				game_money1 -= 260;
 			return;
 		}
 		if (st) {
@@ -679,6 +685,10 @@ void GameMap2::upgradebuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Wi
 			st->setScale(0.9);
 			// 移除所有按钮
 			hideButton();
+			if (st->level == 1)
+				game_money1 -= 220;
+			else if (st->level == 2)
+				game_money1 -= 260;
 			return;
 		}
 		if (sunt) {
@@ -688,6 +698,10 @@ void GameMap2::upgradebuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Wi
 			sunt->setTexture(towerImage);
 			// 移除所有按钮
 			hideButton();
+			if (st->level == 1)
+				game_money1 -= 260;
+			else if (st->level == 2)
+				game_money1 -= 320;
 			return;
 		}
 	}
@@ -715,6 +729,12 @@ void GameMap2::cancelbuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Wid
 			}
 			// 移除所有按钮
 			hideButton();
+			if (bt->level == 1)
+				game_money1 += 80;
+			else if (bt->level == 2)
+				game_money1 += 224;
+			else if (bt->level == 3)
+				game_money1 += 432;
 			return;
 		}
 		//拆除shit
@@ -732,6 +752,12 @@ void GameMap2::cancelbuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Wid
 			}
 			// 移除所有按钮
 			hideButton();
+			if (st->level == 1)
+				game_money1 += 96;
+			else if (st->level == 2)
+				game_money1 += 272;
+			else if (st->level == 3)
+				game_money1 += 480;
 			return;
 		}
 		//拆除sun
@@ -749,6 +775,12 @@ void GameMap2::cancelbuttonClickCallback(cocos2d::Ref* pSender, cocos2d::ui::Wid
 			}
 			// 移除所有按钮
 			hideButton();
+			if (bt->level == 1)
+				game_money1 += 144;
+			else if (bt->level == 2)
+				game_money1 += 352;
+			else if (bt->level == 3)
+				game_money1 += 608;
 			return;
 		}
 	}

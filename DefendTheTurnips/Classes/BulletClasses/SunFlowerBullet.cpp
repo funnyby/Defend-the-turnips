@@ -56,13 +56,28 @@ void SunFlowerBullet::removeBullet() {
 		this->getPositionY() + this->getParent()->getPositionY() - this->getContentSize().height / 2,
 		this->bulletSprite->getContentSize().width,
 		this->bulletSprite->getContentSize().height);
-
+	
 	for (int j = 0; j < monsterContainer.size(); j++) {
 		auto monster = monsterContainer.at(j);
 		auto monsterRect = monster->getBoundingBox();
 
 		if (monsterRect.intersectsRect(bulletRect)) {
 			monster->behurt(this->getAttackRange(), 3);
+		}
+	}
+	for (int j = 0; j < BarrierContainer.size(); j++) {
+		auto barrier = BarrierContainer.at(j);
+		if (barrier->choosed)
+		{
+			for (int k = 0; j < BarrierContainer.size(); k++)
+			{
+				auto barrier1 = BarrierContainer.at(j);
+				auto barrierRect = barrier1->getBoundingBox();
+				if (barrierRect.intersectsRect(bulletRect)) {
+					barrier1->behurt(this->getAttackDamage(), 1);
+				}
+			}
+			break;
 		}
 	}
 
