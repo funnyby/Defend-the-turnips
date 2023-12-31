@@ -28,6 +28,9 @@ public:
 
 	enum { EMPTY, PATH, PLACED, BARRIER };
 
+	void win();
+	void lose();
+
 	//关卡选项
 	int if_speed_up;//是否加速
 	bool isGamePaused = false;//是否暂停

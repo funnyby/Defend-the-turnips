@@ -1,6 +1,7 @@
 #include "..\Classes\Carrot.h"
 #include "SimpleAudioEngine.h"
 #include "GameMap1.h"
+#include "GameMap2.h"
 using namespace CocosDenshion;
 USING_NS_CC;
 Vector<Carrot*> myCarrot;
@@ -163,6 +164,11 @@ bool Carrot::isDie() {
 		if (sceneInstance) {
 			// 调用自定义函数  
 			sceneInstance->lose();
+		}
+		GameMap2* sceneInstance2 = dynamic_cast<GameMap2*>(this->getParent());
+		if (sceneInstance2) {
+			// 调用自定义函数  
+			sceneInstance2->lose();
 		}
 		return true;
 	}

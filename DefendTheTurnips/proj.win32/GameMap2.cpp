@@ -1222,7 +1222,7 @@ void GameMap2::next_bo(float a) {
 	if (current_wave >= 8) {
 		if (monsternum >= 35 && monsterContainer.empty())
 		{//-------------------todo:判断输赢的接口--------------------------------------------------------------------------
-			//win();
+			win();
 			this->unschedule(schedule_selector(GameMap2::next_bo));
 		}
 	}
@@ -1231,4 +1231,109 @@ void GameMap2::next_bo(float a) {
 		this->unschedule(schedule_selector(GameMap2::next_bo));
 		this->GameMap2::bo(0.1f);
 	}
+}
+
+
+void GameMap2::win()
+{
+	auto winmenu = Sprite::create("GameMap/win.png");
+	// 设置菜单位置
+	winmenu->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2,
+		Director::getInstance()->getVisibleSize().height * 2));
+	this->addChild(winmenu, 200);
+	// 执行菜单从上方移动到中央的动作
+	auto moveAction = EaseBackOut::create(MoveTo::create(0.5f, Vec2(Director::getInstance()->getVisibleSize().width / 2,
+		Director::getInstance()->getVisibleSize().height / 2)));
+	winmenu->runAction(moveAction);
+
+	//奖杯的放置
+	auto champion = Sprite::create("GameMap/champion.png");
+	winmenu->addChild(champion);
+	champion->setPosition(Vec2(360, 400));
+
+	//继续游戏按钮
+	auto continuebtn = Button::create("GameMap/continue.png", "GameMap/continue.png", "");
+	winmenu->addChild(continuebtn);
+	continuebtn->setPressedActionEnabled(true);
+	continuebtn->setPosition(Vec2(360, 255));
+	continuebtn->setScale(1.12);
+	continuebtn->addClickEventListener([=](Ref* sender) {
+		isGamePaused = false;
+		auto gamemap2 = GameMap2::create();
+		//removeAllChildrenWithCleanup(true);
+		Director::getInstance()->replaceScene(gamemap2);
+		});
+
+	//选择关卡按钮
+	auto chooselevelbtn = Button::create("GameMap/chooselevel.png", "GameMap/chooselevel.png", "");
+	winmenu->addChild(chooselevelbtn);
+	chooselevelbtn->setPressedActionEnabled(true);
+	chooselevelbtn->setPosition(Vec2(360, 100));
+	chooselevelbtn->setScale(1.12);
+	chooselevelbtn->addClickEventListener([=](Ref* sender) {
+		auto chooselevel = ChooseLevel::create();
+		//removeAllChildrenWithCleanup(true);
+		Director::getInstance()->replaceScene(chooselevel);
+		//?????????????????再次进入会卡住
+		});
+
+
+	// 使用Sequence连接动作和回调函数
+	winmenu->runAction(Sequence::create(moveAction, CallFunc::create([this]() {
+		// 在动作执行完后执行的回调函数
+		// 游戏暂停
+		isGamePaused = true;
+		Director::getInstance()->pause();
+		}), nullptr));
+
+}
+
+void GameMap2::lose()
+{
+	auto losemenu = Sprite::create("GameMap/lose.png");
+	// 设置菜单位置
+	losemenu->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2,
+		Director::getInstance()->getVisibleSize().height * 2));
+	this->addChild(losemenu, 200);
+	// 执行菜单从上方移动到中央的动作
+	auto moveAction = EaseBackOut::create(MoveTo::create(0.5f, Vec2(Director::getInstance()->getVisibleSize().width / 2,
+		Director::getInstance()->getVisibleSize().height / 2)));
+	losemenu->runAction(moveAction);
+
+
+	//重新开始游戏按钮
+	auto restartbtn = Button::create("GameMap/restart.png", "GameMap/restart.png", "");
+	losemenu->addChild(restartbtn);
+	restartbtn->setPressedActionEnabled(true);
+	restartbtn->setPosition(Vec2(360, 300));
+	restartbtn->setScale(1.12);
+	restartbtn->addClickEventListener([=](Ref* sender) {
+		isGamePaused = false;
+		auto gamemap1 = GameMap2::create();
+		//removeAllChildrenWithCleanup(true);
+		Director::getInstance()->replaceScene(gamemap1);
+		});
+
+	//选择关卡按钮
+	auto chooselevelbtn = Button::create("GameMap/chooselevel.png", "GameMap/chooselevel.png", "");
+	losemenu->addChild(chooselevelbtn);
+	chooselevelbtn->setPressedActionEnabled(true);
+	chooselevelbtn->setPosition(Vec2(360, 150));
+	chooselevelbtn->setScale(1.12);
+	chooselevelbtn->addClickEventListener([=](Ref* sender) {
+		auto chooselevel = ChooseLevel::create();
+		//removeAllChildrenWithCleanup(true);
+		Director::getInstance()->replaceScene(chooselevel);
+		//?????????????????再次进入会卡住
+		});
+
+
+	// 使用Sequence连接动作和回调函数
+	losemenu->runAction(Sequence::create(moveAction, CallFunc::create([this]() {
+		// 在动作执行完后执行的回调函数
+		// 游戏暂停
+		isGamePaused = true;
+		Director::getInstance()->pause();
+		}), nullptr));
+
 }
