@@ -73,7 +73,7 @@ void shitBullet::removeBullet() {
 		auto monsterRect = monster->getBoundingBox();    
 		if (monsterRect.intersectsRect(bulletRect)) {
 			monster->behurt(this->getAttackDamage(), 2);
-			monster->isFreezed();
+			monster->setFreeze(1);
 			isMissed = false;
 		}
 	}

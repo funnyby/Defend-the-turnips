@@ -234,6 +234,7 @@ bool Monster::judge_dest() {
 			auto progress = (ProgressTimer*)this->getChildByTag(BLOOD_BAR_m);
 			progress->removeFromParent();
 			this->_hp = 0;
+			this->_money = 0;
 			this->isDie();
 			return true;
 		}
@@ -250,6 +251,7 @@ bool Monster::judge_dest() {
 			}
 			auto progress = (ProgressTimer*)this->getChildByTag(BLOOD_BAR_m);
 			progress->removeFromParent();
+			this->_money = 0;
 			this->_hp = 0;
 			this->isDie();
 			return true;

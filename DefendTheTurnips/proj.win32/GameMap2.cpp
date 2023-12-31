@@ -1116,7 +1116,14 @@ void GameMap2::bo(float a) {
 }
 
 void GameMap2::next_bo(float a) {
-	if (die_monsternum == monsternum)
+	if (current_wave >= 8) {
+		if (monsternum >= 35 && monsterContainer.empty())
+		{//-------------------todo:ÅÐ¶ÏÊäÓ®µÄ½Ó¿Ú--------------------------------------------------------------------------
+			//win();
+			this->unschedule(schedule_selector(GameMap2::next_bo));
+		}
+	}
+	else if (monsterContainer.empty())
 	{
 		this->unschedule(schedule_selector(GameMap2::next_bo));
 		this->GameMap2::bo(0.1f);

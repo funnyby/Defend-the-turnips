@@ -52,10 +52,10 @@ void SunFlowerBullet::spread() {//run射击动画动作序列
 void SunFlowerBullet::removeBullet() {
 	bool isMissed = true;
 
-	auto bulletRect = Rect(this->getPositionX() + this->getParent()->getPositionX() - this->getContentSize().width / 2,
-		this->getPositionY() + this->getParent()->getPositionY() - this->getContentSize().height / 2,
-		this->bulletSprite->getContentSize().width,
-		this->bulletSprite->getContentSize().height);
+	auto bulletRect = Rect(this->getPositionX() + this->getParent()->getPositionX() - attackRange-20,
+		this->getPositionY() + this->getParent()->getPositionY() - attackRange -20,
+		this->bulletSprite->getContentSize().width+20,
+		this->bulletSprite->getContentSize().height+20);
 	
 	for (int j = 0; j < monsterContainer.size(); j++) {
 		auto monster = monsterContainer.at(j);
@@ -66,18 +66,10 @@ void SunFlowerBullet::removeBullet() {
 		}
 	}
 	for (int j = 0; j < BarrierContainer.size(); j++) {
-		auto barrier = BarrierContainer.at(j);
-		if (barrier->choosed)
-		{
-			for (int k = 0; j < BarrierContainer.size(); k++)
-			{
-				auto barrier1 = BarrierContainer.at(j);
-				auto barrierRect = barrier1->getBoundingBox();
-				if (barrierRect.intersectsRect(bulletRect)) {
-					barrier1->behurt(this->getAttackDamage(), 1);
-				}
-			}
-			break;
+		auto barrier1 = BarrierContainer.at(j);
+		auto barrierRect = barrier1->getBoundingBox();
+		if (barrierRect.intersectsRect(bulletRect)) {
+			barrier1->behurt(this->getAttackDamage(), 1);
 		}
 	}
 
