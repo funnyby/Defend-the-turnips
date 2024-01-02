@@ -193,7 +193,7 @@ bool Carrot::upgrade() {
 			game_money1 -= 125;
 			for (int j = 0; j < monsterContainer.size(); j++) {
 				auto monster = monsterContainer.at(j);
-				monster->behurt(monster->getHP() / (myGrade * 10 - 10), 4);
+				monster->beHurt(monster->getHP() / (myGrade * 10 - 10), 4);
 			}
 		}
 			return true;

@@ -1135,8 +1135,8 @@ void GameMap2::countDown()
 void GameMap2::init_m1(float delta) {
 	auto monsterSprite = Monster::create();
 	this->addChild(monsterSprite, 100 - monsternum);
-	(monsterSprite->map_num) = 2;
-	monsterSprite->initmonster_type1();
+	(monsterSprite->mapNum) = 2;
+	monsterSprite->initMonsterType1();
 	monsterSprite->schedule(schedule_selector(Monster::update), 0.05f);
 	monsternum++;
 	monsterSprite->setPosition(620, 80);
@@ -1145,8 +1145,8 @@ void GameMap2::init_m1(float delta) {
 void GameMap2::init_m2(float delta) {
 	auto monsterSprite = Monster::create();
 	this->addChild(monsterSprite, 100 - monsternum);
-	(monsterSprite->map_num) = 2;
-	monsterSprite->initmonster_type2();
+	(monsterSprite->mapNum) = 2;
+	monsterSprite->initMonsterType2();
 	monsterSprite->schedule(schedule_selector(Monster::update), 0.05f);
 	monsternum++;
 	monsterSprite->setPosition(620, 80);
@@ -1156,8 +1156,8 @@ void GameMap2::init_m3(float delta) {
 	monsternum++;
 	auto monsterSprite = Monster::create();
 	this->addChild(monsterSprite, 100 - monsternum);
-	(monsterSprite->map_num) = 2;
-	monsterSprite->initmonster_type3();
+	(monsterSprite->mapNum) = 2;
+	monsterSprite->initMonsterType3();
 	monsterSprite->schedule(schedule_selector(Monster::update), 0.05f);
 	monsterSprite->setPosition(620, 80);
 }
@@ -1210,6 +1210,8 @@ void GameMap2::bo(float a) {
 		break;
 	}
 	current_wave++;
+	if (current_wave >= 8)
+		this->schedule(schedule_selector(GameMap2::next_bo), 0.05f);
 	if (current_wave < 6)
 		this->schedule(schedule_selector(GameMap2::next_bo), 3);
 	else

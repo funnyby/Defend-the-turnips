@@ -1,6 +1,6 @@
 #include "../Classes/BulletClasses/Bullet.h"
 
-bool Bullet:: init() {
+bool Bullet::init() {
     if (!Node::init()) {
         return false;
     }

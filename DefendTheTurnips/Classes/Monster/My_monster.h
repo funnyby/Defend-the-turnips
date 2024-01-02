@@ -24,21 +24,21 @@ static __TYPE__* create() \
 class Monster : public cocos2d::CCSprite
 {
 public:
-    int map_num;
+    int mapNum;
     //精灵是否还活着
-    bool isalive;
+    bool isAlive;
     virtual void update(float dt);
-    void initmonster_type1();
-    void initmonster_type2();
-    void initmonster_type3();
+    void initMonsterType1();
+    void initMonsterType2();
+    void initMonsterType3();
     //是否受伤，子弹每次攻击时调用该函数
-    void behurt(int monster_blood, int type);
+    void beHurt(int monster_blood, int type);
     bool choosed;
-    bool beshoot=0;
+    bool beShoot=0;
     Sprite* choice;
 private:
-    Sprite* bloodbox;
-    Sprite* behit;
+    Sprite* bloodBox;
+    Sprite* beHit;
     Sprite* sprBlood;
     Sprite* freeze;
     //总血量

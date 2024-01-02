@@ -12,8 +12,6 @@
 #include "SimpleAudioEngine.h"
 #define x_min 90
 #define x_max 1050
-#define y_min 100
-#define y_max 550
 #define i_max 6
 #define j_max 13
 #include<vector>
@@ -80,7 +78,7 @@ bool GameMap1::init()
 
 	auto upPanel = Sprite::create(upPanelPinfo);
 	upPanel->setAnchorPoint(Vec2(0, 1));
-	upPanel->setPosition(0, Director::getInstance()->getVisibleSize().height+330);
+	upPanel->setPosition(0.0f, (Director::getInstance()->getVisibleSize().height + 330));
 	upPanel->setScale(1.05);
 	layerUI->addChild(upPanel);
 
@@ -312,7 +310,7 @@ void GameMap1::setMenuButton(Layer* layerUI)
 	chooselevelbtn->addClickEventListener([=](Ref* sender) {
 		auto chooselevel = ChooseLevel::create();
 	SimpleAudioEngine::getInstance()->stopBackgroundMusic();
-	return false;
+	//return false;
 	SimpleAudioEngine::getInstance()->preloadBackgroundMusic("Music/BackGroundMusic/StartBGMusic.mp3");
 	// ²¥·ÅÒôÀÖ
 	SimpleAudioEngine::getInstance()->playBackgroundMusic("Music/BackGroundMusic/StartBGMusic.mp3", true);
@@ -975,8 +973,8 @@ void GameMap1::countDown()
 void GameMap1::init_m1(float delta) {
 	auto monsterSprite = Monster::create();
 	this->addChild(monsterSprite, 100 - monsternum);
-	(monsterSprite->map_num) = 1;
-	monsterSprite->initmonster_type1();
+	(monsterSprite->mapNum) = 1;
+	monsterSprite->initMonsterType1();
 	monsterSprite->schedule(schedule_selector(Monster::update), 0.05f);
 	monsterSprite->setPosition(170, 485);
 	monsternum++;
@@ -985,8 +983,8 @@ void GameMap1::init_m1(float delta) {
 void GameMap1::init_m2(float delta) {
 	auto monsterSprite = Monster::create();
 	this->addChild(monsterSprite, 100 - monsternum);
-	(monsterSprite->map_num) = 1;
-	monsterSprite->initmonster_type2();
+	(monsterSprite->mapNum) = 1;
+	monsterSprite->initMonsterType2();
 	monsterSprite->schedule(schedule_selector(Monster::update), 0.05f);
 	monsternum++;
 	monsterSprite->setPosition(170, 485);
@@ -996,8 +994,8 @@ void GameMap1::init_m3(float delta) {
 	monsternum++;
 	auto monsterSprite = Monster::create();
 	this->addChild(monsterSprite, 100 - monsternum);
-	(monsterSprite->map_num) = 1;
-	monsterSprite->initmonster_type3();
+	(monsterSprite->mapNum) = 1;
+	monsterSprite->initMonsterType3();
 	monsterSprite->schedule(schedule_selector(Monster::update), 0.05f);
 	monsterSprite->setPosition(170, 485);
 }

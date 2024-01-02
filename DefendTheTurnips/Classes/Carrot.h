@@ -3,6 +3,7 @@
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
 
+
 #define CREATE_FUNC(__TYPE__) \
 static __TYPE__* create() \
 { \

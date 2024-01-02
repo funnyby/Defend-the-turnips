@@ -30,7 +30,7 @@ class Barrier : public cocos2d::CCSprite
 {
 public:
     //精灵是否还活着
-    bool isalive;
+    bool is_alive;
     virtual void update(float dt);
     //是否受伤，子弹每次攻击时调用该函数
     void behurt(int monster_blood, int type);

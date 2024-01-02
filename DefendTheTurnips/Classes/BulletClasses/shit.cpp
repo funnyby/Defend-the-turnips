@@ -47,13 +47,13 @@ void shitBullet::rotateSpriteToDirection() {
 	//射击动画
 	shootBy = MoveBy::create(durTime, direction);
 }
-void shitBullet::inputBulletAction(Point towerLoc, Point MonsterLoc) {
-	src = towerLoc, dst = MonsterLoc;//设置两个点
+void shitBullet::inputBulletAction(Point towerLoc, Point monsterLoc) {
+	src = towerLoc, dst = monsterLoc;//设置两个点
 	bulletSprite->setPosition(Vec2(40, 40));//初始定位
 	this->rotateSpriteToDirection();//计算角度制作动画
 }
 void shitBullet::shoot() {
-	
+
 	runAction(Sequence::create(shootBy,
 		CallFuncN::create(CC_CALLBACK_0(shitBullet::removeBullet, this)), NULL));
 	/*runAction(Sequence::create(shootBy,
@@ -70,16 +70,16 @@ void shitBullet::removeBullet() {
 
 	for (int j = 0; j < monsterContainer.size(); j++) {
 		auto monster = monsterContainer.at(j);
-		auto monsterRect = monster->getBoundingBox();    
-		if (monsterRect.intersectsRect(bulletRect) && monster->beshoot == 1) {
-			monster->behurt(this->getAttackDamage(), 2);
+		auto monsterRect = monster->getBoundingBox();
+		if (monsterRect.intersectsRect(bulletRect) && monster->beShoot == 1) {
+			monster->beHurt(this->getAttackDamage(), 2);
 			monster->setFreeze(1);
-			monster->beshoot = 0;
+			monster->beShoot = 0;
 			isMissed = false;
 		}
 	}
-	for (int j = 0;j < BarrierContainer.size();j++) {
-		
+	for (int j = 0; j < BarrierContainer.size(); j++) {
+
 		auto barrier = BarrierContainer.at(j);
 
 		auto barrierRect = barrier->getBoundingBox();

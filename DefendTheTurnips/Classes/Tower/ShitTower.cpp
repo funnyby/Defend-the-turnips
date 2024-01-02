@@ -61,16 +61,16 @@ void ShitTower::update(float d)
         if (attackTimer >= attackInterval) {
             attackTimer = 0.0f;  // 重置计时器
             SimpleAudioEngine::getInstance()->playEffect("Music/TowerMusic/Shit.mp3");
-            auto BulletSprite1 = shitBullet::create();
-            this->addChild(BulletSprite1, -1);
-            BulletSprite1->initshitBullet(level);
+            auto bulletSprite1 = shitBullet::create();
+            this->addChild(bulletSprite1, -1);
+            bulletSprite1->initshitBullet(level);
 
             //BulletSprite1->monsterContainer.pushBack(monsterSprite);
             // 
             //----------todo：子弹不能按照正确的路径打出
             //----------todo：对接出现问题，应该是参数传递有问题
-            BulletSprite1->inputBulletAction(my_pos, target_pos);//src\dst
-            BulletSprite1->shoot();
+            bulletSprite1->inputBulletAction(my_pos, target_pos);//src\dst
+            bulletSprite1->shoot();
 
         }
     }

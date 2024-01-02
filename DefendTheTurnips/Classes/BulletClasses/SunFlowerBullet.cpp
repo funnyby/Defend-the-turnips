@@ -52,17 +52,17 @@ void SunFlowerBullet::spread() {//run射击动画动作序列
 void SunFlowerBullet::removeBullet() {
 	bool isMissed = true;
 
-	auto bulletRect = Rect(this->getPositionX() + this->getParent()->getPositionX() - attackRange-48,
-		this->getPositionY() + this->getParent()->getPositionY() - attackRange -45,
-		attackRange*2,
-		attackRange*2);
-	
+	auto bulletRect = Rect(this->getPositionX() + this->getParent()->getPositionX() - attackRange - 48,
+		this->getPositionY() + this->getParent()->getPositionY() - attackRange - 45,
+		attackRange * 2,
+		attackRange * 2);
+
 	for (int j = 0; j < monsterContainer.size(); j++) {
 		auto monster = monsterContainer.at(j);
 		auto monsterRect = monster->getBoundingBox();
 
 		if (monsterRect.intersectsRect(bulletRect)) {
-			monster->behurt(this->getAttackRange(), 3);
+			monster->beHurt(this->getAttackRange(), 3);
 		}
 	}
 	for (int j = 0; j < BarrierContainer.size(); j++) {

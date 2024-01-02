@@ -34,7 +34,7 @@ bool Tower::init(const std::string& towerImage)
 
 
     //----------------todo：攻击范围---可以再改一下，因为我是随便设的参数-----
-    attackrange = 80 * 0.6 * (level + 3);
+    attackRange = 80 * 0.6 * (level + 3);
 
 
     return true;
@@ -57,7 +57,7 @@ void Tower::update(float dt)
     }
 }
 
-bool Tower::isTargetInRange() 
+bool Tower::isTargetInRange()
 {
     my_pos = getPosition();//获得我的位置
 
@@ -65,7 +65,7 @@ bool Tower::isTargetInRange()
         if (barrier->choosed) {
             target_pos = barrier->getPosition();
             float distance = my_pos.distance(target_pos);
-            if (distance <= attackrange) {
+            if (distance <= attackRange) {
                 return true;
             }
         }
@@ -75,8 +75,8 @@ bool Tower::isTargetInRange()
         if (target->choosed) {
             target_pos = target->getPosition();//获得目标位置
             float distance = my_pos.distance(target_pos);
-            if (distance <= attackrange) {
-                target->beshoot = 1;
+            if (distance <= attackRange) {
+                target->beShoot = 1;
                 return true;
             }
         }
@@ -86,8 +86,8 @@ bool Tower::isTargetInRange()
 
         target_pos = target->getPosition();//获得目标位置
         float distance = my_pos.distance(target_pos);
-        if (distance <= attackrange) {
-            target->beshoot = 1;
+        if (distance <= attackRange) {
+            target->beShoot = 1;
             return true;
         }
 
@@ -99,7 +99,7 @@ bool Tower::isTargetInRange()
 void Tower::performAttack()
 {
     // 在这里执行防御塔的攻击逻辑，可以创建子弹、特效等
-    
+
     // 示例：简单地输出一条信息
     CCLOG("Tower attacks the target!");
 }

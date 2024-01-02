@@ -24,7 +24,7 @@ void Barrier::initBarrier(int hp, int money, Texture2D* texture, Vec2 pos) {
 
 	//hp_total = 100;
 	_hp = hp_total;
-	isalive = 1;
+	is_alive = 1;
 
 	this->create_Health_bar();
 	this->scheduleBlood();
@@ -37,7 +37,7 @@ void Barrier::update(float dt) {
 	this->isDie();
 	this->scheduleBlood();
 	this->touched();
-	if (!this->isalive)
+	if (!this->is_alive)
 		this->unschedule(schedule_selector(Barrier::update));
 }
 
@@ -81,7 +81,7 @@ void Barrier::clear() {
 }
 
 void Barrier::betouched() {
-	if (this->choosed == 1 || !this->isalive)
+	if (this->choosed == 1 || !this->is_alive)
 		return;
 	choice = Sprite::create("monster/16.png");   //创建进度框
 	this->addChild(choice, 10000);            //加到默认图层里面去
@@ -140,7 +140,7 @@ void Barrier::touched() {
 		}
 	};
 	Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
-	if (!this->isalive)
+	if (!this->is_alive)
 	{
 		_eventDispatcher->removeEventListener(listener);
 		return;
@@ -161,7 +161,7 @@ bool Barrier::isDie() {
 		bloodbox->setVisible(false);
 		getActionManager()->removeAllActionsFromTarget(this);
 
-		isalive = 0;
+		is_alive = 0;
 		//精灵爆炸
 		auto texture = Director::getInstance()->getTextureCache()->addImage("monster/2.png");
 		// 设置新的纹理  

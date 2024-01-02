@@ -14,7 +14,7 @@ public:
     //防御塔在地图数组上的位置
     int pos_i, pos_j;
     //攻击范围
-    int attackrange;
+    int attackRange;
 
     //--------------------------------------
     Vec2 my_pos;//炮塔的位置
@@ -51,7 +51,7 @@ public:
 
 
     // 检测目标是否在攻击范围内
-    bool isTargetInRange() ;
+    bool isTargetInRange();
 
     // 执行攻击动作
     virtual void performAttack();

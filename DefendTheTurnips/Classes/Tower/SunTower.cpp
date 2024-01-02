@@ -60,17 +60,17 @@ void SunTower::update(float d)
         if (attackTimer >= attackInterval) {
             attackTimer = 0.0f;  // 重置计时器
             SimpleAudioEngine::getInstance()->playEffect("Music/TowerMusic/Sun.mp3");
-            auto BulletSprite1 = SunFlowerBullet::create();
-            this->addChild(BulletSprite1, -1);
-            BulletSprite1->initSunBullet(level);
-            int x = BulletSprite1->getContentSize().width;
-            int y = BulletSprite1->getContentSize().height;
+            auto bulletSprite1 = SunFlowerBullet::create();
+            this->addChild(bulletSprite1, -1);
+            bulletSprite1->initSunBullet(level);
+            int x = bulletSprite1->getContentSize().width;
+            int y = bulletSprite1->getContentSize().height;
             //BulletSprite1->monsterContainer.pushBack(monsterSprite);
             // 
             //----------todo：子弹不能按照正确的路径打出
             //----------todo：对接出现问题，应该是参数传递有问题
-            BulletSprite1->inputBulletAction(Vec2(45, 50));//src
-            BulletSprite1->spread();
+            bulletSprite1->inputBulletAction(Vec2(45, 50));//src
+            bulletSprite1->spread();
 
         }
     }

@@ -39,8 +39,8 @@ void GreenTowerBullet::rotateSpriteToDirection() {
 	shootBy = MoveBy::create(durTime, Vec2(0, distance));
 
 }
-void GreenTowerBullet::inputBulletAction(Point towerLoc, Point MonsterLoc) {
-	src = towerLoc, dst = MonsterLoc;//设置两个点
+void GreenTowerBullet::inputBulletAction(Point towerLoc, Point monsterLoc) {
+	src = towerLoc, dst = monsterLoc;//设置两个点
 	bulletSprite->setPosition(src);//初始定位
 	this->rotateSpriteToDirection();//计算角度制作动画
 }
@@ -61,19 +61,18 @@ void GreenTowerBullet::removeBullet() {
 		auto monster = monsterContainer.at(j);
 		auto monsterRect = monster->getBoundingBox();
 
-		if (monsterRect.intersectsRect(bulletRect)&&monster->beshoot==1) {
-			monster->behurt(this->getAttackDamage(), 1);
-			monster->beshoot = 0;
+		if (monsterRect.intersectsRect(bulletRect) && monster->beShoot == 1) {
+			monster->beHurt(this->getAttackDamage(), 1);
+			monster->beShoot = 0;
 			isMissed = false;
 		}
 	}
-	for (int j = 0;j < BarrierContainer.size();j++) {
+	for (int j = 0; j < BarrierContainer.size(); j++) {
 		auto barrier = BarrierContainer.at(j);
 		auto barrierRect = barrier->getBoundingBox();
 
 		if (barrier->choosed && barrierRect.intersectsRect(bulletRect)) {
 			barrier->behurt(this->getAttackDamage(), 1);
-
 			isMissed = false;
 		}
 	}

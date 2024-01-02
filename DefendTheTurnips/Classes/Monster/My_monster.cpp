@@ -13,17 +13,17 @@ extern int die_monsternum;
 
 cocos2d::Vector<Monster*> monsterContainer;
 
-void Monster::initmonster_type1() {
+void Monster::initMonsterType1() {
 	//在地图起点处放置一个怪物
 	monsterContainer.pushBack(this);
 	initWithFile("monster/13.png");
 	setMoney(14);
 
 
-	behit = Sprite::create();
-	behit->setPosition(60, 24); //设置框的位置
-	behit->setVisible(false); // 设置为可见  
-	this->addChild(behit);            //加到默认图层里面去
+	beHit = Sprite::create();
+	beHit->setPosition(60, 24); //设置框的位置
+	beHit->setVisible(false); // 设置为可见  
+	this->addChild(beHit);            //加到默认图层里面去
 
 	freeze = Sprite::create("monster/5.png");   //创建进度框
 	freeze->setScaleX(0.03f); // 将精灵在x轴上的大小缩小到原来的50%  
@@ -39,7 +39,7 @@ void Monster::initmonster_type1() {
 	_hp = 70;
 	_freeze = -10;
 	waypoint = 1;
-	isalive = 1;
+	isAlive = 1;
 
 	this->create_Health_bar();
 	this->scheduleBlood();
@@ -60,7 +60,7 @@ void Monster::initmonster_type1() {
 
 	//4.运行动画
 	this->runAction(RepeatForever::create(Animate::create(animation)));
-	if (map_num == 1)
+	if (mapNum == 1)
 	{
 		beginningWaypoint.x = Path[0].x;
 		beginningWaypoint.y = Path[0].y;
@@ -79,15 +79,15 @@ void Monster::initmonster_type1() {
 
 }
 
-void Monster::initmonster_type2() {
+void Monster::initMonsterType2() {
 	//在地图起点处放置一个怪物
 	monsterContainer.pushBack(this);
 	initWithFile("monster/F11.png");
 	setMoney(16);
-	behit = Sprite::create();
-	behit->setPosition(60, 24); //设置框的位置
-	behit->setVisible(false); // 设置为可见  
-	this->addChild(behit);            //加到默认图层里面去
+	beHit = Sprite::create();
+	beHit->setPosition(60, 24); //设置框的位置
+	beHit->setVisible(false); // 设置为可见  
+	this->addChild(beHit);            //加到默认图层里面去
 
 	freeze = Sprite::create("monster/5.png");   //创建进度框
 	freeze->setScaleX(0.03f); // 将精灵在x轴上的大小缩小到原来的50%  
@@ -103,7 +103,7 @@ void Monster::initmonster_type2() {
 	_hp = 50;
 	_freeze = -1;
 	waypoint = 1;
-	isalive = 1;
+	isAlive = 1;
 
 	this->create_Health_bar();
 	this->scheduleBlood();
@@ -125,7 +125,7 @@ void Monster::initmonster_type2() {
 	//4.运行动画
 	this->runAction(RepeatForever::create(Animate::create(animation)));
 
-	if (map_num == 1)
+	if (mapNum == 1)
 	{
 		beginningWaypoint.x = Path[0].x;
 		beginningWaypoint.y = Path[0].y;
@@ -144,15 +144,15 @@ void Monster::initmonster_type2() {
 
 }
 
-void Monster::initmonster_type3() {
+void Monster::initMonsterType3() {
 	//在地图起点处放置一个怪物
 	monsterContainer.pushBack(this);
 	initWithFile("monster/L11.png");
 	setMoney(15);
-	behit = Sprite::create();
-	behit->setPosition(60, 24); //设置框的位置
-	behit->setVisible(false); // 设置为可见  
-	this->addChild(behit);            //加到默认图层里面去
+	beHit = Sprite::create();
+	beHit->setPosition(60, 24); //设置框的位置
+	beHit->setVisible(false); // 设置为可见  
+	this->addChild(beHit);            //加到默认图层里面去
 
 	freeze = Sprite::create("monster/5.png");   //创建进度框
 	freeze->setScaleX(0.03f); // 将精灵在x轴上的大小缩小到原来的50%  
@@ -169,7 +169,7 @@ void Monster::initmonster_type3() {
 	hp_total = 100;
 	_freeze = -1;
 	waypoint = 1;
-	isalive = 1;
+	isAlive = 1;
 
 	this->create_Health_bar();
 	this->scheduleBlood();
@@ -191,7 +191,7 @@ void Monster::initmonster_type3() {
 	//4.运行动画
 	this->runAction(RepeatForever::create(Animate::create(animation)));
 
-	if (map_num == 1)
+	if (mapNum == 1)
 	{
 		beginningWaypoint.x = Path[0].x;
 		beginningWaypoint.y = Path[0].y;
@@ -217,7 +217,7 @@ void Monster::update(float dt) {
 	this->walk();
 	this->judge_dest();
 	this->touched();
-	if (!this->isalive)
+	if (!this->isAlive)
 		this->unschedule(schedule_selector(Monster::update));
 }
 
@@ -226,7 +226,7 @@ bool Monster::judge_dest() {
 	if ((destinationWaypoint.x - pos.x) * (destinationWaypoint.x - pos.x) + (destinationWaypoint.y - pos.y) * (destinationWaypoint.y - pos.y) <= 666)
 	{
 		waypoint++;
-		if (waypoint == 6 && map_num == 1)
+		if (waypoint == 6 && mapNum == 1)
 		{
 			for (auto Carrot : myCarrot) {
 				Carrot->set_beBiten(true);
@@ -238,11 +238,11 @@ bool Monster::judge_dest() {
 			this->isDie();
 			return true;
 		}
-		if (waypoint == 2 && map_num != 1)
+		if (waypoint == 2 && mapNum != 1)
 			this->setFlippedX(FALSE);
-		if (waypoint == 3 && map_num != 1)
+		if (waypoint == 3 && mapNum != 1)
 			this->setFlippedX(true);
-		if (waypoint == 4 && map_num != 1)
+		if (waypoint == 4 && mapNum != 1)
 			this->setFlippedX(FALSE);
 		if (waypoint == 11)
 		{
@@ -258,7 +258,7 @@ bool Monster::judge_dest() {
 		}
 		beginningWaypoint.x = destinationWaypoint.x;
 		beginningWaypoint.y = destinationWaypoint.y;
-		if (map_num == 1)
+		if (mapNum == 1)
 		{
 			destinationWaypoint.x = Path[waypoint].x;
 			destinationWaypoint.y = Path[waypoint].y;
@@ -278,7 +278,7 @@ bool Monster::judge_dest() {
 void Monster::walk() {
 	Vec2 pos = this->getPosition();
 	float path;
-	if (map_num == 1)
+	if (mapNum == 1)
 	{
 		path = Path[waypoint].path;
 	}
@@ -293,11 +293,11 @@ void Monster::walk() {
 }
 
 void Monster::create_Health_bar() {
-	bloodbox = Sprite::create("monster/3.png");   //创建进度框
-	bloodbox->setScaleX(0.1f); // 将精灵在x轴上的大小缩小到原来的50%  
-	bloodbox->setScaleY(0.1f); // 将精灵在y轴上的大小缩小到原来的50%
-	bloodbox->setPosition(42, 90); //设置框的位置
-	this->addChild(bloodbox);            //加到默认图层里面去
+	bloodBox = Sprite::create("monster/3.png");   //创建进度框
+	bloodBox->setScaleX(0.1f); // 将精灵在x轴上的大小缩小到原来的50%  
+	bloodBox->setScaleY(0.1f); // 将精灵在y轴上的大小缩小到原来的50%
+	bloodBox->setPosition(42, 90); //设置框的位置
+	this->addChild(bloodBox);            //加到默认图层里面去
 	sprBlood = Sprite::create("monster/4.png");  //创建血条
 	ProgressTimer* progress = ProgressTimer::create(sprBlood); //创建progress对象
 	progress->setType(ProgressTimer::Type::BAR);        //类型：条状
@@ -317,7 +317,7 @@ void Monster::scheduleBlood() {
 }
 
 void Monster::betouched() {
-	if (this->choosed == 1 || !this->isalive)
+	if (this->choosed == 1 || !this->isAlive)
 		return;
 	choice = Sprite::create("monster/16.png");   //创建进度框
 	this->addChild(choice, 10000);            //加到默认图层里面去
@@ -377,7 +377,7 @@ void Monster::touched() {
 		}
 	};
 	Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
-	if (!this->isalive)
+	if (!this->isAlive)
 	{
 		_eventDispatcher->removeEventListener(listener);
 		return;
@@ -414,10 +414,10 @@ bool Monster::isDie() {
 			this->choice->removeFromParent();
 			choose_a_object = 0;
 		}
-		if (this->bloodbox != nullptr)
-			this->bloodbox->removeFromParent();
+		if (this->bloodBox != nullptr)
+			this->bloodBox->removeFromParent();
 		getActionManager()->removeAllActionsFromTarget(this);
-		isalive = 0;
+		isAlive = 0;
 		//精灵爆炸
 		auto texture = Director::getInstance()->getTextureCache()->addImage("monster/2.png");
 		// 设置新的纹理  
@@ -456,14 +456,14 @@ void Monster::deletemonster(float a) {
 	this->removeFromParent();
 }
 
-void Monster::behurt(int monster_blood, int type) {
+void Monster::beHurt(int monster_blood, int type) {
 	_hp -= monster_blood;
-	behit->setVisible(true); // 设置为可见  
+	beHit->setVisible(true); // 设置为可见  
 	if (type == 1)
 	{
 		auto texture = Director::getInstance()->getTextureCache()->addImage("monster/behit1.png");
 		// 设置新的纹理  
-		behit->setTexture(texture);
+		beHit->setTexture(texture);
 		//2.创建动画，设置间隔
 		Animation* animation = Animation::create();
 		animation->setDelayPerUnit(0.2 / 2);//动画共16帧，运行时间1秒
@@ -474,13 +474,13 @@ void Monster::behurt(int monster_blood, int type) {
 		Texture2D* texture2 = Director::getInstance()->getTextureCache()->addImage("monster/7.png");
 		animation->addSpriteFrameWithTexture(texture2, Rect(0, 0, 100, 100));
 		//4.运行动画
-		behit->runAction(RepeatForever::create(Animate::create(animation)));
+		beHit->runAction(RepeatForever::create(Animate::create(animation)));
 	}
 	if (type == 2)
 	{
 		auto texture = Director::getInstance()->getTextureCache()->addImage("monster/shit.png");
 		// 设置新的纹理  
-		behit->setTexture(texture);
+		beHit->setTexture(texture);
 		//2.创建动画，设置间隔
 		Animation* animation = Animation::create();
 		animation->setDelayPerUnit(0.2 / 2);//动画共16帧，运行时间1秒
@@ -491,11 +491,11 @@ void Monster::behurt(int monster_blood, int type) {
 		Texture2D* texture2 = Director::getInstance()->getTextureCache()->addImage("monster/7.png");
 		animation->addSpriteFrameWithTexture(texture2, Rect(0, 0, 100, 100));
 		//4.运行动画
-		behit->runAction(RepeatForever::create(Animate::create(animation)));
+		beHit->runAction(RepeatForever::create(Animate::create(animation)));
 	}
 	schedule(schedule_selector(Monster::deletebehit), 0.4);
 }
 
 void Monster::deletebehit(float a) {
-	behit->setVisible(false);
+	beHit->setVisible(false);
 }

@@ -9,13 +9,13 @@
 class BottleTower : public Tower
 {
 public:
-    
+
     // 创建炮塔
     static BottleTower* create(const std::string& towerImage);
 
     // 构造函数
     BottleTower();
-    
+
 
     // 初始化炮塔
     bool init(const std::string& towerImage) override;
