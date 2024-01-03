@@ -18,10 +18,10 @@ public:
 
 
     // 初始化炮塔
-    bool init(const std::string& towerImage) override;
+    virtual bool init(const std::string& towerImage) override;
 
     // 重写父类的攻击行为
-    void performAttack() override;
+    virtual void performAttack() override;
     void update(float d);
 
 };
